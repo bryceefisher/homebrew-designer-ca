@@ -1,0 +1,93 @@
+@model HomebrewDesigner.Core.DTO.FermentableUpdateRequest
+@{
+    ViewBag.Title = "Add Fermentables";
+}
+
+<div class="container mt-5 text-center">
+    <h1 class="display-5 pb-3">Add Fermentables</h1>
+    <form asp-action="AddFermentable" asp-controller="Ingredient" method="post">
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Name" class="form-label">
+                    <h5>Name:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <input class="w-100 form-control" asp-for="Name">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Type" class="form-label">
+                    <h5>Type:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+
+                <select class="form-select w-100" asp-for="Type">
+                    <option selected disabled="disabled">Select Type</option>
+                    @foreach (var type in ViewBag.Types)
+                    {
+                        <option value="@type">@type</option>
+                    }
+                </select>
+            </div>
+            <span asp-validation-for="Type" class="text-danger"></span>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Origin" class="form-label">
+                    <h5>Origin:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+
+                <select class="form-select w-100" asp-for="Origin">
+                    <option selected disabled="disabled">Select Origin</option>
+                    @foreach (var origin in ViewBag.Origins)
+                    {
+                        <option value="@origin">@origin</option>
+                    }
+                </select>
+            </div>
+            <span asp-validation-for="Origin" class="text-danger"></span>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Color" class="form-label">
+                    <h5>Color:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <input class="w-100 form-control" asp-for="Color">
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="PotentialGravity" class="form-label">
+                    <h5>Potential Gravity:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <input class="w-100 form-control" asp-for="PotentialGravity">
+                <span asp-validation-for="PotentialGravity" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="MaxInBatch" class="form-label">
+                    <h5>Max In Batch%:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <input class="w-100 form-control" asp-for="MaxInBatch">
+                <span asp-validation-for="MaxInBatch" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="text-center mt-5">
+            <button type="submit" class="btn btn-danger">Add Fermentables</button>
+        </div>
+    </form>
+</div>

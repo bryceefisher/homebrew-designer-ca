@@ -1,0 +1,58 @@
+@model IEnumerable<HomebrewDesigner.Core.DTO.HopResponse>
+
+@{
+    ViewBag.Title = "Hops";
+}
+
+
+<div class="container mt-5 text-center">
+     <h1 class="display-4 text-decoration-underline">Ingredients: Hops</h1>
+    <div class="container border border-2 p-2 mt-4 rounded-2">
+       <h1 class="display-6">Search Fields</h1>
+        <form asp-action="Hops" asp-controller="Ingredient" method="get">
+            <div class="mb-1">
+                <label for="hopsSelect" class="form-label">Search Text:</label>
+                <select class="form-select" id="hopsSelect" aria-label="Hops Search Fields" name="searchBy">
+                    <option selected disabled>Property</option>
+                    @foreach (KeyValuePair<string, string> item in ViewBag.SearchFields)
+                    {
+                        <option value="@item.Key">@item.Value</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="searchString" class="form-label">Search String:</label>
+                <input type="text" class="form-control" id="searchString" name="searchString" placeholder="Search String">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a class="text-white text-decoration-none btn btn-danger" asp-controller="Ingredient" asp-action="Hops">Clear</a>
+        </form>
+    </div>
+    <div class="border border-2 p-5 rounded-2 mt-2">
+        <h1 class="display-6">Hops</h1>
+        <table class="table table-striped overflow-scroll">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Alpha Acid Percentage</th>
+                <th scope="col">Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var hop in Model)
+            {
+                <tr>
+                    <td>@hop.Name</td>
+                    <td>@hop.AlphaAcid</td>
+                    <td>
+                        <a asp-controller="Ingredient" asp-action="EditHop" asp-route-Id="@hop.Id">Edit</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container mt-3 text-center">
+    <a class="btn btn-success p-2" asp-controller="Ingredient" asp-action="AddHop">Add Hop</a>
+</div>

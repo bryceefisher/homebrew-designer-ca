@@ -1,0 +1,71 @@
+@model IEnumerable<HomebrewDesigner.Core.DTO.RecipeResponse>
+@{
+    ViewBag.Title = "Recipes";
+}
+
+
+<div class="container mt-5 text-center">
+    <h1 class="display-4 text-decoration-underline">Recipes</h1>
+    <div class="container border border-2 p-2 mt-4 rounded-2">
+        <h1 class="display-6">Search Fields</h1>
+        <form asp-action="Recipes" asp-controller="Recipe" method="get">
+            <div class="mb-1">
+                <label for="recipeSelect" class="form-label">Search Text:</label>
+                <select class="form-select" id="recipeSelect" aria-label="Recipe Search Fields" name="searchBy">
+                    <option selected disabled>Property</option>
+                    @foreach (KeyValuePair<string, string> item in ViewBag.SearchFields)
+                    {
+                        <option value="@item.Key">@item.Value</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="searchString" class="form-label">Search String:</label>
+                <input type="text" class="form-control" id="searchString" name="searchString" placeholder="Search String">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a class="text-white text-decoration-none btn btn-danger" asp-controller="Recipe" asp-action="Recipes">Clear</a>
+        </form>
+    </div>
+    <div class="border border-2 p-5 rounded-2 mt-2 container">
+        <h1 class="display-6">Recipes</h1>
+        <table class="table table-striped overflow-scroll">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Style</th>
+                <th scope="col">OG</th>
+                <th scope="col">FG</th>
+                <th scope="col">ABV</th>
+                <th scope="col">IBU</th>
+                <th scope="col">Color</th>
+                <th scope="col">Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var recipe in Model)
+                {
+                    <tr>
+                        <td><a asp-action="ViewRecipe" asp-controller="Recipe" asp-route-Id="@recipe.Id">@recipe.Name</a></td>
+                        <td>@recipe.Style</td>
+                        <td>@recipe.OriginalGravity</td>
+                        <td>@recipe.FinalGravity</td>
+                        <td>@recipe.ABV</td>
+                        <td>@recipe.IBU</td>
+                        <td>@recipe.Color</td>
+
+                        <td>
+                            <a asp-controller="Recipe" asp-action="EditRecipe" asp-route-Id="@recipe.Id">Edit</a>
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container mt-3 text-center">
+    <a class="btn btn-success p-2" asp-controller="Recipe" asp-action="AddFermentables">Add Recipe</a>
+</div>

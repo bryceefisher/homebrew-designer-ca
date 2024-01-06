@@ -1,0 +1,66 @@
+@model IEnumerable<HomebrewDesigner.Core.DTO.YeastResponse>
+
+@{
+    ViewBag.Title = "Yeast";
+}
+
+
+<div class="container mt-5 text-center">
+    <h1 class="display-4 text-decoration-underline">Ingredients: Yeast</h1>
+    <div class="container border border-2 p-2 mt-4 rounded-2">
+        <h1 class="display-6">Search Fields</h1>
+        <form asp-action="Yeast" asp-controller="Ingredient" method="get">
+            <div class="mb-1">
+                <label for="yeastSelect" class="form-label">Search Text:</label>
+                <select class="form-select" id="yeastSelect" aria-label="Yeast Search Fields" name="searchBy">
+                    <option selected disabled>Property</option>
+                    @foreach (KeyValuePair<string, string> item in ViewBag.SearchFields)
+                    {
+                        <option value="@item.Key">@item.Value</option>
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="searchString" class="form-label">Search String:</label>
+                <input type="text" class="form-control" id="searchString" name="searchString" placeholder="Search String">
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a class="text-white text-decoration-none btn btn-danger" asp-controller="Ingredient" asp-action="Yeast">Clear</a>
+        </form>
+    </div>
+    <div class="border border-2 p-5 rounded-2 mt-2">
+        <h1 class="display-6">Yeast</h1>
+        <table class="table table-striped overflow-scroll">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Lab</th>
+                <th scope="col">Code</th>
+                <th scope="col">Type</th>
+                <th scope="col">Form</th>
+                <th scope="col">Flocculation</th>
+                <th scope="col">Edit</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var yeast in Model)
+            {
+                <tr>
+                    <td>@yeast.Name</td>
+                    <td>@yeast.Lab</td>
+                    <td>@yeast.Code</td>
+                    <td>@yeast.Type</td>
+                    <td>@yeast.Form</td>
+                    <td>@yeast.Flocculation</td>
+                    <td>
+                        <a asp-controller="Ingredient" asp-action="EditYeast" asp-route-Id="@yeast.Id">Edit</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="container mt-3 text-center">
+    <a class="btn btn-success p-2" asp-controller="Ingredient" asp-action="AddYeast">Add Yeast</a>
+</div>

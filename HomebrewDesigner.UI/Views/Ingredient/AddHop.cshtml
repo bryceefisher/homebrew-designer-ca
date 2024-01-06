@@ -1,0 +1,33 @@
+@model HomebrewDesigner.Core.DTO.HopUpdateRequest
+@{
+    ViewBag.Title = "Add Hop";
+}
+
+<div class="container mt-5 text-center">
+    <h1 class="display-5 pb-3">Add Hop</h1>
+    <form asp-action="AddHop" asp-controller="Ingredient" method="post">
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Name" class="form-label">
+                    <h5>Name:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <input class="w-100 form-control" asp-for="Name" required>
+            </div>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Name" class="form-label">
+                    <h5>Alpha Acid:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <input class="w-100 form-control" asp-for="AlphaAcid" required>
+            </div>
+        </div>
+        <div class="text-center mt-5">
+            <button type="submit" class="btn btn-danger">Add Hops</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,21 @@
+﻿@model IEnumerable<HomebrewDesigner.Core.DTO.RecipeResponse>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center mt-5">
+    <h1 class="display-3">MVC Homebrew Recipe Designer</h1>
+    <div class="row">
+        <div class="col mt-5 border border-1 rounded-2 m-1 ">
+            <h1 class="text-decoration-underline display-6 mb-3 mt-3"> Recently Added Recipes</h1>
+            @foreach (var item in Model)
+            {
+                <a asp-action="ViewRecipe" asp-controller="Recipe">
+                    <a asp-controller="Recipe" asp-action="ViewRecipe" asp-route-Id="@item.Id"><h2>@item.Name</h2></a>
+                    <p>@item.Style</p>
+                </a>
+            }
+        </div>
+
+    </div>
+</div>

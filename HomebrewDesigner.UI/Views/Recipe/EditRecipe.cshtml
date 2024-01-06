@@ -1,0 +1,101 @@
+@using System.Text.RegularExpressions
+@using HomebrewDesigner.Core.Enums
+@model HomebrewDesigner.Core.DTO.RecipeUpdateRequest
+@{
+    ViewBag.Title = "Edit Recipe";
+}
+
+<div class="container text-center mt-5 bg-light">
+    <h1 class="display-5 pb-3">Edit Recipe</h1>
+    <form asp-controller="Recipe" asp-action="EditRecipe" method="post">
+    <div class="mb-3 d-flex visually-hidden">
+        <div class="col-3">
+            <label asp-for="Id" class="form-label">
+                <h5>Id:</h5>
+            </label>
+        </div>
+        <div class="col-9">
+            <input class="w-100 form-control" asp-for="Id" required>
+            <span class="text-danger" asp-validation-for="Id"></span>
+        </div>
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <label asp-for="Name" class="form-label">
+                <h5>Name:</h5>
+            </label>
+        </div>
+        <div class="col-9">
+            <input class="w-100 form-control" asp-for="Name">
+            <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <label asp-for="Name" class="form-label">
+                <h5>Style:</h5>
+            </label>
+        </div>
+        <div class="col-9">
+            <select class="form-select" asp-for="Style">
+                
+                @foreach (var item in Enum.GetNames(typeof(StyleEnum)))
+                {
+                    <option value="@item">@Regex.Replace(item, "([a-z])([A-Z])", "$1 $2")</option>
+                }
+            </select>
+            <span asp-validation-for="Style"></span>
+        </div>
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <label asp-for="YeastAmount" class="form-label">
+                <h5>Yeast Amount:</h5>
+            </label>
+        </div>
+        <div class="col-9">
+            
+            <input asp-for="YeastAmount" class="form-control" placeholder="Yeast Amount (ml)"/>
+        </div>
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <label asp-for="YeastViability" class="form-label">
+                <h5>Yeast Viability:</h5>
+            </label>
+        </div>
+        <div class="col-9">
+           
+            <input asp-for="YeastViability" class="form-control" placeholder="Yeast Viability (%)"/>
+            <span asp-validation-for="YeastViability"></span>
+        </div>
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <label asp-for="MashTemp" class="form-label">
+                <h5>Mash Temp:</h5>
+            </label>
+        </div>
+        <div class="col-9">
+            
+            <input asp-for="MashTemp" class="form-control" placeholder="Mash Temp (f)"/>
+            <span asp-validation-for="MashTemp"></span>
+        </div>
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <label asp-for="WaterRatio" class="form-label">
+                <h5>Water Ratio:</h5>
+            </label>
+        </div>
+        <div class="col-9">
+            
+            <input asp-for="WaterRatio" class="form-control" placeholder="Water Ratio (*:1)"/>
+            <span asp-validation-for="WaterRatio"></span>
+        </div>
+    </div>
+
+    <button class="btn btn-success">Update Recipe</button>
+
+</form>
+</div>

@@ -1,0 +1,128 @@
+@model HomebrewDesigner.Core.DTO.YeastUpdateRequest
+@{
+    ViewBag.Title = "Edit Yeast";
+}
+<body>
+<div class="container text-center mt-5 bg-light">
+    <h1 class="display-5 pb-3">Edit Yeast</h1>
+    <form asp-controller="Ingredient" asp-action="EditYeast" method="post">
+        <div class="mb-3 d-flex visually-hidden">
+            <div class="col-3">
+                <label asp-for="Id" class="form-label">
+                    <h5>Id:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <input class="w-100 form-control" asp-for="Id" required>
+                <span class="text-danger" asp-validation-for="Id"></span>
+            </div>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Name" class="form-label">
+                    <h5>Name:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <input class="w-100 form-control" asp-for="Name">
+                <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+        </div>
+        <div class="mb-3 d-flex ">
+            <div class="col-3">
+                <label asp-for="Lab" class="form-label">
+                    <h5>Lab:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <input class="w-100 form-control" asp-for="Lab">
+                <span class="text-danger" asp-validation-for="Lab"></span>
+            </div>
+        </div>
+        <div class="mb-3 d-flex ">
+            <div class="col-3">
+                <label asp-for="Code" class="form-label">
+                    <h5>Code:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <input class="w-100 form-control" asp-for="Code">
+                <span class="text-danger" asp-validation-for="Code"></span>
+            </div>
+        </div>
+        <div class="mb-3 d-flex ">
+            <div class="col-3">
+                <label asp-for="Type" class="form-label">
+                    <h5>Type:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <select class="form-select w-100" asp-for="Type">
+                    @foreach (var type in ViewBag.Types)
+                    {
+                        if (type == Model.Form.ToString())
+                        {
+                            <option selected value="@type">@type</option>
+                        }
+                        else
+                        {
+                            <option value="@type">@type</option>
+                        }
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="Type"></span>
+            </div>
+        </div>
+        <div class="mb-3 d-flex ">
+            <div class="col-3">
+                <label asp-for="Form" class="form-label">
+                    <h5>Form:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <select class="form-select w-100" asp-for="Form">
+                    @foreach (var form in ViewBag.Forms)
+                    {
+                        if (form == Model.Form.ToString())
+                        {
+                            <option selected value="@form">@form</option>
+                        }
+                        else
+                        {
+                            <option value="@form">@form</option>
+                        }
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="Form"></span>
+            </div>
+        </div>
+        <div class="mb-3 d-flex ">
+            <div class="col-3">
+                <label asp-for="Flocculation" class="form-label">
+                    <h5>Flocculation:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <select class="form-select w-100" asp-for="Form">
+                    @foreach (var floc in ViewBag.Flocs)
+                    {
+                        if (floc == Model.Flocculation.ToString())
+                        {
+                            <option selected value="@floc">@floc</option>
+                        }
+                        else
+                        {
+                            <option value="@floc">@floc</option>
+                        }
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="Flocculation"></span>
+            </div>
+        </div>
+        <div class="text-center mt-5">
+            <button type="submit" class="btn btn-success">Update Yeast</button>
+
+        </div>
+    </form>
+</div>
+</body>

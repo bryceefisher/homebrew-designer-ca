@@ -1,0 +1,95 @@
+@using System.Text.RegularExpressions
+@using HomebrewDesigner.Core.DTO
+@using HomebrewDesigner.Core.Enums
+@model HomebrewDesigner.ViewModels.RecipeVM
+
+<div class="container p-2 m-2 text-center">
+    <h1 class="display-6">Hops:</h1>
+    <div class="container">
+        <form id="hopsForm" asp-action="AddHops" asp-controller="Recipe" method="post">
+            <div class="col d-flex">
+                    <div class="col m-2">
+                        <div class="hop-addition-template border border-1 rounded-2 p-4 mt-2">
+                        <label asp-for="HopId[0]">Hop</label>
+                        <select class="form-select mt-2" asp-for="HopId[0]">
+                            <option selected disabled>Hop</option>
+                            @foreach (HopResponse hop in Model.HopList)
+                            {
+                                <option value="@hop.Id">@hop.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="HopAdditions[0].Use"></span>
+
+                        <!-- Add dynamic fields for the first hop addition -->
+
+                        <label class="form-label mt-1" asp-for="HopAdditions[0].Use"></label>
+                        <select class="form-select" asp-for="HopAdditions[0].Use">
+                            <option selected disabled>Use</option>
+                            @foreach (var use in Enum.GetNames(typeof(AdditionEnum)))
+                            {
+                                <option value="@use">@Regex.Replace(use, "([a-z])([A-Z])", "$1 $2")</option>
+                            }
+                        </select>
+                        <span asp-validation-for="HopAdditions[0].Use"></span>
+                        <label class="form-label mt-2" asp-for="HopAdditions[0].BoilTime"></label>
+                        <input asp-for="HopAdditions[0].BoilTime" class="form-control" placeholder="Boil Time (min)"/>
+                        <span asp-validation-for="HopAdditions[0].BoilTime"></span>
+                        <label class="form-label mt-2" asp-for="HopAdditions[0].DryHopDays"></label>
+                        <input asp-for="HopAdditions[0].DryHopDays" class="form-control" placeholder="Dry Hop Time (days)"/>
+                        <span asp-validation-for="HopAdditions[0].DryHopDays"></span>
+                        <label class="form-label mt-1" asp-for="HopAdditions[0].Form"></label>
+                        <select class="form-select" asp-for="HopAdditions[0].Form">
+                            <option selected disabled>Form</option>
+                            @foreach (var form in Enum.GetNames(typeof(HopFormEnum)))
+                            {
+                                <option value="@form">@Regex.Replace(form, "([a-z])([A-Z])", "$1 $2")</option>
+                            }
+                        </select>
+                        <span asp-validation-for="HopAdditions[0].Amount"></span>
+                        <label class="form-label mt-2" asp-for="HopAdditions[0].Amount"></label>
+                        <input asp-for="HopAdditions[0].Amount" class="form-control" placeholder="Weight (g)"/>
+                        <span asp-validation-for="HopAdditions[0].Amount"></span>
+                    </div>
+
+                    <!-- Container for dynamically added hop additions -->
+                    <div class="hop-container"></div>
+
+                    <a class="btn btn-success add-hop mt-3">+</a>
+                </div>
+
+            </div>
+            <button class="btn btn-success mt-2" type="submit">Next: Recipe Details -----></button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+         
+            let hopIndex = @Model.Recipe.Hops.Count;
+
+        
+            document.querySelector(".add-hop").addEventListener("click", function (event) {
+                event.preventDefault();
+
+          
+                let template = document.querySelector(".hop-addition-template").cloneNode(true);
+
+             
+                hopIndex++;
+
+               
+                let elements = template.querySelectorAll("[name]");
+                elements.forEach(element => {
+                    let name = element.getAttribute("name");
+                    element.setAttribute("name", name.replace("[0]", `[${hopIndex}]`));
+                });
+
+             
+                template.style.display = "block";
+
+             
+                document.querySelector(".hop-container").appendChild(template);
+            });
+        });
+    </script>
+</div>

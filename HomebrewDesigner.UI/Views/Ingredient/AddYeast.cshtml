@@ -1,0 +1,92 @@
+@model HomebrewDesigner.Core.DTO.YeastUpdateRequest
+@{
+    ViewBag.Title = "Add Yeast";
+}
+
+<div class="container mt-5 text-center bg-light">
+    <h1 class="display-5 pb-3">Add Yeast</h1>
+    <form asp-action="AddYeast" asp-controller="Ingredient" method="post">
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Name" class="form-label">
+                    <h5>Name:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <input class="w-100 form-control" asp-for="Name" required>
+            </div>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Lab" class="form-label">
+                    <h5>Lab:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <input class="w-100 form-control" asp-for="Lab" required>
+            </div>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Code" class="form-label">
+                    <h5>Code:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <input class="w-100 form-control" asp-for="Code" required>
+            </div>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Type" class="form-label">
+                    <h5>Type:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <select class="form-select w-100" asp-for="Type">
+                    <option selected disabled="disabled">Select a Type</option>
+                    @foreach (var type in ViewBag.Types)
+                    {
+                        <option value="@type">@type</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Form" class="form-label">
+                    <h5>Form:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <select class="form-select w-100" asp-for="Form">
+                    <option selected disabled="disabled">Select a Form</option>
+                    @foreach (var form in ViewBag.Forms)
+                    {
+                        <option value="@form">@form</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Flocculation" class="form-label">
+                    <h5>Flocculation:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <select class="form-select w-100" asp-for="Flocculation">
+                    <option selected disabled="disabled">Select Flocculation</option>
+                    @foreach (var floc in ViewBag.Flocs)
+                    {
+                        <option value="@floc">@floc</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <button type="submit" class="btn btn-success">Add Yeast</button>
+        </div>
+    </form>
+</div>
