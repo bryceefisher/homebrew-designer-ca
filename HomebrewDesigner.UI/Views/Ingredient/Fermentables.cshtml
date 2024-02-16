@@ -5,13 +5,13 @@
 }
 
 <div class="container mt-5 text-center">
-    <h1 class="display-4 text-decoration-underline">Ingredients: Fermentables</h1>
-    <div class="container border border-2 p-2 mt-4 rounded-2">
-        <h1 class="display-6">Search Fields</h1>
+    <h1 class="display-2 text-main">Ingredients: Fermentables</h1>
+    <div class="container rounded-5 bg-secondary p-3 mt-4">
+        <h1 class="display-6 text-main">Search Fields</h1>
         <form asp-action="Fermentables" asp-controller="Ingredient" method="get">
             <div class="mb-1">
-                <label for="fermentablesSelect" class="form-label">Search Text:</label>
-                <select class="form-select" id="fermentablesSelect" aria-label="Fermentables Search Fields" name="searchBy">
+                <label for="fermentablesSelect" class="form-label text-main">Search Text:</label>
+                <select class="form-select bg-main text-main" id="fermentablesSelect" aria-label="Fermentables Search Fields" name="searchBy">
                     <option selected disabled>Property</option>
                     @foreach (KeyValuePair<string, string> item in ViewBag.SearchFields)
                     {
@@ -20,16 +20,19 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="searchString" class="form-label">Search String:</label>
-                <input type="text" class="form-control" id="searchString" name="searchString" placeholder="Search String">
+                <label for="searchString" class="form-label text-main">Search String:</label>
+                <input type="text" class="form-control bg-main text-main" id="searchString" name="searchString" placeholder="Search String">
             </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-            <a class="text-white text-decoration-none btn btn-danger" asp-controller="Ingredient" asp-action="Fermentables">Clear</a>
+            <button type="submit" class="text-main btn btn-main">Search</button>
+            <a class="text-main text-decoration-none btn btn-main" asp-controller="Ingredient" asp-action="Fermentables">Clear</a>
         </form>
     </div>
-    <div class="border border-2 p-5 rounded-2 mt-2">
-        <h1 class="display-6">Fermentables</h1>
-        <table class="table table-striped overflow-scroll">
+    <div class="bg-secondary p-5 rounded-5 mt-5 container">
+        <div class="container text-center mb-3">
+            <a class="btn btn-main text-main p-2" asp-controller="Ingredient" asp-action="AddFermentable">Add Fermentable</a>
+        </div>
+        <h1 class="display-6 text-main">Fermentables</h1>
+        <table class="table text-main overflow-scroll">
             <thead>
             <tr>
                 <th scope="col">Name</th>
@@ -38,7 +41,6 @@
                 <th scope="col">Color</th>
                 <th scope="col">Potential Gravity</th>
                 <th scope="col">Max In Batch %</th>
-
                 <th scope="col">Edit</th>
             </tr>
             </thead>
@@ -46,14 +48,14 @@
             @foreach (var ferm in Model)
             {
                 <tr>
-                    <td>@ferm.Name</td>
+                    <td class="text-green">@ferm.Name</td>
                     <td>@ferm.Type</td>
                     <td>@ferm.Origin</td>
                     <td>@ferm.Color</td>
                     <td>@ferm.PotentialGravity</td>
                     <td>@ferm.MaxInBatch</td>
                     <td>
-                        <a asp-controller="Ingredient" asp-action="EditFermentable" asp-route-Id="@ferm.Id">Edit</a>
+                        <a class="text-green" asp-controller="Ingredient" asp-action="EditFermentable" asp-route-Id="@ferm.Id">Edit</a>
                     </td>
                 </tr>
             }
@@ -62,5 +64,5 @@
     </div>
 </div>
 <div class="container mt-3 text-center">
-    <a class="btn btn-success p-2" asp-controller="Ingredient" asp-action="AddFermentable">Add Fermentables</a>
+    <a class="btn btn-main text-main p-2" asp-controller="Ingredient" asp-action="AddFermentable">Add Fermentables</a>
 </div>

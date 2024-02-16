@@ -1,10 +1,13 @@
 using HomebrewDesigner.Core.Domain.Entities;
+using HomebrewDesigner.Core.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace HomebrewDesigner.Infrastructure.DbContext;
 
-public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole, string>
 {
     public ApplicationDbContext(DbContextOptions options) : base(options)
     {
@@ -261,7 +264,6 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 Amount = 15,
                 Form = "Pellet"
             }
-           
         );
 
         modelBuilder.Entity<Recipe.FermentablePair>().HasData(
@@ -316,7 +318,7 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 YeastAmount = 1.0,
                 YeastViability = 95,
                 MashTemp = 152,
-                
+
                 WaterRatio = 1.25,
                 AmountOfWater = 6.0,
                 Color = 12.0
@@ -356,6 +358,5 @@ public class ApplicationDbContext : Microsoft.EntityFrameworkCore.DbContext
                 Color = 18.0
             }
         );
-        ;
     }
 }

@@ -2,8 +2,10 @@
 @{
     ViewBag.Title = "Edit Hop";
 }
-<body>
-<div class="container text-center mt-5">
+
+<div class="container mt-5 text-center">
+     <h1 class="display-2 text-main">Edit Hop</h1>
+<div class="container rounded-5 bg-secondary p-3 pt-5 mt-4">
     <form asp-controller="Ingredient" asp-action="EditHop" method="post">
         <div class="mb-3 d-flex visually-hidden">
             <div class="col-3">
@@ -17,28 +19,28 @@
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <label asp-for="Name" class="form-label">
+                <label asp-for="Name" class="form-label text-main">
                     <h5>Name:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <input class="w-100 form-control" asp-for="Name" required>
+                <input class="w-100 form-control text-main bg-main" asp-for="Name" required>
             </div>
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <label asp-for="AlphaAcid" class="form-label">
+                <label asp-for="AlphaAcid" class="form-label text-main">
                     <h5>Alpha Acid:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <input class="w-100 form-control" asp-for="AlphaAcid" required>
+                <input class="w-100 form-control text-main bg-main" asp-for="AlphaAcid" required>
             </div>
         </div>
         <div class="text-center mt-5">
-            <button type="submit" class="btn btn-success">Update Hop</button>
+            <button type="submit" class="btn btn-main text-green">Update Hop</button>
 
         </div>
     </form>
 </div>
-</body>
+</div>

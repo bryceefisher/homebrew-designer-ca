@@ -1,5 +1,6 @@
 html {
   font-size: 14px;
+
 }
 
 @media (min-width: 768px) {
@@ -19,21 +20,44 @@ html {
 
 body {
   margin-bottom: 60px;
+  font-family: 'Asap Condensed', sans-serif;
+  background-image: linear-gradient(to right, #333, #3c3c3c, #333) !important;
 }
+
+nav{
+  background-image: linear-gradient(to right, #1b1b1b, #2a2a2a, #1b1b1b) !important;
+  background-color: #2b2b2b !important;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bg-secondary{
+  background-image: linear-gradient(to right, #2b2b2b, #2f2f2f, #2b2b2b) !important;
+}
+
+.bg-main{
+  background-color: #333 !important;
+}
+
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
   word-break: break-all;
 }
 
-a {
-  color: #0077cc;
+a:hover {
+  color: #f9f9f9 !important;
 }
+
 
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
+}
+
+.text-main{
+  color: #f9f9f9 !important;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
@@ -70,3 +94,62 @@ button.accept-policy {
   display: none;
 }
 
+.active {
+  transform: scale(1.1);
+  color: #31ED31 !important;
+  text-decoration: none !important;
+}
+
+.form-control:focus {
+  border-color: #f9f9f9 !important; 
+  outline: none; 
+  box-shadow: none; 
+}
+
+.form-select:focus {
+  border-color: #f9f9f9 !important;
+  outline: none;
+  box-shadow: none;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active  {
+  -webkit-text-fill-color: #f9f9f9 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #333 inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.btn-main {
+  color: #2b2b2b;
+  background-color: #2b2b2b;
+  border: .01rem solid #bdbdbd;
+}
+
+.btn-main:hover {
+  color: #f9f9f9;
+  background-color: #333;
+  border-color: #f9f9f9;
+}
+
+.text-green {
+  color: #31ED31;
+}
+
+.bg-secondary{
+  background-color: #2a2a2a !important;
+}
+
+.rounded-5 {
+  border-radius: 0.5rem;
+}
+
+.border-1 {
+  border: .0001rem solid #bdbdbd !important;
+}
+
+input {
+  border: .01rem solid #bdbdbd !important;
+}

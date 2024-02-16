@@ -78,7 +78,7 @@ public class FermentableService : IFermentableService
             throw new ArgumentException($"Field {nameof(id)} cannot be less than 0.");
         }
 
-        Fermentables fermentable = await  _fermentableRepository.GetFermentableByIdAsync(id);
+        Fermentables fermentable = await  _fermentableRepository.GetFermentableByIdAsync(id) ?? throw new InvalidOperationException("Fermentable not found.");
         
         return fermentable.ToFermentableResponse();
     }

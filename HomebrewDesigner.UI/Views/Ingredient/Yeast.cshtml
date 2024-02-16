@@ -6,13 +6,13 @@
 
 
 <div class="container mt-5 text-center">
-    <h1 class="display-4 text-decoration-underline">Ingredients: Yeast</h1>
-    <div class="container border border-2 p-2 mt-4 rounded-2">
-        <h1 class="display-6">Search Fields</h1>
+    <h1 class="display-2 text-main">Ingredients: Yeast</h1>
+    <div class="container rounded-5 bg-secondary p-3 mt-4 ">
+        <h1 class="display-6 text-main">Search Fields</h1>
         <form asp-action="Yeast" asp-controller="Ingredient" method="get">
             <div class="mb-1">
-                <label for="yeastSelect" class="form-label">Search Text:</label>
-                <select class="form-select" id="yeastSelect" aria-label="Yeast Search Fields" name="searchBy">
+                <label for="yeastSelect" class="form-label text-main">Search Text:</label>
+                <select class="form-select bg-main text-main" id="yeastSelect" aria-label="Yeast Search Fields" name="searchBy">
                     <option selected disabled>Property</option>
                     @foreach (KeyValuePair<string, string> item in ViewBag.SearchFields)
                     {
@@ -21,16 +21,19 @@
                 </select>
             </div>
             <div class="mb-3">
-                <label for="searchString" class="form-label">Search String:</label>
-                <input type="text" class="form-control" id="searchString" name="searchString" placeholder="Search String">
+                <label for="searchString" class="form-label text-main">Search String:</label>
+                <input type="text" class="form-control bg-main text-main" id="searchString" name="searchString" placeholder="Search String">
             </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-            <a class="text-white text-decoration-none btn btn-danger" asp-controller="Ingredient" asp-action="Yeast">Clear</a>
+            <button type="submit" class="btn btn-main text-main">Search</button>
+            <a class="text-main text-decoration-none btn btn-main" asp-controller="Ingredient" asp-action="Yeast">Clear</a>
         </form>
     </div>
-    <div class="border border-2 p-5 rounded-2 mt-2">
-        <h1 class="display-6">Yeast</h1>
-        <table class="table table-striped overflow-scroll">
+    <div class="bg-secondary p-5 rounded-5 mt-5 container">
+        <div class="container text-center mb-3">
+                    <a class="btn btn-main text-main p-2" asp-controller="Ingredient" asp-action="AddYeast">Add Yeast</a>
+                </div>
+        <h1 class="display-6 text-main">Yeast</h1>
+        <table class="table overflow-scroll text-main">
             <thead>
             <tr>
                 <th scope="col">Name</th>
@@ -46,14 +49,14 @@
             @foreach (var yeast in Model)
             {
                 <tr>
-                    <td>@yeast.Name</td>
+                    <td class="text-green">@yeast.Name</td>
                     <td>@yeast.Lab</td>
                     <td>@yeast.Code</td>
                     <td>@yeast.Type</td>
                     <td>@yeast.Form</td>
                     <td>@yeast.Flocculation</td>
                     <td>
-                        <a asp-controller="Ingredient" asp-action="EditYeast" asp-route-Id="@yeast.Id">Edit</a>
+                        <a class="text-green" asp-controller="Ingredient" asp-action="EditYeast" asp-route-Id="@yeast.Id">Edit</a>
                     </td>
                 </tr>
             }
@@ -62,5 +65,5 @@
     </div>
 </div>
 <div class="container mt-3 text-center">
-    <a class="btn btn-success p-2" asp-controller="Ingredient" asp-action="AddYeast">Add Yeast</a>
+    <a class="btn btn-main p-2 text-main" asp-controller="Ingredient" asp-action="AddYeast">Add Yeast</a>
 </div>

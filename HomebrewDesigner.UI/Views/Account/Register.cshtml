@@ -1,0 +1,72 @@
+@model HomebrewDesigner.ViewModels.RegisterVM
+@{
+    ViewBag.Title = "Register";
+    Layout = "_Layout";
+}
+
+<div class="text-center pt-5">
+    <h1 class="display-6 mb-3 text-main">Register</h1>
+    <div class="container text-center col-10 flex-column d-flex align-items-center">
+        <div class="col-12">
+            <form asp-action="Register" asp-controller="Account" method="post" id="form">
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label text-main" >First Name:</label>
+                    <input asp-for="FirstName" class="form-control bg-main" placeholder="First Name"/>
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label text-main">Last Name:</label>
+                    <input asp-for="LastName" class="form-control bg-main" placeholder="Last Name"/>
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label text-main">Email:</label>
+                    <input asp-for="Email" class="form-control bg-main" placeholder="Email"/>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UserName" class="control-label text-main">Username:</label>
+                    <input asp-for="UserName" class="form-control bg-main" placeholder="UserName"/>
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label text-main">Password:</label>
+                    <input asp-for="Password" class="form-control bg-main" placeholder="Password"/>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword" class="control-label text-main">Confirm Password:</label>
+                    <input asp-for="ConfirmPassword" class="form-control bg-main" placeholder="Confirm Password"/>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+
+
+                <div id="loader" class="visually-hidden mt-3">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <div class="form-group mt-3 mb-3" id="buttonDiv">
+                    <button type="submit" class=" text-main btn btn-main">Sign Up</button>
+                    <a class="text-main text-decoration-none btn btn-main" asp-controller="Account" asp-action="Register">Clear</a>
+                </div>
+
+                <ul>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(x => x.Errors))
+                    {
+                        <li class="text-danger">@error.ErrorMessage</li>
+                    }
+                </ul>
+            </form>
+            <div class="text-center mt-5">
+                <a class="text-main text-decoration-none">Already Registered?</a><a class="text-main mx-2 mt-2 text-decoration-underline" asp-controller="Account" asp-action="Login">Login</a>
+            </div>
+        </div>
+
+    </div>
+</div>
