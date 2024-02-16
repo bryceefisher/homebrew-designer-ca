@@ -1,0 +1,48 @@
+@model HomebrewDesigner.ViewModels.LoginVM
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "_Layout";
+}
+
+<div class="text-center pt-5 mt-5">
+    <h1 class="display-6 mb-3 text-main">Login</h1>
+    
+    <div class="container text-center col-10 flex-column d-flex align-items-center">
+        <div class="col-12">
+            <form asp-action="Login" asp-controller="Account" method="post" asp-route-ReturnUrl="@Context.Request.Query["ReturnUrl"]">
+                <div class="form-group">
+                    <label asp-for="UserName" class="control-label text-main">Username:</label>
+                    <input asp-for="UserName" class="form-control bg-main rounded-4" placeholder="Username"/>
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label text-main">Password:</label>
+                    <input asp-for="Password" class="form-control bg-main rounded-4 hover-none" placeholder="Password"/>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mt-3 mb-3">
+                    <label asp-for="RememberMe" class="control-label text-main">Remember Me:</label>
+                    <input type="checkbox" title="Remember Me" asp-for="RememberMe" class="form-check-inline"/>
+                    <span asp-validation-for="RememberMe" class="text-danger"></span>
+                </div>
+                @if (ViewData.ModelState["Login"] != null && ViewData.ModelState["Login"].Errors.Any())
+                {
+                    <div class="text-danger">
+                        @ViewData.ModelState["Login"].Errors.First().ErrorMessage
+                    </div>
+                }
+                <div class="form-group mt-3 mb-3">
+                    <button type="submit" class="btn btn-main text-main">Login</button>
+                    <a class="text-main text-decoration-none btn btn-main" asp-controller="Account" asp-action="Login">Clear</a>
+                </div>
+            </form>
+            <div class="text-center mt-5">
+                <a class=" text-decoration-none text-main">Not yet registered?</a><a class="text-main mx-2 mt-2 text-decoration-underline" asp-controller="Account" asp-action="Register">Register</a>
+            </div>
+
+        </div>
+    </div>
+</div>

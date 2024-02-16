@@ -1,4 +1,20 @@
-﻿<!DOCTYPE html>
+﻿@using F1FanSite.ViewModels
+@using HomebrewDesigner.Core.Services
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    // use current controller or area to determine if tab is active
+    var current = ViewContext.RouteData.Values["area"]?.ToString() ??
+                  ViewContext.RouteData.Values["controller"]!.ToString()!;
+
+    // use current action to determine active tab for register and change password tabs
+    var action = ViewContext.RouteData.Values["action"]?.ToString().ToLower();
+    
+    Console.WriteLine(current);
+    Console.WriteLine(action);
+
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -6,34 +22,53 @@
     <title>@ViewData["Title"] - MVC_Homebrew_Recipe_Designer</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Asap+Condensed:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
 </head>
-<body class="bg-light">
+<body >
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-secondary border-bottom box-shadow mb-3 pt-3 pb-3">
+    <nav class="navbar navbar-expand-lg navbar-toggleable-lg navbar-dark mb-3 pt-4 pb-4 ">
         <div class="container-fluid">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MVC Homebrew Recipe Designer</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <div class="navbar-collapse collapse text-center" id="navbarNav">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Recipe" asp-action="Recipes">Recipes</a>
+                        <a class="nav-link text-light @Nav.Active(new string[] {"recipes", "editrecipe", "addfermentables"}, action)" asp-area="" asp-controller="Recipe" asp-action="Recipes">Recipes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Ingredient" asp-action="Hops">Hops</a>
+                        <a class="nav-link text-light @Nav.Active(new string[] {"hops", "edithop", "addhop"}, action)" asp-area="" asp-controller="Ingredient" asp-action="Hops">Hops</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Ingredient" asp-action="Fermentables">Fermentables</a>
+                        <a class="nav-link text-light @Nav.Active(new string[] {"fermentables", "editfermentable", "addfermentable"}, action)" asp-area="" asp-controller="Ingredient" asp-action="Fermentables">Fermentables</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Ingredient" asp-action="Yeast">Yeast</a>
+                        <a class="nav-link text-light @Nav.Active(new string[] {"yeast", "edityeast", "addyeast"}, action)" asp-area="" asp-controller="Ingredient" asp-action="Yeast">Yeast</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" asp-area="" asp-controller="Calculator" asp-action="Index">ABV-Calculator</a>
+                        <a class="nav-link text-light @Nav.Active(new string[] {"calculators"}, current)" asp-area="" asp-controller="Calculator" asp-action="Index">ABV-Calculator</a>
                     </li>
                 </ul>
+                <div class="container text-end text-main col-4" id="userInfo">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <div id="userDiv">
+                            <div>
+                                <a >Hello, @User.Identity.Name!</a> |<a asp-action="Logout" asp-controller="Account" class=" mx-2 mt-2 text-decoration-underline text-main">Logout</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div id="userDiv">
+                            <a asp-controller="Account" asp-action="Login" class="mx-2 mt-2 text-decoration-underline text-main">Login</a> | <a asp-action="Register" asp-controller="Account" class=" mx-2 mt-2 text-decoration-underline text-main">Register</a>
+                        </div>
+                    }
+                </div>
             </div>
         </div>
     </nav>
@@ -44,15 +79,18 @@
     </main>
 </div>
 
-<footer class="border-top footer text-muted">
-    <div class="container text-center">
-        &copy; 2023 - MVC Homebrew Recipe Designer
+<footer class="footer">
+    <div class="container text-center text-main">
+         @DateTime.Now.Year - MVC Homebrew Recipe Designer
     </div>
 </footer>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+<script type="module" src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

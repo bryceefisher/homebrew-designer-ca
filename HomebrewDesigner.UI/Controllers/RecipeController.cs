@@ -41,9 +41,9 @@ public class RecipeController : Controller
         };
 
         IEnumerable<RecipeResponse> recipe = await _recipeService.GetFilteredRecipesAsync(searchBy, searchString);
-        
+
         recipe = recipe.OrderBy(r => r.Name);
-            
+
 
         if (recipe.Any())
         {
@@ -149,10 +149,23 @@ public class RecipeController : Controller
         recipe.Recipe.MashTemp = recipeVm.Recipe.MashTemp;
 
         recipe.Recipe.WaterRatio = recipeVm.Recipe.WaterRatio;
+        
+        double? grainWeight = 0;
+        foreach (var grain in recipe.Recipe.MaltBill)
+        {
+            grainWeight += grain.Weight;
+        }
+        recipe.Recipe.AmountOfWater = Math.Round((double)(grainWeight * recipe.Recipe.WaterRatio)!,2);
+        
+        double? GU = 0;
+        foreach (var grain in recipe.Recipe.MaltBill)
+        {
+            GU += double.Parse(grain.Fermentable.PotentialGravity.ToString().Substring(grain.Fermentable.PotentialGravity.ToString().IndexOf(".") + 1, 3)) * grain.Weight;
+        }
 
-        recipe.Recipe.AmountOfWater = RandomNumberGenerator.GetInt32(7, 12);
+        recipe.Recipe.OriginalGravity = double.Parse(((GU / 5) / 1000 + 1).ToString()!.Substring(0, 5));
+        
         recipe.Recipe.FinalGravity = Math.Round(1.002 + random.NextDouble() * (1.025 - 1.002), 3);
-        recipe.Recipe.OriginalGravity = Math.Round(1.040 + random.NextDouble() * (1.102 - 1.040), 3);
         recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(12, 100);
         recipe.Recipe.ABV = RandomNumberGenerator.GetInt32(3, 12);
         recipe.Recipe.Color = RandomNumberGenerator.GetInt32(3, 75);
@@ -160,7 +173,7 @@ public class RecipeController : Controller
 
         if (TryValidateModel(recipe.Recipe))
         {
-           await _recipeService.AddRecipeAsync(recipe.Recipe);
+            await _recipeService.AddRecipeAsync(recipe.Recipe);
             return RedirectToAction("Recipes", "Recipe");
         }
 
@@ -218,9 +231,7 @@ public class RecipeController : Controller
             // Get Hop by Id from _hopService
             HopResponse hopResponse = await _hopService.GetHopByIdAsync(recipeVm.HopId[i]);
             Hop hop = hopResponse.ToHop();
-            
-            
-                
+
 
             // Create a new HopAddition
             HopAddition hopAddition = new HopAddition
@@ -245,9 +256,9 @@ public class RecipeController : Controller
         ViewBag.YeastList = await _yeastService.GetAllYeastsAsync();
 
         RecipeResponse? recipeResponse = await _recipeService.GetRecipeByIdAsync(id);
-        
+
         RecipeUpdateRequest? recipe = recipeResponse.ToRecipeUpdateRequest();
-        
+
 
         TempData["RecipeUpdateRequest"] = JsonSerializer.Serialize(recipe);
 

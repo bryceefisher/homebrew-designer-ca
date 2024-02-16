@@ -19,12 +19,21 @@
       </PackageReference>
       <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.14" />
       <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="7.0.14" />
+      <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.15" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.15" />
+      <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.15" />
       <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="7.0.14" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.13">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.11" />
       <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Account\Login.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Account\Register.cshtml" />
     </ItemGroup>
 
 </Project>

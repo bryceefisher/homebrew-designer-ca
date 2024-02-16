@@ -4,44 +4,44 @@
 }
 
 <div class="container-fluid mt-5 text-center">
-    <h1 class="display-3 text-decoration-underline">ABV Calculator</h1>
-    <div class="container border border-1 rounded-2 p-3 pt-5">
+    <h1 class="display-3 text-decoration-none text-main">ABV Calculator</h1>
+    <div class="container rounded-5 p-3 pt-5 bg-secondary">
         <form asp-action="Index" asp-controller="Calculator" method="post">
             <div class="mb-3 d-flex">
                 <div class="col-3">
                     <label asp-for="OG" class="form-label">
-                        <h5>Original Gravity:</h5>
+                        <h5 class="text-main">Original Gravity:</h5>
                     </label>
                 </div>
                 <div class="col-9">
-                    <input asp-for="OG" class="form-control"/>
+                    <input asp-for="OG" class="form-control bg-main text-main"/>
                     <span class="text-danger" asp-validation-for="OG"></span>
                 </div>
             </div>
             <div class="mb-3 d-flex">
                 <div class="col-3">
                     <label asp-for="FG" class="form-label">
-                        <h5>Final Gravity:</h5>
+                        <h5 class="text-main">Final Gravity:</h5>
                     </label>
                 </div>
                 <div class="col-9">
-                    <input asp-for="FG" class="form-control"/>
+                    <input asp-for="FG" class="form-control bg-main text-main"/>
                     <span class="text-danger" asp-validation-for="FG"></span>
                 </div>
             </div>
             <div class="mb-3 d-flex">
                 <div class="col-3">
                     <label asp-for="ABV" class="form-label">
-                        <h5>ABV:</h5>
+                        <h5 class="text-main">ABV:</h5>
                     </label>
                 </div>
                 <div class="col-9">
-                    <input asp-for="ABV" disabled class="form-control"/>
+                    <input asp-for="ABV" disabled class="form-control bg-main text-main"/>
                     <span class="text-danger" asp-validation-for="ABV"></span>
                 </div>
             </div>
 
-            <button class="btn btn-success mt-3" type="submit">Calculate ABV</button>
+            <button class="btn btn-main text-main mt-3" type="submit">Calculate ABV</button>
         </form>
     </div>
 </div>

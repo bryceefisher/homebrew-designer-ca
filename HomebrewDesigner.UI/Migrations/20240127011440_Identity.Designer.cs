@@ -4,6 +4,7 @@ using HomebrewDesigner.Infrastructure.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVC_Homebrew_Recipe_Designer.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class RecipeDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240127011440_Identity")]
+    partial class Identity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -552,6 +555,10 @@ namespace MVC_Homebrew_Recipe_Designer.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("varchar(256)");
 
+                    b.Property<string>("EmailAddress")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
 
@@ -585,6 +592,10 @@ namespace MVC_Homebrew_Recipe_Designer.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
+
+                    b.Property<string>("RememberMe")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");

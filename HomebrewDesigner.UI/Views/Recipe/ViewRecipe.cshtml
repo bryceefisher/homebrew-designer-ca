@@ -208,7 +208,20 @@
     </div>
     <div class="mb-3 d-flex">
         <div class="col-3">
-            <label asp-for="Hops" class="form-label">
+            <label asp-for="Maltbill[i].Weight" class="form-label">
+                <p>Weight:</p>
+            </label>
+        </div>
+
+        <div class="col-9">
+            <input asp-for="Maltbill[i].Weight" class="form-control" disabled/>
+            <span class="text-danger" asp-validation-for="Maltbill[i].Weight"></span>
+        </div>
+    </div>
+    
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <label asp-for="Maltbill[i].Fermentable.Type" class="form-label">
                 <p>Type:</p>
             </label>
         </div>

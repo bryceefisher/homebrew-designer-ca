@@ -43,9 +43,7 @@ public class FermentableRepository : IFermentableRepository
     }
 
     public async Task<Fermentables> GetFermentableByIdAsync(int id)
-    { 
-        Fermentables fermentable = await _db.Fermentables.FirstOrDefaultAsync(f => f.Id == id) ?? throw new InvalidOperationException() ;
-
-        return fermentable;
+    {
+        return await _db.Fermentables.FirstOrDefaultAsync(f => f.Id == id);
     }
 }
