@@ -24,7 +24,7 @@ public class RecipeService : IRecipeService
         _yeastRepository = yeastRepository;
     }
 
-    public async Task<RecipeResponse> AddRecipeAsync(RecipeAddRequest? request)
+    public async Task<RecipeResponse> AddAsync(RecipeAddRequest? request)
     {
         if (request is null)
         {
@@ -66,14 +66,14 @@ public class RecipeService : IRecipeService
         return recipeToAdd.ToRecipeResponse();
     }
 
-    public async Task<List<RecipeResponse>> GetAllRecipesAsync()
+    public async Task<List<RecipeResponse>> GetAllAsync()
     {
        List<Recipe> recipes =  await _recipeRepository.GetAllRecipesAsync();
        
        return recipes.Select(r => r.ToRecipeResponse()).ToList();
     }
 
-    public async Task<RecipeResponse> UpdateRecipeAsync(RecipeUpdateRequest? request)
+    public async Task<RecipeResponse> UpdateAsync(RecipeUpdateRequest? request)
     {
         if (request is null)
         {
@@ -90,7 +90,7 @@ public class RecipeService : IRecipeService
        return recipe.ToRecipeResponse();
     }
 
-    public async Task<RecipeResponse> GetRecipeByIdAsync(int id)
+    public async Task<RecipeResponse> GetByIdAsync(int id)
     {
         if (id < 0)
         {
@@ -111,7 +111,7 @@ public class RecipeService : IRecipeService
 
 
     /*******ToDo Tighten up this code************/
-    public async Task<IEnumerable<RecipeResponse>> GetFilteredRecipesAsync(string? searchBy, string? searchString)
+    public async Task<List<RecipeResponse>> GetFilteredAsync(string? searchBy, string? searchString)
     {
         PropertyInfo? property = null;
 

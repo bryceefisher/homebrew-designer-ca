@@ -8,7 +8,7 @@ using ArgumentException = System.ArgumentException;
 
 namespace HomebrewDesigner.Core.Services;
 
-public class HopService : IHopService
+public class HopService : IService<HopAddRequest, HopUpdateRequest, HopResponse>
 {
     // Create a list to hold hop objects.
     private readonly IHopRepository _hopRepository;
@@ -18,7 +18,7 @@ public class HopService : IHopService
         _hopRepository = hopRepository;
     }
 
-    public async Task<HopResponse> AddHopAsync(HopAddRequest? request)
+    public async Task<HopResponse> AddAsync(HopAddRequest? request)
     {
         if (request is null)
         {
@@ -43,7 +43,7 @@ public class HopService : IHopService
         return hopToAdd.ToHopResponse();
     }
 
-    public async Task<List<HopResponse>> GetAllHopsAsync()
+    public async Task<List<HopResponse>> GetAllAsync()
     {
         List<Hop> hops = await _hopRepository.GetAllHopsAsync();
 
@@ -51,7 +51,7 @@ public class HopService : IHopService
     }
 
 
-    public async Task<HopResponse> UpdateHopAsync(HopUpdateRequest? request)
+    public async Task<HopResponse> UpdateAsync(HopUpdateRequest? request)
     {
         if (request is null)
         {
@@ -73,7 +73,7 @@ public class HopService : IHopService
         return hopToUpdate.ToHopResponse();
     }
 
-    public async Task<HopResponse> GetHopByIdAsync(int id)
+    public async Task<HopResponse> GetByIdAsync(int id)
     {
         if (id < 0)
         {
@@ -87,7 +87,7 @@ public class HopService : IHopService
 
     /*******ToDo Tighten up this code************/
 
-    public async Task<List<HopResponse>> GetFilteredHopsAsync(string? searchBy, string? searchString)
+    public async Task<List<HopResponse>> GetFilteredAsync(string? searchBy, string? searchString)
     {
         List<Hop> hops = await _hopRepository.GetAllHopsAsync();
 

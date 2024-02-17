@@ -9,15 +9,14 @@ namespace HomebrewDesigner.Controllers;
 [Route("[controller]/[action]")]
 public class IngredientController : Controller
 {
-    private readonly ILogger<IngredientController> _logger;
-    private readonly IHopService _hopService;
-    private readonly IFermentableService _fermentableService;
-    private readonly IYeastService _yeastService;
+    
+    private readonly IService<HopAddRequest, HopUpdateRequest, HopResponse> _hopService;
+    private readonly IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse> _fermentableService;
+    private readonly IService<YeastAddRequest, YeastUpdateRequest, YeastResponse> _yeastService;
 
-    public IngredientController(ILogger<IngredientController> logger, IHopService hopService,
-        IFermentableService fermentableService, IYeastService yeastService)
+    public IngredientController(IService<HopAddRequest, HopUpdateRequest, HopResponse> hopService,
+        IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse> fermentableService, IService<YeastAddRequest, YeastUpdateRequest, YeastResponse> yeastService)
     {
-        _logger = logger;
         _hopService = hopService;
         _fermentableService = fermentableService;
         _yeastService = yeastService;
@@ -32,7 +31,7 @@ public class IngredientController : Controller
             { nameof(HopResponse.AlphaAcid), "Alpha Acid" }
         };
 
-        IEnumerable<HopResponse> hops = await _hopService.GetFilteredHopsAsync(searchBy, searchString);
+        IEnumerable<HopResponse> hops = await _hopService.GetFilteredAsync(searchBy, searchString);
         
         hops = hops.OrderBy(h => h.Name);
 
@@ -57,7 +56,7 @@ public class IngredientController : Controller
             { nameof(YeastResponse.Flocculation), "Flocculation" }
         };
 
-        IEnumerable<YeastResponse> yeast = await _yeastService.GetFilteredYeastAsync(searchBy, searchString);
+        IEnumerable<YeastResponse> yeast = await _yeastService.GetFilteredAsync(searchBy, searchString);
         
         yeast = yeast.OrderBy(y => y.Name);
         
@@ -84,7 +83,7 @@ public class IngredientController : Controller
         };
 
         IEnumerable<FermentableResponse> fermentable =
-            await _fermentableService.GetFilteredFermentableAsync(searchBy, searchString);
+            await _fermentableService.GetFilteredAsync(searchBy, searchString);
         
         IEnumerable<FermentableResponse> orderedFermentable = fermentable.OrderBy(f => f.Name);
 
@@ -98,7 +97,7 @@ public class IngredientController : Controller
 
     public async Task<IActionResult> EditHop(int Id)
     {
-        HopResponse hopResponse = await _hopService.GetHopByIdAsync(Id);
+        HopResponse hopResponse = await _hopService.GetByIdAsync(Id);
         
         HopUpdateRequest hop = hopResponse.ToHopUpdateRequest();
         
@@ -110,7 +109,7 @@ public class IngredientController : Controller
     {
         if (ModelState.IsValid)
         {
-           await  _hopService.UpdateHopAsync(hop);
+           await  _hopService.UpdateAsync(hop);
         }
 
         return RedirectToAction("Hops", "Ingredient");
@@ -124,14 +123,14 @@ public class IngredientController : Controller
     [HttpPost]
     public async Task<IActionResult> AddHop(HopAddRequest hop)
     {
-       await  _hopService.AddHopAsync(hop);
+       await  _hopService.AddAsync(hop);
 
         return RedirectToAction("Hops", "Ingredient");
     }
 
     public async Task<IActionResult> EditYeast(int Id)
     {
-        YeastResponse? yeastResponse = await _yeastService.GetYeastByIdAsync(Id);
+        YeastResponse? yeastResponse = await _yeastService.GetByIdAsync(Id);
         YeastUpdateRequest yeast = yeastResponse.ToYeastUpdateRequest();
 
         ViewBag.Types = Enum.GetNames(typeof(YeastTypeEnum));
@@ -146,7 +145,7 @@ public class IngredientController : Controller
     {
         if (ModelState.IsValid)
         {
-            await _yeastService.UpdateYeastAsync(yeast);
+            await _yeastService.UpdateAsync(yeast);
             return RedirectToAction("Yeast", "Ingredient");
         }
         else
@@ -171,7 +170,7 @@ public class IngredientController : Controller
     {
         if (ModelState.IsValid)
         {
-           await  _yeastService.AddYeastAsync(yeast);
+           await  _yeastService.AddAsync(yeast);
         }
 
         return RedirectToAction("Yeast", "Ingredient");
@@ -179,7 +178,7 @@ public class IngredientController : Controller
 
     public async Task<IActionResult> EditFermentable(int Id)
     {
-        FermentableResponse? grain = await _fermentableService.GetFermentableByIdAsync(Id);
+        FermentableResponse? grain = await _fermentableService.GetByIdAsync(Id);
         FermentableUpdateRequest fermentable = grain.ToGrainUpdateRequest();
 
         ViewBag.Origins = Enum.GetNames(typeof(FermentableOriginEnum));
@@ -193,7 +192,7 @@ public class IngredientController : Controller
     {
         if (ModelState.IsValid)
         {
-            await _fermentableService.UpdateFermentableAsync(fermentable);
+            await _fermentableService.UpdateAsync(fermentable);
             return RedirectToAction("Fermentables", "Ingredient");
         }
         else
@@ -216,7 +215,7 @@ public class IngredientController : Controller
     {
         if (ModelState.IsValid)
         {
-            await _fermentableService.AddFermentableAsync(fermentable);
+            await _fermentableService.AddAsync(fermentable);
             return RedirectToAction("Fermentables", "Ingredient");
         }
 

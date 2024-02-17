@@ -10,7 +10,7 @@ namespace HomebrewDesignerTests.Tests;
 
 public class HopTests
 {
-    private readonly IHopService _hopService;
+    private readonly IService<HopAddRequest, HopUpdateRequest, HopResponse> _hopService;
     
     public HopTests()
     {
@@ -28,7 +28,7 @@ public class HopTests
         HopAddRequest? hopAddRequest = null;
 
         //Act
-        await Assert.ThrowsAsync<ArgumentNullException>(() => _hopService.AddHopAsync(hopAddRequest));
+        await Assert.ThrowsAsync<ArgumentNullException>(() => _hopService.AddAsync(hopAddRequest));
     }
 
     [Fact]
@@ -42,9 +42,9 @@ public class HopTests
             AlphaAcid = 1.1,
         };
     
-        HopResponse hopResponse = await _hopService.AddHopAsync(hop);
+        HopResponse hopResponse = await _hopService.AddAsync(hop);
     
-        List<HopResponse> hops = await _hopService.GetAllHopsAsync();
+        List<HopResponse> hops = await _hopService.GetAllAsync();
     
         //Assert
         Assert.True(hopResponse.Id == hop.Id);
@@ -64,10 +64,10 @@ public class HopTests
             AlphaAcid = 1.1,
         };
     
-        await _hopService.AddHopAsync(hop);
+        await _hopService.AddAsync(hop);
     
         //Act
-        await Assert.ThrowsAsync<ArgumentException>(() => _hopService.AddHopAsync(hop));
+        await Assert.ThrowsAsync<ArgumentException>(() => _hopService.AddAsync(hop));
     }
     
     [Fact]
@@ -82,7 +82,7 @@ public class HopTests
         };
     
         //Act
-        await Assert.ThrowsAsync<ArgumentException>(() => _hopService.AddHopAsync(hop));
+        await Assert.ThrowsAsync<ArgumentException>(() => _hopService.AddAsync(hop));
     }
 
     #endregion
@@ -95,7 +95,7 @@ public class HopTests
         HopUpdateRequest? hopUpdateRequest = null;
 
         //Act
-       await  Assert.ThrowsAsync<ArgumentNullException>(() => _hopService.UpdateHopAsync(hopUpdateRequest));
+       await  Assert.ThrowsAsync<ArgumentNullException>(() => _hopService.UpdateAsync(hopUpdateRequest));
     }
 
     [Fact]
@@ -108,7 +108,7 @@ public class HopTests
         };
     
         //Act
-        await Assert.ThrowsAsync<ArgumentException>(() => _hopService.UpdateHopAsync(hopUpdateRequest));
+        await Assert.ThrowsAsync<ArgumentException>(() => _hopService.UpdateAsync(hopUpdateRequest));
     }
     
     [Fact]
@@ -129,10 +129,10 @@ public class HopTests
             AlphaAcid = 1.2,
         };
     
-        await _hopService.AddHopAsync(hop);
+        await _hopService.AddAsync(hop);
     
         //Act
-        await Assert.ThrowsAsync<ArgumentException>(() => _hopService.UpdateHopAsync(hopUpdateRequest));
+        await Assert.ThrowsAsync<ArgumentException>(() => _hopService.UpdateAsync(hopUpdateRequest));
     }
 
     [Fact]
@@ -153,9 +153,9 @@ public class HopTests
             AlphaAcid = 1.2,
         };
 
-        await _hopService.AddHopAsync(hop);
+        await _hopService.AddAsync(hop);
 
-        HopResponse hopResponse = await _hopService.UpdateHopAsync(hopUpdateRequest);
+        HopResponse hopResponse = await _hopService.UpdateAsync(hopUpdateRequest);
 
         //Assert
         Assert.True(hopResponse.Id == hopUpdateRequest.Id);
@@ -178,10 +178,10 @@ public class HopTests
             AlphaAcid = 1.1,
         };
         
-        HopResponse addedHop =  await _hopService.AddHopAsync(hopAddRequest);
+        HopResponse addedHop =  await _hopService.AddAsync(hopAddRequest);
         
         //Act
-        await Assert.ThrowsAsync<ArgumentException>(() => _hopService.GetHopByIdAsync(500));
+        await Assert.ThrowsAsync<ArgumentException>(() => _hopService.GetByIdAsync(500));
     }
     
     [Fact]
@@ -195,7 +195,7 @@ public class HopTests
             AlphaAcid = 1.1,
         };
         
-        HopResponse hop = await _hopService.AddHopAsync(hopAddRequest);
+        HopResponse hop = await _hopService.AddAsync(hopAddRequest);
         
         Assert.Equal("TestHop", hop.Name);
     }
@@ -203,7 +203,7 @@ public class HopTests
     [Fact]
     public async Task GetHopById_IdLessThanZero()
     {
-        await Assert.ThrowsAsync<ArgumentException>(() => _hopService.GetHopByIdAsync(-1));
+        await Assert.ThrowsAsync<ArgumentException>(() => _hopService.GetByIdAsync(-1));
     }
     
 
@@ -228,11 +228,11 @@ public class HopTests
             AlphaAcid = 1.1,
         };
         
-        await _hopService.AddHopAsync(hopAddRequest);
-        await _hopService.AddHopAsync(hopAddRequest2);
+        await _hopService.AddAsync(hopAddRequest);
+        await _hopService.AddAsync(hopAddRequest2);
         
         //Act
-        List<HopResponse> hops = await _hopService.GetAllHopsAsync();
+        List<HopResponse> hops = await _hopService.GetAllAsync();
         
         //Assert
         Assert.True(hops.Count == 2);
@@ -260,11 +260,11 @@ public class HopTests
             AlphaAcid = 1.1,
         };
         
-        await _hopService.AddHopAsync(hopAddRequest);
-        await _hopService.AddHopAsync(hopAddRequest2);
+        await _hopService.AddAsync(hopAddRequest);
+        await _hopService.AddAsync(hopAddRequest2);
         
         //Act
-        List<HopResponse> hops = await _hopService.GetFilteredHopsAsync("name", "TestHop");
+        List<HopResponse> hops = await _hopService.GetFilteredAsync("name", "TestHop");
         
         //Assert
         Assert.True(hops.Count == 1);
@@ -288,11 +288,11 @@ public class HopTests
             AlphaAcid = 1.1,
         };
         
-        await _hopService.AddHopAsync(hopAddRequest);
-        await _hopService.AddHopAsync(hopAddRequest2);
+        await _hopService.AddAsync(hopAddRequest);
+        await _hopService.AddAsync(hopAddRequest2);
         
         //Act
-        List<HopResponse> hops = await _hopService.GetFilteredHopsAsync("name", "Citra");
+        List<HopResponse> hops = await _hopService.GetFilteredAsync("name", "Citra");
         
         //Assert
         Assert.True(hops.Count == 2);
@@ -316,11 +316,11 @@ public class HopTests
             AlphaAcid = 1.1,
         };
         
-        await _hopService.AddHopAsync(hopAddRequest);
-        await _hopService.AddHopAsync(hopAddRequest2);
+        await _hopService.AddAsync(hopAddRequest);
+        await _hopService.AddAsync(hopAddRequest2);
         
         //Act
-        await Assert.ThrowsAsync<NullReferenceException>(() => _hopService.GetFilteredHopsAsync("invalid", "Citra"));
+        await Assert.ThrowsAsync<NullReferenceException>(() => _hopService.GetFilteredAsync("invalid", "Citra"));
     }
     
     #endregion
