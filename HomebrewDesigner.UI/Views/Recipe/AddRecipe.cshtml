@@ -6,55 +6,67 @@
 
 
 <div class="container-fluid mt-5 text-center">
-    <h1 class="display-3 text-decoration-underline">Recipe Details</h1>
+    <h1 class="display-2 text-main">Recipe Details</h1>
     <form asp-action="AddRecipe" asp-controller="Recipe" method="post">
         <div class="container d-flex justify-content-between">
-            <div class="container border border-2 p-2 rounded-2 m-2">
+            <div class="container bg-secondary p-2 rounded-5 text-main m-2 pb-3">
                 <h1 class="display-6">Name:</h1>
-                <input asp-for="Recipe.Name" class="form-control"/>
-                <span asp-validation-for="Recipe.Name"></span>
+                <input asp-for="Recipe.Name" class="form-control bg-secondary text-main" placeholder="Name"/>
+                <div>
+                    <span asp-validation-for="Recipe.Name" class="text-green"></span>
+                </div>
             </div>
-            <div class="container border border-2 p-2 rounded-2 m-2">
-                <h1 class="display-6">Style:</h1>
-                <select class="form-select" asp-for="Recipe.Style">
+            <div class="container bg-secondary p-2 rounded-5 m-2 pb-3">
+                <h1 class="display-6 text-main">Style:</h1>
+                <select class="form-select bg-secondary text-main" asp-for="Recipe.Style">
                     <option selected disabled>Style</option>
                     @foreach (var item in Enum.GetNames(typeof(StyleEnum)))
                     {
                         <option value="@item">@Regex.Replace(item, "([a-z])([A-Z])", "$1 $2")</option>
                     }
                 </select>
-                <span asp-validation-for="Recipe.Style"></span>
+                <div>
+                    <span asp-validation-for="Recipe.Style" class="text-green"></span>
+                </div>
             </div>
         </div>
-        <div class="container border border-2 p-2 rounded-2 m-2">
-            <h1 class="display-6">Yeast:</h1>
-            <label asp-for="YeastId">Yeast</label>
-            <select class="form-select mt-2" asp-for="YeastId">
+        <div class="container bg-secondary p-2 rounded-5 m-2 pb-3">
+            <h1 class="display-6 text-main">Yeast:</h1>
+            <label asp-for="YeastId" class="text-main">Yeast</label>
+            <select class="form-select mt-2 bg-secondary text-main" asp-for="YeastId">
                 <option selected disabled>Yeast</option>
                 @foreach (YeastResponse yeast in Model.YeastList)
                 {
                     <option value="@yeast.Id">@yeast.Name</option>
                 }
             </select>
-            <span asp-validation-for="YeastId"></span>
-            <label class="form-label mt-2" asp-for="Recipe.YeastAmount"></label>
-            <input asp-for="Recipe.YeastAmount" class="form-control" placeholder="Yeast Amount (ml)"/>
-            <span asp-validation-for="Recipe.YeastAmount"></span>
-            <label class="form-label mt-2" asp-for="Recipe.YeastViability"></label>
-            <input asp-for="Recipe.YeastViability" class="form-control" placeholder="Yeast Viability (%)"/>
-            <span asp-validation-for="Recipe.YeastViability"></span>
+            <div>
+                <span asp-validation-for="YeastId" class="text-green"></span>
+            </div>
+            <label class="form-label mt-2 text-main" asp-for="Recipe.YeastAmount"></label>
+            <input asp-for="Recipe.YeastAmount" class="form-control bg-secondary text-main" placeholder="Yeast Amount (ml)"/>
+            <div>
+                <span asp-validation-for="Recipe.YeastAmount" class="text-green"></span>
+            </div>
+            <label class="form-label mt-2 text-main" asp-for="Recipe.YeastViability"></label>
+            <input asp-for="Recipe.YeastViability" class="form-control text-main bg-secondary" placeholder="Yeast Viability (%)"/>
+            <div>
+                <span asp-validation-for="Recipe.YeastViability" class="text-green"></span>
+            </div>
         </div>
-        <div class="container border border-2 p-2 rounded-2 m-2">
-            <h1 class="display-6">Mash:</h1>
-            <label class="form-label mt-2" asp-for="Recipe.MashTemp"></label>
-            <input asp-for="Recipe.MashTemp" class="form-control" placeholder="Mash Temp (f)"/>
+        <div class="container p-2 rounded-2 m-2 pb-3 bg-secondary">
+            <h1 class="display-6 text-main">Mash:</h1>
+            <label class="form-label mt-2 text-main" asp-for="Recipe.MashTemp"></label>
+            <input asp-for="Recipe.MashTemp" class="form-control text-main bg-secondary" placeholder="Mash Temp (f)"/>
             <span asp-validation-for="Recipe.MashTemp"></span>
-            <label class="form-label mt-2" asp-for="Recipe.WaterRatio"></label>
-            <input asp-for="Recipe.WaterRatio" class="form-control" placeholder="Water Ratio (*:1)"/>
-            <span asp-validation-for="Recipe.WaterRatio"></span>
+            <label class="form-label mt-2 text-main" asp-for="Recipe.WaterRatio"></label>
+            <input asp-for="Recipe.WaterRatio" class="form-control text-main bg-secondary" placeholder="Water Ratio (*:1)"/>
+            <div>
+            <span asp-validation-for="Recipe.WaterRatio" class="text-green"></span>
+            </div>
         </div>
         
-        <button class="btn btn-success mt-3" type="submit">Submit Recipe</button>
+        <button class="btn btn-main text-green mt-3" type="submit">Submit Recipe</button>
     </form>
-    
+
 </div>

@@ -30,11 +30,11 @@ nav{
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
 
-.bg-secondary{
+.bg-main{
   background-image: linear-gradient(to right, #2b2b2b, #2f2f2f, #2b2b2b) !important;
 }
 
-.bg-main{
+.bg-secondary{
   background-color: #333 !important;
 }
 

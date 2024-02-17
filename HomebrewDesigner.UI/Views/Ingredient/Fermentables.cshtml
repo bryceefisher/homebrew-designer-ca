@@ -11,7 +11,7 @@
         <form asp-action="Fermentables" asp-controller="Ingredient" method="get">
             <div class="mb-1">
                 <label for="fermentablesSelect" class="form-label text-main">Search Text:</label>
-                <select class="form-select bg-main text-main" id="fermentablesSelect" aria-label="Fermentables Search Fields" name="searchBy">
+                <select class="form-select bg-secondary text-main" id="fermentablesSelect" aria-label="Fermentables Search Fields" name="searchBy">
                     <option selected disabled>Property</option>
                     @foreach (KeyValuePair<string, string> item in ViewBag.SearchFields)
                     {
@@ -21,7 +21,7 @@
             </div>
             <div class="mb-3">
                 <label for="searchString" class="form-label text-main">Search String:</label>
-                <input type="text" class="form-control bg-main text-main" id="searchString" name="searchString" placeholder="Search String">
+                <input type="text" class="form-control bg-secondary text-main" id="searchString" name="searchString" placeholder="Search String">
             </div>
             <button type="submit" class="text-main btn btn-main">Search</button>
             <a class="text-main text-decoration-none btn btn-main" asp-controller="Ingredient" asp-action="Fermentables">Clear</a>

@@ -110,13 +110,13 @@ public class YeastService : IYeastService
 
         IEnumerable<YeastResponse> yeast = yeasts.Select(y => y.ToYeastResponse());
 
-        List<YeastResponse> filteredyeast = yeast
+        List<YeastResponse> filteredYeast = yeast
             .Where(h => property.GetValue(h).ToString().ToLower()
                 .Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
         
-        if (filteredyeast.Any())
+        if (filteredYeast.Any())
         {
-            return filteredyeast;
+            return filteredYeast;
         }
 
         return yeasts.Select(y => y.ToYeastResponse()).ToList();

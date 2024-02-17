@@ -4,61 +4,76 @@
 @model HomebrewDesigner.ViewModels.RecipeVM
 
 <div class="container p-2 m-2 text-center">
-    <h1 class="display-6">Hops:</h1>
-    <div class="container">
+    <h1 class="display-2 text-main">Add Recipe:</h1>
+    <div class="container text-center mt-5 bg-secondary rounded-5 pe-5 pt-3">
         <form id="hopsForm" asp-action="AddHops" asp-controller="Recipe" method="post">
+            <h1 class="display-6 mb-3 text-main">Hops:</h1>
             <div class="col d-flex">
-                    <div class="col m-2">
-                        <div class="hop-addition-template border border-1 rounded-2 p-4 mt-2">
-                        <label asp-for="HopId[0]">Hop</label>
-                        <select class="form-select mt-2" asp-for="HopId[0]">
+                <div class="col m-2">
+                    <div class="hop-addition-template rounded-2 p-4 mt-2">
+                        <label asp-for="HopId[0]" class="text-main">Hop</label>
+                        <select class="form-select mt-2 bg-secondary text-main" asp-for="HopId[0]">
                             <option selected disabled>Hop</option>
                             @foreach (HopResponse hop in Model.HopList)
                             {
                                 <option value="@hop.Id">@hop.Name</option>
                             }
                         </select>
-                        <span asp-validation-for="HopAdditions[0].Use"></span>
+                        <div>
+                            <span asp-validation-for="HopId[0]" class="text-green"></span>
+                        </div>
 
                         <!-- Add dynamic fields for the first hop addition -->
 
-                        <label class="form-label mt-1" asp-for="HopAdditions[0].Use"></label>
-                        <select class="form-select" asp-for="HopAdditions[0].Use">
+                        <label class="form-label mt-1 text-main" asp-for="HopAdditions[0].Use"></label>
+                        <select class="form-select text-main bg-secondary" asp-for="HopAdditions[0].Use">
                             <option selected disabled>Use</option>
                             @foreach (var use in Enum.GetNames(typeof(AdditionEnum)))
                             {
                                 <option value="@use">@Regex.Replace(use, "([a-z])([A-Z])", "$1 $2")</option>
                             }
                         </select>
-                        <span asp-validation-for="HopAdditions[0].Use"></span>
-                        <label class="form-label mt-2" asp-for="HopAdditions[0].BoilTime"></label>
-                        <input asp-for="HopAdditions[0].BoilTime" class="form-control" placeholder="Boil Time (min)"/>
-                        <span asp-validation-for="HopAdditions[0].BoilTime"></span>
-                        <label class="form-label mt-2" asp-for="HopAdditions[0].DryHopDays"></label>
-                        <input asp-for="HopAdditions[0].DryHopDays" class="form-control" placeholder="Dry Hop Time (days)"/>
-                        <span asp-validation-for="HopAdditions[0].DryHopDays"></span>
-                        <label class="form-label mt-1" asp-for="HopAdditions[0].Form"></label>
-                        <select class="form-select" asp-for="HopAdditions[0].Form">
+                        <div>
+                            <span asp-validation-for="HopAdditions[0].Use" class="text-green"></span>
+                        </div>
+                        <label class="form-label mt-2 text-main" asp-for="HopAdditions[0].BoilTime"></label>
+                        <input asp-for="HopAdditions[0].BoilTime" class="form-control text-main bg-secondary" placeholder="Boil Time (min)"/>
+                        <div>
+                            <span asp-validation-for="HopAdditions[0].BoilTime" class="text-green"></span>
+                        </div>
+                        <label class="form-label mt-2 text-main" asp-for="HopAdditions[0].DryHopDays"></label>
+                        <input asp-for="HopAdditions[0].DryHopDays" class="form-control bg-secondary text-main" placeholder="Dry Hop Time (days)"/>
+                        <div>
+                            <span asp-validation-for="HopAdditions[0].DryHopDays" class="text-green"></span>
+                        </div>
+                        <label class="form-label mt-1 text-main" asp-for="HopAdditions[0].Form"></label>
+                        <select class="form-select text-main bg-secondary" asp-for="HopAdditions[0].Form">
                             <option selected disabled>Form</option>
                             @foreach (var form in Enum.GetNames(typeof(HopFormEnum)))
                             {
                                 <option value="@form">@Regex.Replace(form, "([a-z])([A-Z])", "$1 $2")</option>
                             }
                         </select>
-                        <span asp-validation-for="HopAdditions[0].Amount"></span>
-                        <label class="form-label mt-2" asp-for="HopAdditions[0].Amount"></label>
-                        <input asp-for="HopAdditions[0].Amount" class="form-control" placeholder="Weight (g)"/>
-                        <span asp-validation-for="HopAdditions[0].Amount"></span>
+                        <div>
+                            <span asp-validation-for="HopAdditions[0].Amount" class="text-green"></span>
+                        </div>
+                        <label class="form-label mt-2 text-main" asp-for="HopAdditions[0].Amount"></label>
+                        <input asp-for="HopAdditions[0].Amount" class="form-control text-main bg-secondary" placeholder="Weight (g)"/>
+                        <div>
+                            <span asp-validation-for="HopAdditions[0].Amount" class="text-green"></span>
+                        </div>
                     </div>
 
                     <!-- Container for dynamically added hop additions -->
                     <div class="hop-container"></div>
 
-                    <a class="btn btn-success add-hop mt-3">+</a>
+                    <a class="btn btn-main add-hop text-green">+</a>
                 </div>
 
             </div>
-            <button class="btn btn-success mt-2" type="submit">Next: Recipe Details -----></button>
+            <div class="pb-4">
+                <button class="btn btn-main text-green mt-3" type="submit">Next: Recipe Details -----></button>
+            </div>
         </form>
     </div>
 

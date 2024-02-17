@@ -3,9 +3,9 @@
     ViewBag.Title = "Edit Fermentables";
 }
 <body>
-<div class="container text-center mt-5">
-    <h1 class="display-5 pb-3">Edit Fermentable</h1>
-    <form asp-controller="Ingredient" asp-action="EditFermentable" method="post">
+<div class="container text-center mt-5 bg-secondary rounded-5 pe-5 pt-3">
+    <h1 class="display-2 pb-3 text-main">Edit Fermentable</h1>
+    <form asp-controller="Ingredient" asp-action="EditFermentable" method="post" class="pt-3">
         <div class="mb-3 d-flex visually-hidden">
             <div class="col-3">
                 <label asp-for="Id" class="form-label">
@@ -18,23 +18,23 @@
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <label asp-for="Name" class="form-label">
+                <label asp-for="Name" class="form-label text-main">
                     <h5>Name:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <input class="w-100 form-control" asp-for="Name">
+                <input class="w-100 form-control bg-secondary text-main" asp-for="Name">
                 <span class="text-danger" asp-validation-for="Name"></span>
             </div>
         </div>
         <div class="mb-3 d-flex ">
             <div class="col-3">
-                <label asp-for="Type" class="form-label">
+                <label asp-for="Type" class="form-label text-main">
                     <h5>Type:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <select class="form-select w-100" asp-for="Type">
+                <select class="form-select w-100 bg-secondary text-main" asp-for="Type">
                     @foreach (var type in ViewBag.Types)
                     {
                         if (type == Model.Type.ToString())
@@ -52,12 +52,12 @@
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <label asp-for="Origin" class="form-label">
+                <label asp-for="Origin" class="form-label text-main">
                     <h5>Origin:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <select class="form-select w-100" asp-for="Origin">
+                <select class="form-select w-100 bg-secondary text-main" asp-for="Origin">
                     <option selected disabled="disabled">Select Origin</option>
                     @foreach (var origin in ViewBag.Origins)
                     {
@@ -76,39 +76,39 @@
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <label asp-for="Color" class="form-label">
+                <label asp-for="Color" class="form-label text-main">
                     <h5>Color:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <input class="w-100 form-control" asp-for="Color">
+                <input class="w-100 form-control bg-secondary text-main" asp-for="Color">
                 <span class="text-danger" asp-validation-for="Color"></span>
             </div>
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <label asp-for="PotentialGravity" class="form-label">
+                <label asp-for="PotentialGravity" class="form-label text-main">
                     <h5>Potential Gravity:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <input class="w-100 form-control" asp-for="PotentialGravity">
+                <input class="w-100 form-control bg-secondary text-main" asp-for="PotentialGravity">
                 <span class="text-danger" asp-validation-for="PotentialGravity"></span>
             </div>
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <label asp-for="MaxInBatch" class="form-label">
+                <label asp-for="MaxInBatch" class="form-label text-main">
                     <h5>Max in Batch:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <input class="w-100 form-control" asp-for="MaxInBatch">
+                <input class="w-100 form-control bg-secondary text-main" asp-for="MaxInBatch">
                 <span class="text-danger" asp-validation-for="MaxInBatch"></span>
             </div>
         </div>
-        <div class="text-center mt-5">
-            <button type="submit" class="btn btn-success">Update Fermentable</button>
+        <div class="text-center mt-5 pb-5">
+            <button type="submit" class="btn btn-main text-green">Update Fermentable</button>
         </div>
     </form>
 </div>

@@ -26,7 +26,8 @@ public class RecipeVM
     public RecipeAddRequest Recipe { get; set; }
 
     public int YeastId { get; set; }
-    public int[]? HopId { get; set; }
+    [Required(ErrorMessage = "Hop is required")]
+    public int[] HopId { get; set; }
      public int[]? FermentableId { get; set; }
 
 
@@ -35,5 +36,6 @@ public class RecipeVM
     public List<HopResponse>? HopList { get; set; }
     public List<FermentableResponse>? FermentableList { get; set; }
     public List<YeastResponse>? YeastList { get; set; }
-    public HopAddition[]? HopAdditions { get; set; }
+    [Required(ErrorMessage = "Hop is required")]
+    public HopAddition[] HopAdditions { get; set; }
 }
