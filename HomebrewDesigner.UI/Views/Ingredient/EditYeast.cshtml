@@ -3,61 +3,61 @@
     ViewBag.Title = "Edit Yeast";
 }
 <body>
-<div class="container text-center mt-5 bg-light">
-    <h1 class="display-5 pb-3">Edit Yeast</h1>
+<div class="container text-center mt-5 bg-secondary rounded-5 pe-5 pt-3">
+    <h1 class="display-2 pb-3 text-main">Edit Yeast</h1>
     <form asp-controller="Ingredient" asp-action="EditYeast" method="post">
         <div class="mb-3 d-flex visually-hidden">
             <div class="col-3">
-                <label asp-for="Id" class="form-label">
+                <label asp-for="Id" class="form-label text-main">
                     <h5>Id:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <input class="w-100 form-control" asp-for="Id" required>
+                <input class="w-100 form-control bg-main text-main" asp-for="Id" required>
                 <span class="text-danger" asp-validation-for="Id"></span>
             </div>
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <label asp-for="Name" class="form-label">
+                <label asp-for="Name" class="form-label text-main ">
                     <h5>Name:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <input class="w-100 form-control" asp-for="Name">
+                <input class="w-100 form-control bg-main text-main bg-secondary" asp-for="Name">
                 <span class="text-danger" asp-validation-for="Name"></span>
             </div>
         </div>
         <div class="mb-3 d-flex ">
             <div class="col-3">
-                <label asp-for="Lab" class="form-label">
+                <label asp-for="Lab" class="form-label text-main">
                     <h5>Lab:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <input class="w-100 form-control" asp-for="Lab">
+                <input class="w-100 form-control bg-main text-main bg-secondary" asp-for="Lab">
                 <span class="text-danger" asp-validation-for="Lab"></span>
             </div>
         </div>
         <div class="mb-3 d-flex ">
             <div class="col-3">
-                <label asp-for="Code" class="form-label">
+                <label asp-for="Code" class="form-label text-main">
                     <h5>Code:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <input class="w-100 form-control" asp-for="Code">
+                <input class="w-100 form-control bg-main text-main bg-secondary" asp-for="Code">
                 <span class="text-danger" asp-validation-for="Code"></span>
             </div>
         </div>
         <div class="mb-3 d-flex ">
             <div class="col-3">
-                <label asp-for="Type" class="form-label">
+                <label asp-for="Type" class="form-label text-main">
                     <h5>Type:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <select class="form-select w-100" asp-for="Type">
+                <select class="form-select w-100 bg-main text-main bg-secondary" asp-for="Type">
                     @foreach (var type in ViewBag.Types)
                     {
                         if (type == Model.Form.ToString())
@@ -75,12 +75,12 @@
         </div>
         <div class="mb-3 d-flex ">
             <div class="col-3">
-                <label asp-for="Form" class="form-label">
+                <label asp-for="Form" class="form-label text-main">
                     <h5>Form:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <select class="form-select w-100" asp-for="Form">
+                <select class="form-select w-100 bg-main text-main bg-secondary" asp-for="Form">
                     @foreach (var form in ViewBag.Forms)
                     {
                         if (form == Model.Form.ToString())
@@ -98,12 +98,12 @@
         </div>
         <div class="mb-3 d-flex ">
             <div class="col-3">
-                <label asp-for="Flocculation" class="form-label">
+                <label asp-for="Flocculation" class="form-label text-main">
                     <h5>Flocculation:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <select class="form-select w-100" asp-for="Form">
+                <select class="form-select w-100 bg-main text-main bg-secondary" asp-for="Form">
                     @foreach (var floc in ViewBag.Flocs)
                     {
                         if (floc == Model.Flocculation.ToString())
@@ -119,8 +119,8 @@
                 <span class="text-danger" asp-validation-for="Flocculation"></span>
             </div>
         </div>
-        <div class="text-center mt-5">
-            <button type="submit" class="btn btn-success">Update Yeast</button>
+        <div class="text-center mt-5 pb-5">
+            <button type="submit" class="btn btn-main text-green">Update Yeast</button>
 
         </div>
     </form>

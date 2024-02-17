@@ -1,57 +1,62 @@
 @using HomebrewDesigner.Core.DTO
 @model HomebrewDesigner.ViewModels.RecipeVM
 
-    
 
-<div class="text-center mt-5">
-    <h1 class="display-6 mb-5">Fermentables:</h1>
-    <form id="fermentablesForm" asp-action="AddFermentables" asp-controller="Recipe" method="post">
-        <div class="container">
+<div class="container mt-5 text-center">
+    <h1 class="display-2 mb-3 text-main">Add Recipe:</h1>
+    <div class="container text-center mt-5 bg-secondary rounded-5 pe-5 pt-3">
+        <form id="fermentablesForm" asp-action="AddFermentables" asp-controller="Recipe" method="post">
+            <h1 class="display-6 mb-3 text-main">Fermentables:</h1>
+            <div class="container">
+                <div class="col d-flex">
+                    <div class="col m-2">
+                        <label asp-for="FermentableId" class="text-main">Fermentable</label>
+                        <select class="form-select m-2 bg-secondary text-main" asp-for="FermentableId[0]">
+                            <option selected disabled>Fermentable</option>
+                            @foreach (FermentableResponse fermentable in Model.FermentableList)
+                            {
+                                <option value="@fermentable.Id">@fermentable.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="FermentableId[0]" class="text-green"></span>
+                    </div>
+                    <div class="col-2 m-2">
+                        <label asp-for="FermentableWeight[0]" class="text-main">Weight</label>
+                        <input class="form-control m-2 bg-secondary text-main" asp-for="FermentableWeight[0]" placeholder="lbs"/>
+                        <span asp-validation-for="FermentableWeight[0]" class="text-green"></span>
+                    </div>
+                </div>
+                <div class="ferm-container"></div>
+                <a class="btn btn-main add-fermentable text-green">+</a>
+            </div>
+            <div class="pb-4">
+                <button class="btn btn-main text-green mt-3" type="submit">Next: Hops -----></button>
+            </div>
+        </form>
+
+
+        <div class="fermentable-template" style="display: none;">
             <div class="col d-flex">
                 <div class="col m-2">
-                    <label asp-for="FermentableId">Fermentable</label>
-                    <select class="form-select m-2" asp-for="FermentableId[0]">
+                    <label asp-for="FermentableId" class="text-main">Fermentable</label>
+                    <select class="form-select m-2 bg-secondary text-main" asp-for="FermentableId">
                         <option selected disabled>Fermentable</option>
                         @foreach (FermentableResponse fermentable in Model.FermentableList)
                         {
                             <option value="@fermentable.Id">@fermentable.Name</option>
                         }
                     </select>
-                    <span asp-validation-for="FermentableId[0]"></span>
+                    <span asp-validation-for="FermentableId" class="text-green"></span>
                 </div>
                 <div class="col-2 m-2">
-                    <label asp-for="FermentableWeight[0]">Weight</label>
-                    <input class="form-control m-2" asp-for="FermentableWeight[0]" />
-                    <span asp-validation-for="FermentableWeight[0]"></span>
+                    <label asp-for="FermentableWeight" class="text-main bg-secondary">Weight</label>
+                    <input class="form-control m-2 bg-secondary text-main" asp-for="FermentableWeight" placeholder="lbs"/>
+                    <span asp-validation-for="FermentableWeight" class="text-green"></span>
                 </div>
-            </div>
-            <div class="ferm-container"></div>
-            <a class="btn btn-success add-fermentable">+</a>
-        </div>
-        <button class="btn btn-success mt-3" type="submit">Next: Hops -----></button>
-    </form>
-
-   
-    <div class="fermentable-template" style="display: none;">
-        <div class="col d-flex">
-            <div class="col m-2">
-                <label asp-for="FermentableId">Fermentable</label>
-                <select class="form-select m-2" asp-for="FermentableId">
-                    <option selected disabled>Fermentable</option>
-                    @foreach (FermentableResponse fermentable in Model.FermentableList)
-                    {
-                        <option value="@fermentable.Id">@fermentable.Name</option>
-                    }
-                </select>
-                <span asp-validation-for="FermentableId"></span>
-            </div>
-            <div class="col-2 m-2">
-                <label asp-for="FermentableWeight">Weight</label>
-                <input class="form-control m-2" asp-for="FermentableWeight" />
-                <span asp-validation-for="FermentableWeight"></span>
             </div>
         </div>
     </div>
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {

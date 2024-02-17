@@ -5,8 +5,8 @@
     ViewBag.Title = "Edit Recipe";
 }
 
-<div class="container text-center mt-5 bg-light">
-    <h1 class="display-5 pb-3">Edit Recipe</h1>
+<div class="container text-center mt-5 bg-secondary rounded-5 pe-5 pt-3">
+    <h1 class="display-2 pb-3 text-main">Edit Recipe</h1>
     <form asp-controller="Recipe" asp-action="EditRecipe" method="post">
     <div class="mb-3 d-flex visually-hidden">
         <div class="col-3">
@@ -15,29 +15,29 @@
             </label>
         </div>
         <div class="col-9">
-            <input class="w-100 form-control" asp-for="Id" required>
+            <input class="w-100 form-control bg-secondary text-main" asp-for="Id" required>
             <span class="text-danger" asp-validation-for="Id"></span>
         </div>
     </div>
     <div class="mb-3 d-flex">
         <div class="col-3">
-            <label asp-for="Name" class="form-label">
+            <label asp-for="Name" class="form-label text-main">
                 <h5>Name:</h5>
             </label>
         </div>
         <div class="col-9">
-            <input class="w-100 form-control" asp-for="Name">
+            <input class="w-100 form-control bg-secondary text-main" asp-for="Name">
             <span class="text-danger" asp-validation-for="Name"></span>
         </div>
     </div>
     <div class="mb-3 d-flex">
         <div class="col-3">
-            <label asp-for="Name" class="form-label">
+            <label asp-for="Name" class="form-label text-main">
                 <h5>Style:</h5>
             </label>
         </div>
         <div class="col-9">
-            <select class="form-select" asp-for="Style">
+            <select class="form-select bg-secondary text-main" asp-for="Style">
                 
                 @foreach (var item in Enum.GetNames(typeof(StyleEnum)))
                 {
@@ -49,53 +49,55 @@
     </div>
     <div class="mb-3 d-flex">
         <div class="col-3">
-            <label asp-for="YeastAmount" class="form-label">
+            <label asp-for="YeastAmount" class="form-label text-main">
                 <h5>Yeast Amount:</h5>
             </label>
         </div>
         <div class="col-9">
             
-            <input asp-for="YeastAmount" class="form-control" placeholder="Yeast Amount (ml)"/>
+            <input asp-for="YeastAmount" class="form-control bg-secondary text-main" placeholder="Yeast Amount (ml)"/>
         </div>
     </div>
     <div class="mb-3 d-flex">
         <div class="col-3">
-            <label asp-for="YeastViability" class="form-label">
+            <label asp-for="YeastViability" class="form-label text-main">
                 <h5>Yeast Viability:</h5>
             </label>
         </div>
         <div class="col-9">
            
-            <input asp-for="YeastViability" class="form-control" placeholder="Yeast Viability (%)"/>
+            <input asp-for="YeastViability" class="form-control bg-secondary text-main" placeholder="Yeast Viability (%)"/>
             <span asp-validation-for="YeastViability"></span>
         </div>
     </div>
     <div class="mb-3 d-flex">
         <div class="col-3">
-            <label asp-for="MashTemp" class="form-label">
+            <label asp-for="MashTemp" class="form-label text-main">
                 <h5>Mash Temp:</h5>
             </label>
         </div>
         <div class="col-9">
             
-            <input asp-for="MashTemp" class="form-control" placeholder="Mash Temp (f)"/>
+            <input asp-for="MashTemp" class="form-control bg-secondary text-main" placeholder="Mash Temp (f)"/>
             <span asp-validation-for="MashTemp"></span>
         </div>
     </div>
     <div class="mb-3 d-flex">
         <div class="col-3">
-            <label asp-for="WaterRatio" class="form-label">
+            <label asp-for="WaterRatio" class="form-label text-main">
                 <h5>Water Ratio:</h5>
             </label>
         </div>
         <div class="col-9">
             
-            <input asp-for="WaterRatio" class="form-control" placeholder="Water Ratio (*:1)"/>
+            <input asp-for="WaterRatio" class="form-control bg-secondary text-main" placeholder="Water Ratio (*:1)"/>
             <span asp-validation-for="WaterRatio"></span>
         </div>
     </div>
 
-    <button class="btn btn-success">Update Recipe</button>
+    <<div class="text-center mt-5 pb-5">
+                 <button type="submit" class="btn btn-main text-green">Update Recipe</button>
+             </div>
 
 </form>
 </div>

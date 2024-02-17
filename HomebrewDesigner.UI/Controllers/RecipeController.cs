@@ -11,14 +11,14 @@ namespace HomebrewDesigner.Controllers;
 [Route("[controller]/[action]")]
 public class RecipeController : Controller
 {
-    private readonly IHopService _hopService;
-    private readonly IFermentableService _fermentableService;
-    private readonly IYeastService _yeastService;
+    private readonly IService<HopAddRequest, HopUpdateRequest, HopResponse> _hopService;
+    private readonly IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse> _fermentableService;
+    private readonly IService<YeastAddRequest, YeastUpdateRequest, YeastResponse> _yeastService;
     private readonly IRecipeService _recipeService;
     private RecipeVM _recipeVm;
 
-    public RecipeController(IHopService hopService,
-        IFermentableService fermentableService, IYeastService yeastService, IRecipeService recipeService)
+    public RecipeController(IService<HopAddRequest, HopUpdateRequest, HopResponse> hopService,
+        IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse> fermentableService, IService<YeastAddRequest, YeastUpdateRequest, YeastResponse> yeastService, IRecipeService recipeService)
     {
         _hopService = hopService;
         _fermentableService = fermentableService;
@@ -40,7 +40,7 @@ public class RecipeController : Controller
             { nameof(RecipeResponse.Color), "Color" }
         };
 
-        IEnumerable<RecipeResponse> recipe = await _recipeService.GetFilteredRecipesAsync(searchBy, searchString);
+        IEnumerable<RecipeResponse> recipe = await _recipeService.GetFilteredAsync(searchBy, searchString);
 
         recipe = recipe.OrderBy(r => r.Name);
 
@@ -59,9 +59,9 @@ public class RecipeController : Controller
         RecipeVM recipeVm = JsonSerializer.Deserialize<RecipeVM>(TempData["Recipe"].ToString());
 
 
-        recipeVm.HopList = await _hopService.GetAllHopsAsync();
-        recipeVm.YeastList = await _yeastService.GetAllYeastsAsync();
-        recipeVm.FermentableList = await _fermentableService.GetAllFermentablesAsync();
+        recipeVm.HopList = await _hopService.GetAllAsync();
+        recipeVm.YeastList = await _yeastService.GetAllAsync();
+        recipeVm.FermentableList = await _fermentableService.GetAllAsync();
 
         TempData["Recipe"] = JsonSerializer.Serialize(recipeVm);
         return View(recipeVm);
@@ -78,9 +78,9 @@ public class RecipeController : Controller
             },
         };
 
-        recipeVm.HopList = await _hopService.GetAllHopsAsync();
-        recipeVm.YeastList = await _yeastService.GetAllYeastsAsync();
-        recipeVm.FermentableList = await _fermentableService.GetAllFermentablesAsync();
+        recipeVm.HopList = await _hopService.GetAllAsync();
+        recipeVm.YeastList = await _yeastService.GetAllAsync();
+        recipeVm.FermentableList = await _fermentableService.GetAllAsync();
 
         return View(recipeVm);
     }
@@ -88,9 +88,9 @@ public class RecipeController : Controller
     [HttpPost]
     public async Task<IActionResult> AddFermentables([Bind("FermentableId, FermentableWeight")] RecipeVM recipeVm)
     {
-        recipeVm.HopList = await _hopService.GetAllHopsAsync();
-        recipeVm.YeastList = await _yeastService.GetAllYeastsAsync();
-        recipeVm.FermentableList = await _fermentableService.GetAllFermentablesAsync();
+        recipeVm.HopList = await _hopService.GetAllAsync();
+        recipeVm.YeastList = await _yeastService.GetAllAsync();
+        recipeVm.FermentableList = await _fermentableService.GetAllAsync();
 
         recipeVm.Recipe = new RecipeAddRequest();
         recipeVm.Recipe.MaltBill = new List<RecipeAddRequest.FermentablePair>();
@@ -106,7 +106,7 @@ public class RecipeController : Controller
 
                 // Get Fermentable by Id from _fermentableService
                 FermentableResponse fermentableResponse =
-                    await _fermentableService.GetFermentableByIdAsync(recipeVm.FermentableId[i]);
+                    await _fermentableService.GetByIdAsync(recipeVm.FermentableId[i]);
 
                 Fermentables fermentable = fermentableResponse.ToFermentables();
 
@@ -137,7 +137,7 @@ public class RecipeController : Controller
 
         if (recipeVm.YeastId != 0)
         {
-            YeastResponse yeast = await _yeastService.GetYeastByIdAsync(recipeVm.YeastId);
+            YeastResponse yeast = await _yeastService.GetByIdAsync(recipeVm.YeastId);
             recipe.Recipe.Yeast = yeast.ToYeast();
         }
 
@@ -173,7 +173,7 @@ public class RecipeController : Controller
 
         if (TryValidateModel(recipe.Recipe))
         {
-            await _recipeService.AddRecipeAsync(recipe.Recipe);
+            await _recipeService.AddAsync(recipe.Recipe);
             return RedirectToAction("Recipes", "Recipe");
         }
 
@@ -193,9 +193,9 @@ public class RecipeController : Controller
         }
 
 
-        recipe.HopList = await _hopService.GetAllHopsAsync();
-        recipe.FermentableList = await _fermentableService.GetAllFermentablesAsync();
-        recipe.YeastList = await _yeastService.GetAllYeastsAsync();
+        recipe.HopList = await _hopService.GetAllAsync();
+        recipe.FermentableList = await _fermentableService.GetAllAsync();
+        recipe.YeastList = await _yeastService.GetAllAsync();
 
         TempData["Recipe"] = JsonSerializer.Serialize(recipe);
         return View(recipe);
@@ -207,9 +207,9 @@ public class RecipeController : Controller
         _recipeVm = recipeComponent;
 
 
-        recipeComponent.HopList = await _hopService.GetAllHopsAsync();
-        recipeComponent.YeastList = await _yeastService.GetAllYeastsAsync();
-        recipeComponent.FermentableList = await _fermentableService.GetAllFermentablesAsync();
+        recipeComponent.HopList = await _hopService.GetAllAsync();
+        recipeComponent.YeastList = await _yeastService.GetAllAsync();
+        recipeComponent.FermentableList = await _fermentableService.GetAllAsync();
 
         recipeComponent.Recipe.Hops = new List<HopAddition>();
 
@@ -229,7 +229,7 @@ public class RecipeController : Controller
         for (int i = 0; i < recipeVm.HopId.Length; i++)
         {
             // Get Hop by Id from _hopService
-            HopResponse hopResponse = await _hopService.GetHopByIdAsync(recipeVm.HopId[i]);
+            HopResponse hopResponse = await _hopService.GetByIdAsync(recipeVm.HopId[i]);
             Hop hop = hopResponse.ToHop();
 
 
@@ -253,9 +253,9 @@ public class RecipeController : Controller
 
     public async Task<IActionResult> EditRecipe(int id)
     {
-        ViewBag.YeastList = await _yeastService.GetAllYeastsAsync();
+        ViewBag.YeastList = await _yeastService.GetAllAsync();
 
-        RecipeResponse? recipeResponse = await _recipeService.GetRecipeByIdAsync(id);
+        RecipeResponse? recipeResponse = await _recipeService.GetByIdAsync(id);
 
         RecipeUpdateRequest? recipe = recipeResponse.ToRecipeUpdateRequest();
 
@@ -278,7 +278,7 @@ public class RecipeController : Controller
         recipeUpdateRequest.MashTemp = recipe.MashTemp;
         recipeUpdateRequest.WaterRatio = recipe.WaterRatio;
 
-        await _recipeService.UpdateRecipeAsync(recipeUpdateRequest);
+        await _recipeService.UpdateAsync(recipeUpdateRequest);
 
 
         return RedirectToAction("Recipes", "Recipe");
@@ -286,7 +286,7 @@ public class RecipeController : Controller
 
     public async Task<IActionResult> ViewRecipe(int id)
     {
-        RecipeResponse recipe = await _recipeService.GetRecipeByIdAsync(id);
+        RecipeResponse recipe = await _recipeService.GetByIdAsync(id);
         return View(recipe);
     }
 }

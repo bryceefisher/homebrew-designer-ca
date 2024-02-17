@@ -1,5 +1,6 @@
 using System.Reflection;
 using HomebrewDesigner.Core.Domain.Identity;
+using HomebrewDesigner.Core.DTO;
 using HomebrewDesigner.Core.RepositoryContracts;
 using HomebrewDesigner.Core.ServiceContracts;
 using HomebrewDesigner.Core.Services;
@@ -27,9 +28,9 @@ builder.Services.AddControllersWithViews()
         new PhysicalFileProvider(appDirectory)));
 
 //Add services to DI container
-builder.Services.AddScoped<IHopService, HopService>();
-builder.Services.AddScoped<IFermentableService, FermentableService>();
-builder.Services.AddScoped<IYeastService, YeastService>();
+builder.Services.AddScoped<IService<HopAddRequest, HopUpdateRequest, HopResponse>, HopService>();
+builder.Services.AddScoped<IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse>, FermentableService>();
+builder.Services.AddScoped<IService<YeastAddRequest, YeastUpdateRequest, YeastResponse>, YeastService>();
 builder.Services.AddScoped<IRecipeService, RecipeService>();
 builder.Services.AddScoped<IHopRepository, HopRepository>();
 builder.Services.AddScoped<IFermentableRepository, FermentableRepository>();

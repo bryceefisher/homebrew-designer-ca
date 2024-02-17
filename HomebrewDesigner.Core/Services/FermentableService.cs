@@ -7,7 +7,7 @@ using HomebrewDesigner.Core.ServiceContracts;
 
 namespace HomebrewDesigner.Core.Services;
 
-public class FermentableService : IFermentableService
+public class FermentableService : IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse>
 {
     private readonly IFermentableRepository _fermentableRepository;
     
@@ -16,7 +16,7 @@ public class FermentableService : IFermentableService
         _fermentableRepository = fermentableRepository;
     }
 
-    public async Task<FermentableResponse> AddFermentableAsync(FermentableAddRequest request)
+    public async Task<FermentableResponse> AddAsync(FermentableAddRequest request)
     {
         if (request is null)
         {
@@ -41,13 +41,13 @@ public class FermentableService : IFermentableService
         return fermentableToAdd.ToFermentableResponse();
     }
 
-    public async Task<List<FermentableResponse>> GetAllFermentablesAsync()
+    public async Task<List<FermentableResponse>> GetAllAsync()
     {
         List<Fermentables> fermentables = await _fermentableRepository.GetAllFermentablesAsync();
         return fermentables.Select(f => f.ToFermentableResponse()).ToList();
     }
 
-    public async Task<FermentableResponse> UpdateFermentableAsync(FermentableUpdateRequest request)
+    public async Task<FermentableResponse> UpdateAsync(FermentableUpdateRequest request)
     {
         if (request is null)
         {
@@ -71,7 +71,7 @@ public class FermentableService : IFermentableService
         return fermentable.ToFermentableResponse();
     }
 
-    public async Task<FermentableResponse> GetFermentableByIdAsync(int id)
+    public async Task<FermentableResponse> GetByIdAsync(int id)
     {
         if (id < 0)
         {
@@ -84,7 +84,7 @@ public class FermentableService : IFermentableService
     }
     
     /*******ToDo Tighten up this code************/
-    public async Task<List<FermentableResponse>> GetFilteredFermentableAsync(string? searchBy, string? searchString)
+    public async Task<List<FermentableResponse>> GetFilteredAsync(string? searchBy, string? searchString)
     {
         List<Fermentables> fermentables = await _fermentableRepository.GetAllFermentablesAsync();
         

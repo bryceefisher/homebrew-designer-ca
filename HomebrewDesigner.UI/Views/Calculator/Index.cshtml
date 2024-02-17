@@ -14,7 +14,7 @@
                     </label>
                 </div>
                 <div class="col-9">
-                    <input asp-for="OG" class="form-control bg-main text-main"/>
+                    <input asp-for="OG" class="form-control bg-secondary text-main"/>
                     <span class="text-danger" asp-validation-for="OG"></span>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                     </label>
                 </div>
                 <div class="col-9">
-                    <input asp-for="FG" class="form-control bg-main text-main"/>
+                    <input asp-for="FG" class="form-control bg-secondary text-main"/>
                     <span class="text-danger" asp-validation-for="FG"></span>
                 </div>
             </div>
@@ -36,12 +36,12 @@
                     </label>
                 </div>
                 <div class="col-9">
-                    <input asp-for="ABV" disabled class="form-control bg-main text-main"/>
+                    <input asp-for="ABV" disabled class="form-control bg-secondary text-main"/>
                     <span class="text-danger" asp-validation-for="ABV"></span>
                 </div>
             </div>
 
-            <button class="btn btn-main text-main mt-3" type="submit">Calculate ABV</button>
+            <button class="btn btn-main text-green mt-3" type="submit">Calculate ABV</button>
         </form>
     </div>
 </div>

@@ -8,7 +8,7 @@ using ArgumentException = System.ArgumentException;
 
 namespace HomebrewDesigner.Core.Services;
 
-public class YeastService : IYeastService
+public class YeastService : IService<YeastAddRequest, YeastUpdateRequest, YeastResponse>
 {
     private readonly IYeastRepository _yeastRepository;
     
@@ -18,7 +18,7 @@ public class YeastService : IYeastService
     }
       
 
-    public async Task<YeastResponse> AddYeastAsync(YeastAddRequest? request)
+    public async Task<YeastResponse> AddAsync(YeastAddRequest? request)
     {
         if (request is null)
         {
@@ -42,14 +42,14 @@ public class YeastService : IYeastService
         return yeast.ToYeastResponse();
     }
 
-    public async Task<List<YeastResponse>> GetAllYeastsAsync()
+    public async Task<List<YeastResponse>> GetAllAsync()
     {
         List<Yeast> yeasts = await _yeastRepository.GetAllYeastAsync();
 
         return yeasts.Select(y => y.ToYeastResponse()).ToList();
     }
 
-    public async Task<YeastResponse> UpdateYeastAsync(YeastUpdateRequest? request)
+    public async Task<YeastResponse> UpdateAsync(YeastUpdateRequest? request)
     {
         if (request is null)
         {
@@ -71,7 +71,7 @@ public class YeastService : IYeastService
         return yeast.ToYeastResponse();
     }
 
-    public async Task<YeastResponse> GetYeastByIdAsync(int id)
+    public async Task<YeastResponse> GetByIdAsync(int id)
     {
         
         if (id < 0)
@@ -85,7 +85,7 @@ public class YeastService : IYeastService
     }
     
     /*******ToDo Tighten up this code************/
-    public async Task<List<YeastResponse>> GetFilteredYeastAsync(string? searchBy, string? searchString)
+    public async Task<List<YeastResponse>> GetFilteredAsync(string? searchBy, string? searchString)
     {
         List<Yeast> yeasts = await _yeastRepository.GetAllYeastAsync();
         
@@ -110,13 +110,13 @@ public class YeastService : IYeastService
 
         IEnumerable<YeastResponse> yeast = yeasts.Select(y => y.ToYeastResponse());
 
-        List<YeastResponse> filteredyeast = yeast
+        List<YeastResponse> filteredYeast = yeast
             .Where(h => property.GetValue(h).ToString().ToLower()
                 .Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
         
-        if (filteredyeast.Any())
+        if (filteredYeast.Any())
         {
-            return filteredyeast;
+            return filteredYeast;
         }
 
         return yeasts.Select(y => y.ToYeastResponse()).ToList();

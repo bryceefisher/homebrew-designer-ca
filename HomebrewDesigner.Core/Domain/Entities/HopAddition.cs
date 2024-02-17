@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace HomebrewDesigner.Core.Domain.Entities;
 
 public class HopAddition
@@ -16,6 +18,6 @@ public class HopAddition
     public double? Amount { get; set; }
     
     public int RecipeId { get; set; }
-    
+    [Required(ErrorMessage = "Hop is required")]
     public int HopId { get; set; }
 }
