@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HomebrewDesigner.Infrastructure.Repositories;
 
-public class YeastRepository : IYeastRepository
+public class YeastRepository : IRepository<Yeast, YeastUpdateRequest>
 {
     private readonly ApplicationDbContext _db;
     
@@ -15,7 +15,7 @@ public class YeastRepository : IYeastRepository
         _db = db;
     }
     
-    public async Task<Yeast> AddYeastAsync(Yeast yeast)
+    public async Task<Yeast> AddAsync(Yeast yeast)
     {
         await _db.Yeasts.AddAsync(yeast);
         await _db.SaveChangesAsync();
@@ -23,17 +23,17 @@ public class YeastRepository : IYeastRepository
         return yeast;
     }
 
-    public async Task<List<Yeast>> GetAllYeastAsync()
+    public async Task<List<Yeast>> GetAllAsync()
     {
         return await _db.Yeasts.ToListAsync();
     }
 
-    public async Task<Yeast> GetYeastByIdAsync(int id)
+    public async Task<Yeast> GetByIdAsync(int id)
     {
         return await _db.Yeasts.FirstOrDefaultAsync(y => y.Id == id) ?? throw new InvalidOperationException();
     }
 
-    public async Task<Yeast> UpdateYeastAsync(Yeast yeast, YeastUpdateRequest request)
+    public async Task<Yeast> UpdateAsync(Yeast yeast, YeastUpdateRequest request)
     {
         Yeast yeastToUpdate = await _db.Yeasts.FirstOrDefaultAsync(y => y.Id == yeast.Id) ?? throw new InvalidOperationException();
         

@@ -15,7 +15,7 @@ public class RecipeRepository : IRecipeRepository
         _db = db;
     }
 
-    public async Task<Recipe> AddRecipeAsync(Recipe recipe)
+    public async Task<Recipe> AddAsync(Recipe recipe)
     {
         _db.Recipes.Add(recipe);
         await _db.SaveChangesAsync();
@@ -23,7 +23,7 @@ public class RecipeRepository : IRecipeRepository
         return recipe;
     }
 
-    public async Task<List<Recipe>> GetAllRecipesAsync()
+    public async Task<List<Recipe>> GetAllAsync()
     {
         return await _db.Recipes
             .Include(r => r.Yeast)
@@ -34,7 +34,7 @@ public class RecipeRepository : IRecipeRepository
             .ToListAsync();
     }
 
-    public async Task<Recipe> GetRecipeByIdAsync(int id)
+    public async Task<Recipe> GetByIdAsync(int id)
     {
         return await _db.Recipes
             .Include(r => r.Yeast)
@@ -45,7 +45,7 @@ public class RecipeRepository : IRecipeRepository
             .FirstOrDefaultAsync(r => r.Id == id) ?? throw new InvalidOperationException();
     }
 
-    public async Task<Recipe> UpdateRecipeAsync(Recipe recipe, RecipeUpdateRequest request)
+    public async Task<Recipe> UpdateAsync(Recipe recipe, RecipeUpdateRequest request)
     {
         Recipe recipeToUpdate = await _db.Recipes.FirstOrDefaultAsync(r => r.Id == recipe.Id) ?? throw new InvalidOperationException();
         

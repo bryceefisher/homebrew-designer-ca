@@ -1,4 +1,5 @@
 using System.Reflection;
+using HomebrewDesigner.Core.Domain.Entities;
 using HomebrewDesigner.Core.Domain.Identity;
 using HomebrewDesigner.Core.DTO;
 using HomebrewDesigner.Core.RepositoryContracts;
@@ -32,9 +33,9 @@ builder.Services.AddScoped<IService<HopAddRequest, HopUpdateRequest, HopResponse
 builder.Services.AddScoped<IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse>, FermentableService>();
 builder.Services.AddScoped<IService<YeastAddRequest, YeastUpdateRequest, YeastResponse>, YeastService>();
 builder.Services.AddScoped<IRecipeService, RecipeService>();
-builder.Services.AddScoped<IHopRepository, HopRepository>();
-builder.Services.AddScoped<IFermentableRepository, FermentableRepository>();
-builder.Services.AddScoped<IYeastRepository, YeastRepository>();
+builder.Services.AddScoped<IRepository<Hop, HopUpdateRequest>, HopRepository>();
+builder.Services.AddScoped<IRepository<Fermentables, FermentableUpdateRequest>, FermentableRepository>();
+builder.Services.AddScoped<IRepository<Yeast, YeastUpdateRequest>, YeastRepository>();
 builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddTransient<SeedData>();
 

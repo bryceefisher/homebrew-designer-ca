@@ -11,9 +11,9 @@ namespace HomebrewDesigner.Core.Services;
 public class HopService : IService<HopAddRequest, HopUpdateRequest, HopResponse>
 {
     // Create a list to hold hop objects.
-    private readonly IHopRepository _hopRepository;
+    private readonly IRepository<Hop, HopUpdateRequest> _hopRepository;
 
-    public HopService(IHopRepository hopRepository)
+    public HopService(IRepository<Hop, HopUpdateRequest> hopRepository)
     {
         _hopRepository = hopRepository;
     }
@@ -30,7 +30,7 @@ public class HopService : IService<HopAddRequest, HopUpdateRequest, HopResponse>
         ValidationHelper.ModelValidation(request);
 
 
-        foreach (var hop in await _hopRepository.GetAllHopsAsync())
+        foreach (var hop in await _hopRepository.GetAllAsync())
         {
             if (hop.Name.ToLower() == hopToAdd.Name.ToLower())
             {
@@ -38,14 +38,14 @@ public class HopService : IService<HopAddRequest, HopUpdateRequest, HopResponse>
             }
         }
 
-        await _hopRepository.AddHopAsync(hopToAdd);
+        await _hopRepository.AddAsync(hopToAdd);
 
         return hopToAdd.ToHopResponse();
     }
 
     public async Task<List<HopResponse>> GetAllAsync()
     {
-        List<Hop> hops = await _hopRepository.GetAllHopsAsync();
+        List<Hop> hops = await _hopRepository.GetAllAsync();
 
         return hops.Select(h => h.ToHopResponse()).ToList();
     }
@@ -58,7 +58,7 @@ public class HopService : IService<HopAddRequest, HopUpdateRequest, HopResponse>
             throw new ArgumentNullException(nameof(request));
         }
 
-        Hop hopToUpdate = await _hopRepository.GetHopByIdAsync(request.Id);
+        Hop hopToUpdate = await _hopRepository.GetByIdAsync(request.Id);
 
         //if null, throw exception
         if (hopToUpdate is null)
@@ -68,7 +68,7 @@ public class HopService : IService<HopAddRequest, HopUpdateRequest, HopResponse>
 
         ValidationHelper.ModelValidation(request);
 
-        await _hopRepository.UpdateHopAsync(hopToUpdate, request);
+        await _hopRepository.UpdateAsync(hopToUpdate, request);
 
         return hopToUpdate.ToHopResponse();
     }
@@ -80,7 +80,7 @@ public class HopService : IService<HopAddRequest, HopUpdateRequest, HopResponse>
             throw new ArgumentException($"Field {nameof(id)} cannot be less than 0.");
         }
 
-        Hop hop = await _hopRepository.GetHopByIdAsync(id);
+        Hop hop = await _hopRepository.GetByIdAsync(id);
 
         return hop.ToHopResponse();
     }
@@ -89,7 +89,7 @@ public class HopService : IService<HopAddRequest, HopUpdateRequest, HopResponse>
 
     public async Task<List<HopResponse>> GetFilteredAsync(string? searchBy, string? searchString)
     {
-        List<Hop> hops = await _hopRepository.GetAllHopsAsync();
+        List<Hop> hops = await _hopRepository.GetAllAsync();
 
         PropertyInfo? property = null;
 

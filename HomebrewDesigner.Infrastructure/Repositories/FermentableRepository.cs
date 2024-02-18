@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HomebrewDesigner.Infrastructure.Repositories;
 
-public class FermentableRepository : IFermentableRepository
+public class FermentableRepository : IRepository<Fermentables, FermentableUpdateRequest>
 {
     
     private readonly ApplicationDbContext _db;
@@ -16,7 +16,7 @@ public class FermentableRepository : IFermentableRepository
         _db = db;
     }
     
-    public async Task<Fermentables> AddFermentableAsync(Fermentables fermentable)
+    public async Task<Fermentables> AddAsync(Fermentables fermentable)
     {
         _db.Fermentables.Add(fermentable);
         await _db.SaveChangesAsync();
@@ -24,12 +24,12 @@ public class FermentableRepository : IFermentableRepository
         return fermentable;
     }
 
-    public Task<List<Fermentables>> GetAllFermentablesAsync()
+    public Task<List<Fermentables>> GetAllAsync()
     {
         return _db.Fermentables.ToListAsync();
     }
 
-    public async Task<Fermentables> UpdateFermentableAsync(Fermentables fermentable, FermentableUpdateRequest request)
+    public async Task<Fermentables> UpdateAsync(Fermentables fermentable, FermentableUpdateRequest request)
     {
         Fermentables fermentablesToUpdate = await _db.Fermentables.FirstOrDefaultAsync(f => f.Id == fermentable.Id) ?? throw new InvalidOperationException() ;
         
@@ -42,7 +42,7 @@ public class FermentableRepository : IFermentableRepository
         return fermentablesToUpdate;
     }
 
-    public async Task<Fermentables> GetFermentableByIdAsync(int id)
+    public async Task<Fermentables> GetByIdAsync(int id)
     {
         return await _db.Fermentables.FirstOrDefaultAsync(f => f.Id == id);
     }
