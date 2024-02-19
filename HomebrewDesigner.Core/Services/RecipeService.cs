@@ -4,6 +4,7 @@ using HomebrewDesigner.Core.DTO;
 using HomebrewDesigner.Core.Helpers;
 using HomebrewDesigner.Core.RepositoryContracts;
 using HomebrewDesigner.Core.ServiceContracts;
+using Microsoft.CodeAnalysis;
 using ArgumentException = System.ArgumentException;
 
 namespace HomebrewDesigner.Core.Services;
@@ -30,8 +31,16 @@ public class RecipeService : IRecipeService
         {
             throw new ArgumentException("Recipe object cannot be null.");
         }
-
+        
         Recipe recipeToAdd = request.ToRecipe();
+        
+        foreach (var recipe in await _recipeRepository.GetAllAsync())
+        {
+            if (recipe.Name.ToLower() == recipeToAdd.Name.ToLower())
+            {
+                throw new ArgumentException("Recipe name already exists.");
+            }
+        }
 
         ValidationHelper.ModelValidation(request);
 

@@ -153,3 +153,8 @@ input:-webkit-autofill:active  {
 input {
   border: .01rem solid #bdbdbd !important;
 }
+
+.beer-img{
+  height: 30px;
+  width: 15px;
+}

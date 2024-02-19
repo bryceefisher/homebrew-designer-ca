@@ -42,6 +42,7 @@
                 <th scope="col">ABV</th>
                 <th scope="col">IBU</th>
                 <th scope="col">Color</th>
+                <th scope="col">SRM</th>
                 <th scope="col">Edit</th>
             </tr>
             </thead>
@@ -60,6 +61,7 @@
                         <td>@recipe.ABV</td>
                         <td>@recipe.IBU</td>
                         <td>@recipe.Color</td>
+                        <td><img class="beer-img" src="~/images/pale.png" alt="Pale beer in glass"></td>
 
                         <td>
                             <a class="text-green" asp-controller="Recipe" asp-action="EditRecipe" asp-route-Id="@recipe.Id">Edit</a>
