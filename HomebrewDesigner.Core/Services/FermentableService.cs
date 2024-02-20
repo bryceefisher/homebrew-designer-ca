@@ -9,9 +9,9 @@ namespace HomebrewDesigner.Core.Services;
 
 public class FermentableService : IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse>
 {
-    private readonly IFermentableRepository _fermentableRepository;
+    private readonly IRepository<Fermentables, FermentableUpdateRequest> _fermentableRepository;
     
-    public FermentableService(IFermentableRepository fermentableRepository)
+    public FermentableService(IRepository<Fermentables, FermentableUpdateRequest> fermentableRepository)
     {
         _fermentableRepository = fermentableRepository;
     }
@@ -27,7 +27,7 @@ public class FermentableService : IService<FermentableAddRequest, FermentableUpd
         
         ValidationHelper.ModelValidation(request);
         
-        foreach (var ferm in await _fermentableRepository.GetAllFermentablesAsync())
+        foreach (var ferm in await _fermentableRepository.GetAllAsync())
         {
             if (string.Equals(ferm.Name, fermentableToAdd.Name, StringComparison.CurrentCultureIgnoreCase))
             {
@@ -35,7 +35,7 @@ public class FermentableService : IService<FermentableAddRequest, FermentableUpd
             }
         }
 
-        await _fermentableRepository.AddFermentableAsync(fermentableToAdd);
+        await _fermentableRepository.AddAsync(fermentableToAdd);
         
 
         return fermentableToAdd.ToFermentableResponse();
@@ -43,7 +43,7 @@ public class FermentableService : IService<FermentableAddRequest, FermentableUpd
 
     public async Task<List<FermentableResponse>> GetAllAsync()
     {
-        List<Fermentables> fermentables = await _fermentableRepository.GetAllFermentablesAsync();
+        List<Fermentables> fermentables = await _fermentableRepository.GetAllAsync();
         return fermentables.Select(f => f.ToFermentableResponse()).ToList();
     }
 
@@ -54,7 +54,7 @@ public class FermentableService : IService<FermentableAddRequest, FermentableUpd
             throw new ArgumentException("Error: Fermentables object cannot be null.");
         }
         
-        List<Fermentables> fermentables = await _fermentableRepository.GetAllFermentablesAsync();
+        List<Fermentables> fermentables = await _fermentableRepository.GetAllAsync();
         
         Fermentables fermentablesToUpdate = fermentables.FirstOrDefault(g => g.Id == request.Id) ??
                                             throw new ArgumentException($"Fermentables with id {request.Id} not found.");
@@ -66,7 +66,7 @@ public class FermentableService : IService<FermentableAddRequest, FermentableUpd
             throw new ArgumentException($"Fermentables object not found");
         }
 
-        Fermentables fermentable = await  _fermentableRepository.UpdateFermentableAsync(fermentablesToUpdate, request);
+        Fermentables fermentable = await  _fermentableRepository.UpdateAsync(fermentablesToUpdate, request);
         
         return fermentable.ToFermentableResponse();
     }
@@ -78,7 +78,7 @@ public class FermentableService : IService<FermentableAddRequest, FermentableUpd
             throw new ArgumentException($"Field {nameof(id)} cannot be less than 0.");
         }
 
-        Fermentables fermentable = await  _fermentableRepository.GetFermentableByIdAsync(id) ?? throw new InvalidOperationException("Fermentable not found.");
+        Fermentables fermentable = await  _fermentableRepository.GetByIdAsync(id) ?? throw new InvalidOperationException("Fermentable not found.");
         
         return fermentable.ToFermentableResponse();
     }
@@ -86,7 +86,7 @@ public class FermentableService : IService<FermentableAddRequest, FermentableUpd
     /*******ToDo Tighten up this code************/
     public async Task<List<FermentableResponse>> GetFilteredAsync(string? searchBy, string? searchString)
     {
-        List<Fermentables> fermentables = await _fermentableRepository.GetAllFermentablesAsync();
+        List<Fermentables> fermentables = await _fermentableRepository.GetAllAsync();
         
         PropertyInfo? property = null;
 
@@ -119,5 +119,10 @@ public class FermentableService : IService<FermentableAddRequest, FermentableUpd
         }
 
         return fermentables.Select(y => y.ToFermentableResponse()).ToList();
+    }
+
+    public Task<bool> DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
     }
 }

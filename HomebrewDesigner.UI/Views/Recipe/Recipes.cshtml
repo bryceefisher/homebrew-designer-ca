@@ -41,6 +41,7 @@
                 <th scope="col">FG</th>
                 <th scope="col">ABV</th>
                 <th scope="col">IBU</th>
+                <th scope="col">SRM</th>
                 <th scope="col">Color</th>
                 <th scope="col">Edit</th>
             </tr>
@@ -60,9 +61,32 @@
                         <td>@recipe.ABV</td>
                         <td>@recipe.IBU</td>
                         <td>@recipe.Color</td>
-
+                        @if (@recipe.Color < 10)
+                        {
+                            <td>
+                                <img class="beer-img" src="~/images/pale.png" alt="Pale beer in glass">
+                            </td>
+                        }
+                        else if (@recipe.Color < 25 && @recipe.Color > 10)
+                        {
+                            <td>
+                                <img class="beer-img" src="~/images/light.png" alt="Pale beer in glass">
+                            </td>
+                        }
+                        else if (recipe.Color > 25 && recipe.Color < 40)
+                        {
+                            <td>
+                                <img class="beer-img" src="~/images/amber.png" alt="Pale beer in glass">
+                            </td>
+                        }
+                        else if (recipe.Color >= 40)
+                        {
+                            <td>
+                                <img class="beer-img" src="~/images/dark.png" alt="Pale beer in glass">
+                            </td>
+                        }
                         <td>
-                            <a class="text-green" asp-controller="Recipe" asp-action="EditRecipe" asp-route-Id="@recipe.Id">Edit</a>
+                            <a class="text-green" asp-controller="Recipe" asp-action="EditRecipe" asp-route-Id="@recipe.Id">Edit</a> / <a class="text-green" asp-controller="Recipe" asp-action="DeleteRecipe" asp-route-Id="@recipe.Id">Delete</a>
                         </td>
                     </tr>
                 }

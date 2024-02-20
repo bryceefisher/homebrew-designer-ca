@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HomebrewDesigner.Infrastructure.Repositories;
 
-public class HopRepository : IHopRepository
+public class HopRepository : IRepository<Hop, HopUpdateRequest>
 {
     private readonly ApplicationDbContext _db;
     
@@ -16,7 +16,7 @@ public class HopRepository : IHopRepository
     }
 
 
-    public async Task<Hop> AddHopAsync(Hop hop)
+    public async Task<Hop> AddAsync(Hop hop)
     {
         await _db.Hops.AddAsync(hop);
         await _db.SaveChangesAsync();
@@ -24,12 +24,12 @@ public class HopRepository : IHopRepository
         return hop;
     }
 
-    public async Task<List<Hop>> GetAllHopsAsync()
+    public async Task<List<Hop>> GetAllAsync()
     {
         return await _db.Hops.ToListAsync();
     }
 
-    public async Task<Hop> UpdateHopAsync(Hop hop, HopUpdateRequest request)
+    public async Task<Hop> UpdateAsync(Hop hop, HopUpdateRequest request)
     {
         Hop hopToUpdate = _db.Hops.FirstOrDefault(h => h.Id == request.Id) ?? throw new InvalidOperationException();
         
@@ -41,10 +41,15 @@ public class HopRepository : IHopRepository
         return hopToUpdate;
     }
 
-    public async Task<Hop> GetHopByIdAsync(int id)
+    public async Task<Hop> GetByIdAsync(int id)
     {
         Hop hop = await _db.Hops.FirstOrDefaultAsync(h => h.Id == id) ?? throw new InvalidOperationException();
 
         return hop;
+    }
+
+    public Task<bool> DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
     }
 }

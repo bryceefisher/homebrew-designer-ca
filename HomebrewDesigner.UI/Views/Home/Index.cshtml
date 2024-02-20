@@ -4,15 +4,15 @@
 }
 
 <div class="text-center mt-5">
-    <h1 class="display-3">MVC Homebrew Recipe Designer</h1>
+    <h1 class="display-2 text-main">MVC Homebrew Recipe Designer</h1>
     <div class="row">
-        <div class="col mt-5 border border-1 rounded-2 m-1 ">
-            <h1 class="text-decoration-underline display-6 mb-3 mt-3"> Recently Added Recipes</h1>
+        <div class="col mt-5 bg-secondary rounded-5 p-3">
+            <h1 class="display-6 mb-3 mt-3 text-main"> Recently Added Recipes</h1>
             @foreach (var item in Model)
             {
                 <a asp-action="ViewRecipe" asp-controller="Recipe">
-                    <a asp-controller="Recipe" asp-action="ViewRecipe" asp-route-Id="@item.Id"><h2>@item.Name</h2></a>
-                    <p>@item.Style</p>
+                    <a class="text-decoration-none text-green" asp-controller="Recipe" asp-action="ViewRecipe" asp-route-Id="@item.Id"><h2>@item.Name</h2></a>
+                    <p class="text-main">@item.Style</p>
                 </a>
             }
         </div>

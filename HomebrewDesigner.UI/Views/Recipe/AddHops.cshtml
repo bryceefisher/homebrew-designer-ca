@@ -7,10 +7,11 @@
     <h1 class="display-2 text-main">Add Recipe:</h1>
     <div class="container text-center mt-5 bg-secondary rounded-5 pe-5 pt-3">
         <form id="hopsForm" asp-action="AddHops" asp-controller="Recipe" method="post">
-            <h1 class="display-6 mb-3 text-main">Hops:</h1>
+            <h1 class="display-6 text-main mt-2">Hop Addition 1:</h1>
             <div class="col d-flex">
-                <div class="col m-2">
-                    <div class="hop-addition-template rounded-2 p-4 mt-2">
+                <div class="col">
+                    <div class="hop-addition-template rounded-2 px-4 pb-4">
+                        <h1 class="display-6 text-main mb-3 hop-addition-count-display"></h1>
                         <label asp-for="HopId[0]" class="text-main">Hop</label>
                         <select class="form-select mt-2 bg-secondary text-main" asp-for="HopId[0]">
                             <option selected disabled>Hop</option>
@@ -81,26 +82,38 @@
         document.addEventListener("DOMContentLoaded", function () {
          
             let hopIndex = @Model.Recipe.Hops.Count;
-
+            let hopAddCount = 1;
+            
         
             document.querySelector(".add-hop").addEventListener("click", function (event) {
                 event.preventDefault();
-
           
                 let template = document.querySelector(".hop-addition-template").cloneNode(true);
-
-             
+       
                 hopIndex++;
+                
 
-               
                 let elements = template.querySelectorAll("[name]");
                 elements.forEach(element => {
                     let name = element.getAttribute("name");
                     element.setAttribute("name", name.replace("[0]", `[${hopIndex}]`));
                 });
 
+                let inputs = template.querySelectorAll("input");
+                    inputs.forEach(input => {
+                        input.value = ""; 
+                                            });
              
                 template.style.display = "block";
+                
+              console.log(hopAddCount);
+                let displayElement = template.querySelector(".hop-addition-count-display");
+                        if (displayElement) {
+                            hopAddCount++;
+                            displayElement.textContent = `Hop Addition: ${hopAddCount}`;
+                        } else {
+                            console.error('The display element was not found in the DOM.');
+                        }
 
              
                 document.querySelector(".hop-container").appendChild(template);

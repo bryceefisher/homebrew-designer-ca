@@ -8,23 +8,23 @@ namespace HomebrewDesignerTests.FakeRepos;
 
 
 
-public class FakeHopRepo : IHopRepository
+public class FakeHopRepo : IRepository<Hop, HopUpdateRequest>
 {
     // Create a list to hold hop objects.
     private readonly List<Hop> _hops = new();
     
-    public async Task<Hop> AddHopAsync(Hop hop)
+    public async Task<Hop> AddAsync(Hop hop)
     {
         _hops.Add(hop);
         return await Task.Run(() => hop);
     }
 
-    public async Task<List<Hop>> GetAllHopsAsync()
+    public async Task<List<Hop>> GetAllAsync()
     {
         return await Task.Run(() => _hops);
     }
 
-    public Task<Hop> UpdateHopAsync(Hop hop, HopUpdateRequest request)
+    public Task<Hop> UpdateAsync(Hop hop, HopUpdateRequest request)
     {
         Hop hopToUpdate = _hops.Find(h => h.Id == hop.Id) ?? throw new ArgumentException("Hop not found.");
         
@@ -34,10 +34,13 @@ public class FakeHopRepo : IHopRepository
         return Task.Run(() => hopToUpdate);
     }
 
-    public async Task<Hop> GetHopByIdAsync(int id)
+    public async Task<Hop> GetByIdAsync(int id)
     {
         return await Task.Run(() => _hops.Find(h => h.Id == id)) ?? throw new ArgumentException("Hop not found");
     }
-    
-    
+
+    public Task<bool> DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
 }

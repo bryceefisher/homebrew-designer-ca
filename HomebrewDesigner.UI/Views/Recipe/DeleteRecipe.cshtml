@@ -1,0 +1,32 @@
+@model HomebrewDesigner.Core.DTO.RecipeResponse
+@{
+    ViewBag.Title = "Delete Recipe";
+    Layout = "_Layout";
+}
+
+<div class="container text-center mt-5 bg-secondary rounded-5 pe-5 pt-3">
+    <h1 class="display-2 pb-3 text-main">Delete Recipe</h1>
+    <form asp-controller="Recipe" asp-action="DeleteRecipe" method="post">
+        <h3 class="pb-3 text-main">Are you sure you want to delete this recipe?</h3>
+        <div class="mb-2 d-flex visually-hidden">
+            <div class="col-9 visually-hidden">
+                <input class="w-100 form-control bg-secondary text-main" asp-for="Id" required>
+            </div>
+        </div>
+        <div class="mb-2 d-flex">
+            <div class="col-3">
+                <label asp-for="Name" class="form-label text-main">
+                    <h5>Recipe:</h5>
+                </label>
+            </div>
+            <div class="col-9">
+                <input class="w-100 form-control bg-secondary text-main" asp-for="Name" required>
+                <span class="text-danger" asp-validation-for="Name"></span>
+            </div>
+        </div>
+        <div class="text-center mt-5 pb-5">
+            <button type="submit" class="btn btn-main text-green">Delete Recipe</button>
+        </div>
+
+    </form>
+</div>

@@ -4,6 +4,7 @@ using HomebrewDesigner.Core.DTO;
 using HomebrewDesigner.Core.Helpers;
 using HomebrewDesigner.Core.RepositoryContracts;
 using HomebrewDesigner.Core.ServiceContracts;
+using Microsoft.CodeAnalysis;
 using ArgumentException = System.ArgumentException;
 
 namespace HomebrewDesigner.Core.Services;
@@ -11,12 +12,12 @@ namespace HomebrewDesigner.Core.Services;
 public class RecipeService : IRecipeService
 {
     private readonly IRecipeRepository _recipeRepository;
-    private readonly IHopRepository _hopRepository;
-    private readonly IFermentableRepository _fermentableRepository;
-    private readonly IYeastRepository _yeastRepository;
+    private readonly IRepository<Hop, HopUpdateRequest> _hopRepository;
+    private readonly IRepository<Fermentables, FermentableUpdateRequest> _fermentableRepository;
+    private readonly IRepository<Yeast, YeastUpdateRequest> _yeastRepository;
 
-    public RecipeService(IRecipeRepository recipeRepository, IHopRepository hopRepository,
-        IFermentableRepository fermentableRepository, IYeastRepository yeastRepository)
+    public RecipeService(IRecipeRepository recipeRepository, IRepository<Hop, HopUpdateRequest> hopRepository,
+        IRepository<Fermentables, FermentableUpdateRequest> fermentableRepository, IRepository<Yeast, YeastUpdateRequest> yeastRepository)
     {
         _recipeRepository = recipeRepository;
         _hopRepository = hopRepository;
@@ -30,15 +31,23 @@ public class RecipeService : IRecipeService
         {
             throw new ArgumentException("Recipe object cannot be null.");
         }
-
+        
         Recipe recipeToAdd = request.ToRecipe();
+        
+        foreach (var recipe in await _recipeRepository.GetAllAsync())
+        {
+            if (recipe.Name.ToLower() == recipeToAdd.Name.ToLower())
+            {
+                throw new ArgumentException("Recipe name already exists.");
+            }
+        }
 
         ValidationHelper.ModelValidation(request);
 
 
         foreach (var hopAddition in recipeToAdd.HopAdditions)
         {
-            var existingHop = await _hopRepository.GetHopByIdAsync(hopAddition.Hop.Id);
+            var existingHop = await _hopRepository.GetByIdAsync(hopAddition.Hop.Id);
             if (existingHop != null)
             {
                 hopAddition.Hop = existingHop; // Associate the existing hop
@@ -48,27 +57,27 @@ public class RecipeService : IRecipeService
 
         foreach (var maltBill in recipeToAdd.Maltbill)
         {
-            var existingFermentable = await _fermentableRepository.GetFermentableByIdAsync(maltBill.Fermentable.Id);
+            var existingFermentable = await _fermentableRepository.GetByIdAsync(maltBill.Fermentable.Id);
             if (existingFermentable != null)
             {
                 maltBill.Fermentable = existingFermentable; // Associate the existing fermentable
             }
         }
 
-        var existingYeast = await _yeastRepository.GetYeastByIdAsync(recipeToAdd.Yeast.Id);
+        var existingYeast = await _yeastRepository.GetByIdAsync(recipeToAdd.Yeast.Id);
         if (existingYeast != null)
         {
             recipeToAdd.Yeast = existingYeast; // Associate the existing yeast
         }
 
-        await _recipeRepository.AddRecipeAsync(recipeToAdd);
+        await _recipeRepository.AddAsync(recipeToAdd);
 
         return recipeToAdd.ToRecipeResponse();
     }
 
     public async Task<List<RecipeResponse>> GetAllAsync()
     {
-       List<Recipe> recipes =  await _recipeRepository.GetAllRecipesAsync();
+       List<Recipe> recipes =  await _recipeRepository.GetAllAsync();
        
        return recipes.Select(r => r.ToRecipeResponse()).ToList();
     }
@@ -81,11 +90,11 @@ public class RecipeService : IRecipeService
         }
 
 
-        Recipe recipeToUpdate = await _recipeRepository.GetRecipeByIdAsync(request.Id);
+        Recipe recipeToUpdate = await _recipeRepository.GetByIdAsync(request.Id);
 
         ValidationHelper.ModelValidation(request);
 
-       Recipe recipe = await _recipeRepository.UpdateRecipeAsync(recipeToUpdate, request);
+       Recipe recipe = await _recipeRepository.UpdateAsync(recipeToUpdate, request);
        
        return recipe.ToRecipeResponse();
     }
@@ -97,7 +106,7 @@ public class RecipeService : IRecipeService
             throw new ArgumentException("Id cannot be less than 0.");
         }
 
-        Recipe recipe = await _recipeRepository.GetRecipeByIdAsync(id);
+        Recipe recipe = await _recipeRepository.GetByIdAsync(id);
 
         return recipe.ToRecipeResponse();
     }
@@ -127,7 +136,7 @@ public class RecipeService : IRecipeService
             }
         }
 
-        List<Recipe> recipes = await _recipeRepository.GetAllRecipesAsync();
+        List<Recipe> recipes = await _recipeRepository.GetAllAsync();
         
         if (String.IsNullOrEmpty(searchString))
         {
@@ -145,5 +154,19 @@ public class RecipeService : IRecipeService
         }
 
         return recipes.Select(r => r.ToRecipeResponse()).ToList();
+    }
+
+    public async Task<bool> DeleteAsync(int id)
+    {
+        RecipeResponse? personToDelete = await GetByIdAsync(id);
+
+        if (personToDelete is null)
+        {
+            return false;
+        }
+
+        await _recipeRepository.DeleteAsync(id);
+        
+        return true;
     }
 }

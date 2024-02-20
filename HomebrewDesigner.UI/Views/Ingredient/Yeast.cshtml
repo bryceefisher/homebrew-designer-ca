@@ -36,6 +36,7 @@
         <table class="table overflow-scroll text-main">
             <thead>
             <tr>
+                <th>Ingredient Type</th>
                 <th scope="col">Name</th>
                 <th scope="col">Lab</th>
                 <th scope="col">Code</th>
@@ -49,6 +50,7 @@
             @foreach (var yeast in Model)
             {
                 <tr>
+                    <td><img class="yeast-img" src="~/images/yeast.png"/></td>
                     <td class="text-green">@yeast.Name</td>
                     <td>@yeast.Lab</td>
                     <td>@yeast.Code</td>

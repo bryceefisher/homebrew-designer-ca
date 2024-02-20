@@ -18,7 +18,8 @@ public class RecipeController : Controller
     private RecipeVM _recipeVm;
 
     public RecipeController(IService<HopAddRequest, HopUpdateRequest, HopResponse> hopService,
-        IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse> fermentableService, IService<YeastAddRequest, YeastUpdateRequest, YeastResponse> yeastService, IRecipeService recipeService)
+        IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse> fermentableService,
+        IService<YeastAddRequest, YeastUpdateRequest, YeastResponse> yeastService, IRecipeService recipeService)
     {
         _hopService = hopService;
         _fermentableService = fermentableService;
@@ -149,26 +150,76 @@ public class RecipeController : Controller
         recipe.Recipe.MashTemp = recipeVm.Recipe.MashTemp;
 
         recipe.Recipe.WaterRatio = recipeVm.Recipe.WaterRatio;
-        
+
         double? grainWeight = 0;
         foreach (var grain in recipe.Recipe.MaltBill)
         {
             grainWeight += grain.Weight;
         }
-        recipe.Recipe.AmountOfWater = Math.Round((double)(grainWeight * recipe.Recipe.WaterRatio)!,2);
-        
+
+        recipe.Recipe.AmountOfWater = Math.Round((double)(grainWeight * recipe.Recipe.WaterRatio)!, 2);
+
         double? GU = 0;
         foreach (var grain in recipe.Recipe.MaltBill)
         {
-            GU += double.Parse(grain.Fermentable.PotentialGravity.ToString().Substring(grain.Fermentable.PotentialGravity.ToString().IndexOf(".") + 1, 3)) * grain.Weight;
+            GU += double.Parse(grain.Fermentable.PotentialGravity.ToString()
+                .Substring(grain.Fermentable.PotentialGravity.ToString().IndexOf(".") + 1, 3)) * grain.Weight;
         }
 
-        recipe.Recipe.OriginalGravity = double.Parse(((GU / 5) / 1000 + 1).ToString()!.Substring(0, 5));
+        recipe.Recipe.OriginalGravity = double.Parse(((GU / 6.75) / 1000 + 1).ToString()!.Substring(0, 5));
+
+        if (recipe.Recipe.OriginalGravity < 1.040)
+        {
+            recipe.Recipe.FinalGravity = Math.Round(1.002 + random.NextDouble() * (1.010 - 1.005), 3);
+        }
+        else if (recipe.Recipe.OriginalGravity < 1.060)
+        {
+            recipe.Recipe.FinalGravity = Math.Round(1.002 + random.NextDouble() * (1.015 - 1.010), 3);
+        }
+        else if (recipe.Recipe.OriginalGravity < 1.080)
+        {
+            recipe.Recipe.FinalGravity = Math.Round(1.002 + random.NextDouble() * (1.020 - 1.012), 3);
+        }
+        else
+        {
+            recipe.Recipe.FinalGravity = Math.Round(1.002 + random.NextDouble() * (1.025 - 1.015), 3);
+        }
         
-        recipe.Recipe.FinalGravity = Math.Round(1.002 + random.NextDouble() * (1.025 - 1.002), 3);
-        recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(12, 100);
-        recipe.Recipe.ABV = RandomNumberGenerator.GetInt32(3, 12);
-        recipe.Recipe.Color = RandomNumberGenerator.GetInt32(3, 75);
+        
+        
+        recipe.Recipe.ABV = (double)Math.Round((decimal)((recipe.Recipe.OriginalGravity - recipe.Recipe.FinalGravity) * 131.25), 2);
+        
+        if (recipe.Recipe.ABV < 5)
+        {
+            recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(12, 35);
+        }
+        else if (recipe.Recipe.ABV < 6)
+        {
+            recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(20, 45);
+        }
+        else if (recipe.Recipe.ABV < 7)
+        {
+            recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(30, 55);
+        }
+        else if (recipe.Recipe.ABV < 8)
+        {
+            recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(40, 65);
+        }
+        else if (recipe.Recipe.ABV < 9)
+        {
+            recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(40, 75);
+        }
+        else
+        {
+            recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(60, 90);
+        }
+        double? MCU = 0;
+        foreach (var grain in recipe.Recipe.MaltBill)
+        {
+            MCU += grain.Fermentable.Color * grain.Weight;
+        }
+
+        recipe.Recipe.Color = (double)(MCU / 5);
 
 
         if (TryValidateModel(recipe.Recipe))
@@ -280,6 +331,27 @@ public class RecipeController : Controller
 
         await _recipeService.UpdateAsync(recipeUpdateRequest);
 
+
+        return RedirectToAction("Recipes", "Recipe");
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> DeleteRecipe(int id)
+    {
+        RecipeResponse recipe = await _recipeService.GetByIdAsync(id);
+
+        return View(recipe);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteRecipe(RecipeResponse recipe)
+    {
+        bool succeeded = await _recipeService.DeleteAsync(recipe.Id);
+
+        if (!succeeded)
+        {
+            return View(recipe);
+        }
 
         return RedirectToAction("Recipes", "Recipe");
     }

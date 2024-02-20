@@ -10,9 +10,9 @@ namespace HomebrewDesigner.Core.Services;
 
 public class YeastService : IService<YeastAddRequest, YeastUpdateRequest, YeastResponse>
 {
-    private readonly IYeastRepository _yeastRepository;
+    private readonly IRepository<Yeast, YeastUpdateRequest> _yeastRepository;
     
-    public YeastService(IYeastRepository yeastRepository)
+    public YeastService(IRepository<Yeast, YeastUpdateRequest> yeastRepository)
     {
         _yeastRepository = yeastRepository;
     }
@@ -29,7 +29,7 @@ public class YeastService : IService<YeastAddRequest, YeastUpdateRequest, YeastR
 
         ValidationHelper.ModelValidation(request);
 
-        foreach (var yeasts in await _yeastRepository.GetAllYeastAsync())
+        foreach (var yeasts in await _yeastRepository.GetAllAsync())
         {
             if (yeasts.Name == yeast.Name)
             {
@@ -37,14 +37,14 @@ public class YeastService : IService<YeastAddRequest, YeastUpdateRequest, YeastR
             }
         }
 
-        await _yeastRepository.AddYeastAsync(yeast);
+        await _yeastRepository.AddAsync(yeast);
         
         return yeast.ToYeastResponse();
     }
 
     public async Task<List<YeastResponse>> GetAllAsync()
     {
-        List<Yeast> yeasts = await _yeastRepository.GetAllYeastAsync();
+        List<Yeast> yeasts = await _yeastRepository.GetAllAsync();
 
         return yeasts.Select(y => y.ToYeastResponse()).ToList();
     }
@@ -56,7 +56,7 @@ public class YeastService : IService<YeastAddRequest, YeastUpdateRequest, YeastR
             throw new ArgumentException($"Yeasts object cannot be null. {nameof(request)}");
         }
 
-        Yeast yeastToUpdate = await _yeastRepository.GetYeastByIdAsync(request.Id);
+        Yeast yeastToUpdate = await _yeastRepository.GetByIdAsync(request.Id);
 
         ValidationHelper.ModelValidation(request);
 
@@ -65,7 +65,7 @@ public class YeastService : IService<YeastAddRequest, YeastUpdateRequest, YeastR
             throw new ArgumentException($"Yeast object not found");
         }
         
-        Yeast yeast = await _yeastRepository.UpdateYeastAsync(yeastToUpdate, request);
+        Yeast yeast = await _yeastRepository.UpdateAsync(yeastToUpdate, request);
         
 
         return yeast.ToYeastResponse();
@@ -79,7 +79,7 @@ public class YeastService : IService<YeastAddRequest, YeastUpdateRequest, YeastR
             throw new ArgumentException($"Field {nameof(id)} cannot be less than 0.");
         }
 
-        Yeast yeast = await _yeastRepository.GetYeastByIdAsync(id);
+        Yeast yeast = await _yeastRepository.GetByIdAsync(id);
         
         return yeast.ToYeastResponse();
     }
@@ -87,7 +87,7 @@ public class YeastService : IService<YeastAddRequest, YeastUpdateRequest, YeastR
     /*******ToDo Tighten up this code************/
     public async Task<List<YeastResponse>> GetFilteredAsync(string? searchBy, string? searchString)
     {
-        List<Yeast> yeasts = await _yeastRepository.GetAllYeastAsync();
+        List<Yeast> yeasts = await _yeastRepository.GetAllAsync();
         
         PropertyInfo? property = null;
 
@@ -120,5 +120,10 @@ public class YeastService : IService<YeastAddRequest, YeastUpdateRequest, YeastR
         }
 
         return yeasts.Select(y => y.ToYeastResponse()).ToList();
+    }
+
+    public Task<bool> DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
     }
 }
