@@ -122,4 +122,9 @@ public class HopService : IService<HopAddRequest, HopUpdateRequest, HopResponse>
 
         return hops.Select(h => h.ToHopResponse()).ToList();
     }
+
+    public Task<bool> DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
 }

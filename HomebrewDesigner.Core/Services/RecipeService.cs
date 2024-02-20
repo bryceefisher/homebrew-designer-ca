@@ -155,4 +155,18 @@ public class RecipeService : IRecipeService
 
         return recipes.Select(r => r.ToRecipeResponse()).ToList();
     }
+
+    public async Task<bool> DeleteAsync(int id)
+    {
+        RecipeResponse? personToDelete = await GetByIdAsync(id);
+
+        if (personToDelete is null)
+        {
+            return false;
+        }
+
+        await _recipeRepository.DeleteAsync(id);
+        
+        return true;
+    }
 }

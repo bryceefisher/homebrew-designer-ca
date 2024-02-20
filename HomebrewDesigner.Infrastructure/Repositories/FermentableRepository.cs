@@ -46,4 +46,9 @@ public class FermentableRepository : IRepository<Fermentables, FermentableUpdate
     {
         return await _db.Fermentables.FirstOrDefaultAsync(f => f.Id == id);
     }
+
+    public Task<bool> DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
 }

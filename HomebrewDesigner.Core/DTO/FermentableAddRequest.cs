@@ -19,7 +19,6 @@ public class FermentableAddRequest
     [Required]
     public FermentableOriginEnum Origin { get; set; }
     
-    
     public double Color { get; set; }
     
     [Required]

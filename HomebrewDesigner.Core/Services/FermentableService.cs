@@ -120,4 +120,9 @@ public class FermentableService : IService<FermentableAddRequest, FermentableUpd
 
         return fermentables.Select(y => y.ToFermentableResponse()).ToList();
     }
+
+    public Task<bool> DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
 }

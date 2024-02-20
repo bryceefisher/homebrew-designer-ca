@@ -47,4 +47,9 @@ public class HopRepository : IRepository<Hop, HopUpdateRequest>
 
         return hop;
     }
+
+    public Task<bool> DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
 }

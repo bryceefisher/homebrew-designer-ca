@@ -38,4 +38,11 @@ public interface IService<in TAddRequest, in TUpdateRequest, TResponse>
     /// <param name="searchString"></param>
     /// <returns>List of TResponse Objects</returns>
     Task<List<TResponse>> GetFilteredAsync(string? searchBy, string? searchString);
+    
+    /// <summary>
+    /// Deletes an object based on the given id.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns>Bool indicating successful deletion</returns>
+    Task<bool> DeleteAsync(int id);
 }

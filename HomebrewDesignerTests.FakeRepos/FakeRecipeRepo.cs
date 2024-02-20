@@ -44,6 +44,11 @@ public class FakeRecipeRepo : IRecipeRepository
         return await Task.Run(() => _recipes.Find(r => r.Id == id)) ?? throw new ArgumentException("Hop not found");
     }
 
+    public Task<bool> DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<IEnumerable<Recipe>> GetLastThreeEntriesAsync()
     {
         return _recipes.OrderByDescending(recipe => recipe.Id)

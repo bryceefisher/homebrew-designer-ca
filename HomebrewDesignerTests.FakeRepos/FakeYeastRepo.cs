@@ -38,4 +38,9 @@ public class FakeYeastRepo : IRepository<Yeast, YeastUpdateRequest>
     {
         return await Task.Run(() => _yeast.Find(y => y.Id == id)) ?? throw new ArgumentException("Yeast not found");
     }
+
+    public Task<bool> DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
 }

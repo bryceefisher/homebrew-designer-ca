@@ -121,4 +121,9 @@ public class YeastService : IService<YeastAddRequest, YeastUpdateRequest, YeastR
 
         return yeasts.Select(y => y.ToYeastResponse()).ToList();
     }
+
+    public Task<bool> DeleteAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
 }
