@@ -10,7 +10,7 @@ public class FermentableAddRequest
 {
     public int Id { get; set; }
     
-    [Required(ErrorMessage = "Fermentables name cannot be blank.")]
+    [Required(ErrorMessage = " Name cannot be blank.")]
     public string Name { get; set; }
     
     [Required]

@@ -32,69 +32,95 @@
             <a class="btn btn-main text-main p-2" asp-controller="Recipe" asp-action="AddFermentables">Add Recipe</a>
         </div>
         <h1 class="display-6 text-main">Recipes</h1>
-        <table class="table overflow-scroll text-main">
-            <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Style</th>
-                <th scope="col">OG</th>
-                <th scope="col">FG</th>
-                <th scope="col">ABV</th>
-                <th scope="col">IBU</th>
-                <th scope="col">SRM</th>
-                <th scope="col">Color</th>
-                <th scope="col">Edit</th>
-            </tr>
-            </thead>
-            <tbody>
-            @if (Model != null && Model.Any())
-            {
-                foreach (var recipe in Model)
+        <br/>
+        <div class="table-responsive">
+            <table class="table overflow-scroll text-main">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Style</th>
+                    <th scope="col">OG</th>
+                    <th scope="col">FG</th>
+                    <th scope="col">ABV</th>
+                    <th scope="col">IBU</th>
+                    <th scope="col">SRM</th>
+                    <th scope="col">Color</th>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <th scope="col">Edit</th>
+                    }
+                </tr>
+                </thead>
+                <tbody class="pt-5">
+                @if (Model != null && Model.Any())
                 {
-                    <tr>
-                        <td>
-                            <a class="text-green" asp-action="ViewRecipe" asp-controller="Recipe" asp-route-Id="@recipe.Id">@recipe.Name</a>
-                        </td>
-                        <td>@recipe.Style</td>
-                        <td>@recipe.OriginalGravity</td>
-                        <td>@recipe.FinalGravity</td>
-                        <td>@recipe.ABV</td>
-                        <td>@recipe.IBU</td>
-                        <td>@recipe.Color</td>
-                        @if (@recipe.Color < 10)
-                        {
+                    foreach (var recipe in Model)
+                    {
+                        <tr>
                             <td>
-                                <img class="beer-img" src="~/images/pale.png" alt="Pale beer in glass">
+                                <a class="text-green" asp-action="ViewRecipe" asp-controller="Recipe" asp-route-Id="@recipe.Id">@recipe.Name</a>
                             </td>
-                        }
-                        else if (@recipe.Color < 25 && @recipe.Color > 10)
-                        {
-                            <td>
-                                <img class="beer-img" src="~/images/light.png" alt="Pale beer in glass">
-                            </td>
-                        }
-                        else if (recipe.Color > 25 && recipe.Color < 40)
-                        {
-                            <td>
-                                <img class="beer-img" src="~/images/amber.png" alt="Pale beer in glass">
-                            </td>
-                        }
-                        else if (recipe.Color >= 40)
-                        {
-                            <td>
-                                <img class="beer-img" src="~/images/dark.png" alt="Pale beer in glass">
-                            </td>
-                        }
-                        <td>
-                            <a class="text-green" asp-controller="Recipe" asp-action="EditRecipe" asp-route-Id="@recipe.Id">Edit</a> / <a class="text-green" asp-controller="Recipe" asp-action="DeleteRecipe" asp-route-Id="@recipe.Id">Delete</a>
-                        </td>
-                    </tr>
+                            <td>@recipe.Style</td>
+                            <td>@recipe.OriginalGravity</td>
+                            <td>@recipe.FinalGravity</td>
+                            <td>@recipe.ABV</td>
+                            <td>@recipe.IBU</td>
+                            <td>@recipe.Color</td>
+                            @if (@recipe.Color < 10)
+                            {
+                                <td>
+                                    <img class="beer-img" src="~/images/pale.png" alt="Pale beer in glass">
+                                    <div class="image-tooltip">
+                                        <img src="~/images/palesrm.png" alt="Tooltip Image">
+                                    </div>
+                                </td>
+                            }
+                            else if (@recipe.Color < 25 && @recipe.Color > 10)
+                            {
+                                <td>
+                                    <img class="beer-img" src="~/images/light.png" alt="Pale beer in glass">
+                                    <div class="image-tooltip">
+                                        <img src="~/images/lightsrm.png" alt="Tooltip Image">
+                                    </div>
+                                </td>
+                            }
+                            else if (recipe.Color > 25 && recipe.Color < 40)
+                            {
+                                <td>
+                                    <img class="beer-img" src="~/images/amber.png" alt="Pale beer in glass">
+                                    <div class="image-tooltip">
+                                        <img src="~/images/ambersrm.png" alt="Tooltip Image">
+                                    </div>
+                                </td>
+                            }
+                            else if (recipe.Color >= 40)
+                            {
+                                <td>
+                                    <img class="beer-img" src="~/images/dark.png" alt="Pale beer in glass">
+                                    <div class="image-tooltip">
+                                        <img src="~/images/darksrm.png" alt="Tooltip Image">
+                                    </div>
+                                </td>
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <td>
+                                    <a class="text-green" asp-controller="Recipe" asp-action="EditRecipe" asp-route-Id="@recipe.Id">Edit</a> / <a class="text-green" asp-controller="Recipe" asp-action="DeleteRecipe" asp-route-Id="@recipe.Id">Delete</a>
+                                </td>
+                            }
+                        </tr>
+                    }
                 }
-            }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <div class="container mt-3 text-center">
     <a class="btn btn-main text-main p-2" asp-controller="Recipe" asp-action="AddFermentables">Add Recipe</a>
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

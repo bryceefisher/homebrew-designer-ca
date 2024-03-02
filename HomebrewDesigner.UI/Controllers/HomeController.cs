@@ -1,6 +1,7 @@
 ﻿using HomebrewDesigner.Core.Domain.Entities;
 using HomebrewDesigner.Core.DTO;
 using HomebrewDesigner.Core.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomebrewDesigner.Controllers;
@@ -17,7 +18,8 @@ public class HomeController : Controller
     
 
     [Route("/")]
-    public async Task<IActionResult> Index()
+    [AllowAnonymous]
+    public async Task<IActionResult> Home()
     {
         IEnumerable<RecipeResponse> recipes = await _recipeService.GetLastThreeEntriesAsync();
         

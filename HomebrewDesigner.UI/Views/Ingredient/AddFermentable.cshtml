@@ -1,11 +1,11 @@
-@model HomebrewDesigner.Core.DTO.FermentableUpdateRequest
+@model HomebrewDesigner.Core.DTO.FermentableAddRequest
 @{
     ViewBag.Title = "Add Fermentables";
 }
 
-<div class="container mt-5 text-center">
-    <h1 class="display-5 pb-3">Add Fermentables</h1>
-    <form asp-action="AddFermentable" asp-controller="Ingredient" method="post">
+<div class="container mt-5 text-center bg-secondary rounded-5 p-3">
+    <h1 class="display-5 pb-3 text-main">Add Fermentables</h1>
+    <form asp-action="AddFermentable" asp-controller="Ingredient" method="post" id="form">
         <div class="mb-3 d-flex">
             <div class="col-3">
                 <label asp-for="Name" class="form-label">
@@ -14,7 +14,7 @@
             </div>
             <div class="col-9">
                 <input class="w-100 form-control" asp-for="Name">
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <span asp-validation-for="Name" class="text-validation"></span>
             </div>
         </div>
         <div class="mb-3 d-flex">
@@ -25,15 +25,16 @@
             </div>
             <div class="col-9">
 
-                <select class="form-select w-100" asp-for="Type">
+                <select class="form-select w-100 bg-secondary text-main" asp-for="Type">
                     <option selected disabled="disabled">Select Type</option>
                     @foreach (var type in ViewBag.Types)
                     {
                         <option value="@type">@type</option>
                     }
                 </select>
+                <span asp-validation-for="Type" class="text-validation"></span>
             </div>
-            <span asp-validation-for="Type" class="text-danger"></span>
+
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
@@ -43,15 +44,16 @@
             </div>
             <div class="col-9">
 
-                <select class="form-select w-100" asp-for="Origin">
+                <select class="form-select w-100 bg-secondary text-main" asp-for="Origin">
                     <option selected disabled="disabled">Select Origin</option>
                     @foreach (var origin in ViewBag.Origins)
                     {
                         <option value="@origin">@origin</option>
                     }
                 </select>
+                <span asp-validation-for="Origin" class="text-validation"></span>
             </div>
-            <span asp-validation-for="Origin" class="text-danger"></span>
+
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
@@ -61,7 +63,7 @@
             </div>
             <div class="col-9">
                 <input class="w-100 form-control" asp-for="Color">
-                <span asp-validation-for="Color" class="text-danger"></span>
+                <span asp-validation-for="Color" class="text-validation"></span>
             </div>
         </div>
         <div class="mb-3 d-flex">
@@ -72,7 +74,7 @@
             </div>
             <div class="col-9">
                 <input class="w-100 form-control" asp-for="PotentialGravity">
-                <span asp-validation-for="PotentialGravity" class="text-danger"></span>
+                <span asp-validation-for="PotentialGravity" class="text-validation"></span>
             </div>
         </div>
         <div class="mb-3 d-flex">
@@ -83,11 +85,21 @@
             </div>
             <div class="col-9">
                 <input class="w-100 form-control" asp-for="MaxInBatch">
-                <span asp-validation-for="MaxInBatch" class="text-danger"></span>
+                <span asp-validation-for="MaxInBatch" class="text-validation"></span>
             </div>
         </div>
-        <div class="text-center mt-5">
-            <button type="submit" class="btn btn-danger">Add Fermentables</button>
+        <div id="loader" class="visually-hidden mt-3">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="text-center mt-5" id="buttonDiv">
+            <button type="submit" class="btn btn-main text-green">Add Fermentables</button>
         </div>
     </form>
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

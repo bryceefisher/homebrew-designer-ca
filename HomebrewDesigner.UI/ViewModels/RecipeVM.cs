@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using HomebrewDesigner.Core.Domain.Entities;
 using HomebrewDesigner.Core.DTO;
 using HomebrewDesigner.Core.ServiceContracts;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HomebrewDesigner.ViewModels;
 
@@ -25,15 +26,14 @@ public class RecipeVM
     {
     }
 
-    public RecipeAddRequest Recipe { get; set; }
+    public RecipeAddRequest? Recipe { get; set; }
 
     public int YeastId { get; set; }
     
     public int[]? HopId { get; set; }
-
     public int[]? FermentableId { get; set; }
-
-
+    
+    
     public double[]? FermentableWeight { get; set; }
 
     public List<HopResponse>? HopList { get; set; }

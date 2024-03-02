@@ -30,42 +30,57 @@
     </div>
     <div class="bg-secondary p-5 rounded-5 mt-5 container">
         <div class="container text-center mb-3">
-                    <a class="btn btn-main text-main p-2" asp-controller="Ingredient" asp-action="AddYeast">Add Yeast</a>
-                </div>
+            <a class="btn btn-main text-main p-2" asp-controller="Ingredient" asp-action="AddYeast">Add Yeast</a>
+        </div>
         <h1 class="display-6 text-main">Yeast</h1>
-        <table class="table overflow-scroll text-main">
-            <thead>
-            <tr>
-                <th>Ingredient Type</th>
-                <th scope="col">Name</th>
-                <th scope="col">Lab</th>
-                <th scope="col">Code</th>
-                <th scope="col">Type</th>
-                <th scope="col">Form</th>
-                <th scope="col">Flocculation</th>
-                <th scope="col">Edit</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var yeast in Model)
-            {
+        <div class="table-responsive">
+            <table class="table overflow-scroll text-main">
+                <thead>
                 <tr>
-                    <td><img class="yeast-img" src="~/images/yeast.png"/></td>
-                    <td class="text-green">@yeast.Name</td>
-                    <td>@yeast.Lab</td>
-                    <td>@yeast.Code</td>
-                    <td>@yeast.Type</td>
-                    <td>@yeast.Form</td>
-                    <td>@yeast.Flocculation</td>
-                    <td>
-                        <a class="text-green" asp-controller="Ingredient" asp-action="EditYeast" asp-route-Id="@yeast.Id">Edit</a>
-                    </td>
+                    <th>Ingredient Type</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Lab</th>
+                    <th scope="col">Code</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Form</th>
+                    <th scope="col">Flocculation</th>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <th scope="col">Edit</th>
+                    }
                 </tr>
-            }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach (var yeast in Model)
+                {
+                    <tr>
+                        <td>
+                            <img class="yeast-img" src="~/images/yeast.png"/>
+                        </td>
+                        <td class="text-green">@yeast.Name</td>
+                        <td>@yeast.Lab</td>
+                        <td>@yeast.Code</td>
+                        <td>@yeast.Type</td>
+                        <td>@yeast.Form</td>
+                        <td>@yeast.Flocculation</td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td>
+                                <a class="text-green" asp-controller="Ingredient" asp-action="EditYeast" asp-route-Id="@yeast.Id">Edit</a>
+                            </td>
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <div class="container mt-3 text-center">
     <a class="btn btn-main p-2 text-main" asp-controller="Ingredient" asp-action="AddYeast">Add Yeast</a>
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

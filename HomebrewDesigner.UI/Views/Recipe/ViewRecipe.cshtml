@@ -5,277 +5,292 @@
 }
 
 <div class="container-fluid mt-5 text-center">
-<h1 class="display-3 text-decoration-underline">View Recipe</h1>
-<div class="container border border-1 rounded-2 p-3 pt-5 bg-light">
-<h3 class="display-6">Details</h3>
-<div class="mb-3 d-flex">
-    <div class="col-3">
-        <label asp-for="Name" class="form-label">
-            <h5>Name:</h5>
-        </label>
-    </div>
-    <div class="col-9">
-        <input asp-for="Name" class="form-control" disabled/>
-        <span class="text-danger" asp-validation-for="Name"></span>
-    </div>
-</div>
-<div class="mb-3 d-flex">
-    <div class="col-3">
-        <label asp-for="Style" class="form-label">
-            <h5>Style:</h5>
-        </label>
-    </div>
-    <div class="col-9">
-        <input asp-for="Style" class="form-control" disabled/>
-        <span class="text-danger" asp-validation-for="Style"></span>
-    </div>
-</div>
-<div class="mb-3 d-flex">
-    <div class="col-3">
-        <label asp-for="OriginalGravity" class="form-label">
-            <h5>Original Gravity:</h5>
-        </label>
-    </div>
-    <div class="col-9">
-        <input asp-for="OriginalGravity" class="form-control" disabled/>
-        <span class="text-danger" asp-validation-for="OriginalGravity"></span>
-    </div>
-</div>
-<div class="mb-3 d-flex">
-    <div class="col-3">
-        <label asp-for="FinalGravity" class="form-label">
-            <h5>Final Gravity:</h5>
-        </label>
-    </div>
-    <div class="col-9">
-        <input asp-for="FinalGravity" class="form-control" disabled/>
-        <span class="text-danger" asp-validation-for="FinalGravity"></span>
-    </div>
-</div>
-<div class="mb-3 d-flex">
-    <div class="col-3">
-        <label asp-for="ABV" class="form-label">
-            <h5>ABV:</h5>
-        </label>
-    </div>
-    <div class="col-9">
-        <input asp-for="ABV" class="form-control" disabled/>
-        <span class="text-danger" asp-validation-for="ABV"></span>
-    </div>
-</div>
-<div class="mb-3 d-flex">
-    <div class="col-3">
-        <label asp-for="IBU" class="form-label">
-            <h5>IBU:</h5>
-        </label>
-    </div>
-    <div class="col-9">
-        <input asp-for="IBU" class="form-control" disabled/>
-        <span class="text-danger" asp-validation-for="IBU"></span>
-    </div>
-</div>
-<div class="mb-3 d-flex">
-    <div class="col-3">
-        <label asp-for="Color" class="form-label">
-            <h5>Color:</h5>
-        </label>
-    </div>
-    <div class="col-9">
-        <input asp-for="Color" class="form-control" disabled/>
-        <span class="text-danger" asp-validation-for="Color"></span>
-    </div>
-</div>
-<h3 class="display-6">Hops</h3>
-@for (int i = 0; i < Model.Hops.Count; i++)
-{
+<h1 class="display-3 text-decoration-underline text-main">View Recipe</h1>
+<div class="container pt-5 ">
+<div class="bg-secondary rounded-5 p-3">
+    <h3 class="display-6 text-green">Details</h3>
     <div class="mb-3 d-flex">
         <div class="col-3">
-            <label asp-for="Hops" class="form-label">
-                <h5>Hop Addition: @(i + 1)</h5>
+            <label asp-for="Name" class="form-label">
+                <h5>Name:</h5>
             </label>
         </div>
-
         <div class="col-9">
-            <input asp-for="Hops[i].Hop.Name" class="form-control" disabled/>
-            <span class="text-danger" asp-validation-for="Hops[i].Hop.Name"></span>
-        </div>
-
-    </div>
-    <div class="mb-3 d-flex">
-        <div class="col-3">
-            <p>Alpa Acid (%)</p>
-        </div>
-
-        <div class="col-9">
-            <input asp-for="Hops[i].Hop.AlphaAcid" class="form-control" disabled/>
-            <span class="text-danger" asp-validation-for="Hops[i].Hop.Name"></span>
-        </div>
-
-    </div>
-    <div class="mb-3 d-flex">
-        <div class="col-3">
-            <p>Amount (g)</p>
-        </div>
-
-        <div class="col-9">
-            <input asp-for="Hops[i].Amount" class="form-control" disabled/>
-            <span class="text-danger" asp-validation-for="Hops[i].Hop.Name"></span>
+            <input asp-for="Name" class="form-control" disabled/>
+            <span class="text-green" asp-validation-for="Name"></span>
         </div>
     </div>
     <div class="mb-3 d-flex">
         <div class="col-3">
-            <p>Form</p>
+            <label asp-for="Style" class="form-label">
+                <h5>Style:</h5>
+            </label>
         </div>
-
         <div class="col-9">
-            <input asp-for="Hops[i].Form" class="form-control" disabled/>
-            <span class="text-danger" asp-validation-for="Hops[i].Hop.Name"></span>
+            <input asp-for="Style" class="form-control" disabled/>
+            <span class="text-green" asp-validation-for="Style"></span>
         </div>
     </div>
-    @if (Model.Hops[i].Use == "Dry Hop")
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <label asp-for="OriginalGravity" class="form-label">
+                <h5>Original Gravity:</h5>
+            </label>
+        </div>
+        <div class="col-9">
+            <input asp-for="OriginalGravity" class="form-control" disabled/>
+            <span class="text-green" asp-validation-for="OriginalGravity"></span>
+        </div>
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <label asp-for="FinalGravity" class="form-label">
+                <h5>Final Gravity:</h5>
+            </label>
+        </div>
+        <div class="col-9">
+            <input asp-for="FinalGravity" class="form-control" disabled/>
+            <span class="text-green" asp-validation-for="FinalGravity"></span>
+        </div>
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <label asp-for="ABV" class="form-label">
+                <h5>ABV:</h5>
+            </label>
+        </div>
+        <div class="col-9">
+            <input asp-for="ABV" class="form-control" disabled/>
+            <span class="text-green" asp-validation-for="ABV"></span>
+        </div>
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <label asp-for="IBU" class="form-label">
+                <h5>IBU:</h5>
+            </label>
+        </div>
+        <div class="col-9">
+            <input asp-for="IBU" class="form-control" disabled/>
+            <span class="text-green" asp-validation-for="IBU"></span>
+        </div>
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <label asp-for="Color" class="form-label">
+                <h5>Color:</h5>
+            </label>
+        </div>
+        <div class="col-9">
+            <input asp-for="Color" class="form-control" disabled/>
+            <span class="text-green" asp-validation-for="Color"></span>
+        </div>
+    </div>
+</div>
+<div class="bg-secondary rounded-5 p-3 mt-3">
+    <h3 class="display-6 text-green">Hops</h3>
+    @for (int i = 0; i < Model.Hops.Count; i++)
     {
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <p>Dry Hop (Days)</p>
+                <label asp-for="Hops" class="form-label">
+                    <h5>Hop Addition: @(i + 1)</h5>
+                </label>
             </div>
 
             <div class="col-9">
-                <input asp-for="Hops[i].DryHopDays" class="form-control" disabled/>
-                <span class="text-danger" asp-validation-for="Hops[i].Hop.Name"></span>
+                <input asp-for="Hops[i].Hop.Name" class="form-control" disabled/>
+                <span class="text-green" asp-validation-for="Hops[i].Hop.Name"></span>
+            </div>
+
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <p>Alpa Acid (%)</p>
+            </div>
+
+            <div class="col-9">
+                <input asp-for="Hops[i].Hop.AlphaAcid" class="form-control" disabled/>
+                <span class="text-green" asp-validation-for="Hops[i].Hop.Name"></span>
+            </div>
+
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <p>Amount (g)</p>
+            </div>
+
+            <div class="col-9">
+                <input asp-for="Hops[i].Amount" class="form-control" disabled/>
+                <span class="text-green" asp-validation-for="Hops[i].Hop.Name"></span>
             </div>
         </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <p>Form</p>
+            </div>
+
+            <div class="col-9">
+                <input asp-for="Hops[i].Form" class="form-control" disabled/>
+                <span class="text-green" asp-validation-for="Hops[i].Hop.Name"></span>
+            </div>
+        </div>
+        @if (Model.Hops[i].Use == "Dry Hop")
+        {
+            <div class="mb-3 d-flex">
+                <div class="col-3">
+                    <p>Dry Hop (Days)</p>
+                </div>
+
+                <div class="col-9">
+                    <input asp-for="Hops[i].DryHopDays" class="form-control" disabled/>
+                    <span class="text-green" asp-validation-for="Hops[i].Hop.Name"></span>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="mb-3 d-flex">
+                <div class="col-3">
+                    <p>Boil (Minutes)</p>
+                </div>
+
+                <div class="col-9">
+                    <input asp-for="Hops[i].BoilTime" class="form-control" disabled/>
+                    <span class="text-green" asp-validation-for="Hops[i].Hop.Name"></span>
+                </div>
+            </div>
+        }
     }
-    else
+</div>
+<div class="bg-secondary rounded-5 p-3 mt-3">
+    <h3 class="display-6 text-green">Yeast</h3>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <h5>Yeast: </h5>
+        </div>
+
+        <div class="col-9">
+            <input asp-for="Yeast.Name" class="form-control" disabled/>
+            <span class="text-green" asp-validation-for="Yeast.Name"></span>
+        </div>
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <h5>Yeast Amount (ml) </h5>
+        </div>
+
+        <div class="col-9">
+            <input asp-for="YeastAmount" class="form-control" disabled/>
+            <span class="text-green" asp-validation-for="YeastAmount"></span>
+        </div>
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <h5>Yeast Viability (%) </h5>
+        </div>
+
+        <div class="col-9">
+            <input asp-for="YeastViability" class="form-control" disabled/>
+            <span class="text-green" asp-validation-for="YeastViability"></span>
+        </div>
+    </div>
+</div>
+<div class="bg-secondary rounded-5 p-3 mt-3">
+    <h3 class="display-6 text-green">Fermentables</h3>
+    @for (int i = 0; i < Model.Maltbill.Count; i++)
     {
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <p>Boil (Minutes)</p>
+                <label asp-for="Hops" class="form-label">
+                    <h5>Fermentable: @(i + 1)</h5>
+                </label>
             </div>
 
             <div class="col-9">
-                <input asp-for="Hops[i].BoilTime" class="form-control" disabled/>
-                <span class="text-danger" asp-validation-for="Hops[i].Hop.Name"></span>
+                <input asp-for="Maltbill[i].Fermentable.Name" class="form-control" disabled/>
+                <span class="text-green" asp-validation-for="Maltbill[i].Fermentable.Name"></span>
+            </div>
+
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Maltbill[i].Weight" class="form-label">
+                    <p>Weight:</p>
+                </label>
+            </div>
+
+            <div class="col-9">
+                <input asp-for="Maltbill[i].Weight" class="form-control" disabled/>
+                <span class="text-green" asp-validation-for="Maltbill[i].Weight"></span>
+            </div>
+        </div>
+
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Maltbill[i].Fermentable.Type" class="form-label">
+                    <p>Type:</p>
+                </label>
+            </div>
+
+            <div class="col-9">
+                <input asp-for="Maltbill[i].Fermentable.Type" class="form-control" disabled/>
+                <span class="text-green" asp-validation-for="Maltbill[i].Fermentable.Type"></span>
+            </div>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Hops" class="form-label">
+                    <p>Color:</p>
+                </label>
+            </div>
+
+            <div class="col-9">
+                <input asp-for="Maltbill[i].Fermentable.Color" class="form-control" disabled/>
+                <span class="text-green" asp-validation-for="Maltbill[i].Fermentable.Color"></span>
+            </div>
+        </div>
+        <div class="mb-3 d-flex">
+            <div class="col-3">
+                <label asp-for="Hops" class="form-label">
+                    <p>Potential Gravity:</p>
+                </label>
+            </div>
+
+            <div class="col-9">
+                <input asp-for="Maltbill[i].Fermentable.PotentialGravity" class="form-control" disabled/>
+                <span class="text-green" asp-validation-for="Maltbill[i].Fermentable.PotentialGravity"></span>
             </div>
         </div>
     }
+</div>
+<div class="bg-secondary rounded-5 p-3 mt-3">
+    <h3 class="display-6 text-green">Mash</h3>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <h5>Mash Temp (f): </h5>
+        </div>
+
+        <div class="col-9">
+            <input asp-for="MashTemp" class="form-control" disabled/>
+            <span class="text-green" asp-validation-for="MashTemp"></span>
+        </div>
+    </div>
+    <div class="mb-3 d-flex">
+        <div class="col-3">
+            <h5>Amount of Water (gal): </h5>
+        </div>
+
+        <div class="col-9">
+            <input asp-for="AmountOfWater" class="form-control" disabled/>
+            <span class="text-green" asp-validation-for="AmountOfWater"></span>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
 }
-<h3 class="display-6">Yeast</h3>
-<div class="mb-3 d-flex">
-    <div class="col-3">
-        <h5>Yeast: </h5>
-    </div>
-
-    <div class="col-9">
-        <input asp-for="Yeast.Name" class="form-control" disabled/>
-        <span class="text-danger" asp-validation-for="Yeast.Name"></span>
-    </div>
-</div>
-<div class="mb-3 d-flex">
-    <div class="col-3">
-        <h5>Yeast Amount (ml) </h5>
-    </div>
-
-    <div class="col-9">
-        <input asp-for="YeastAmount" class="form-control" disabled/>
-        <span class="text-danger" asp-validation-for="YeastAmount"></span>
-    </div>
-</div>
-<div class="mb-3 d-flex">
-    <div class="col-3">
-        <h5>Yeast Viability (%) </h5>
-    </div>
-
-    <div class="col-9">
-        <input asp-for="YeastViability" class="form-control" disabled/>
-        <span class="text-danger" asp-validation-for="YeastViability"></span>
-    </div>
-</div>
-<h3 class="display-6">Fermentables</h3>
-@for (int i = 0; i < Model.Maltbill.Count; i++)
-{
-    <div class="mb-3 d-flex">
-        <div class="col-3">
-            <label asp-for="Hops" class="form-label">
-                <h5>Fermentable: @(i + 1)</h5>
-            </label>
-        </div>
-
-        <div class="col-9">
-            <input asp-for="Maltbill[i].Fermentable.Name" class="form-control" disabled/>
-            <span class="text-danger" asp-validation-for="Maltbill[i].Fermentable.Name"></span>
-        </div>
-
-    </div>
-    <div class="mb-3 d-flex">
-        <div class="col-3">
-            <label asp-for="Maltbill[i].Weight" class="form-label">
-                <p>Weight:</p>
-            </label>
-        </div>
-
-        <div class="col-9">
-            <input asp-for="Maltbill[i].Weight" class="form-control" disabled/>
-            <span class="text-danger" asp-validation-for="Maltbill[i].Weight"></span>
-        </div>
-    </div>
-    
-    <div class="mb-3 d-flex">
-        <div class="col-3">
-            <label asp-for="Maltbill[i].Fermentable.Type" class="form-label">
-                <p>Type:</p>
-            </label>
-        </div>
-
-        <div class="col-9">
-            <input asp-for="Maltbill[i].Fermentable.Type" class="form-control" disabled/>
-            <span class="text-danger" asp-validation-for="Maltbill[i].Fermentable.Type"></span>
-        </div>
-    </div>
-    <div class="mb-3 d-flex">
-        <div class="col-3">
-            <label asp-for="Hops" class="form-label">
-                <p>Color:</p>
-            </label>
-        </div>
-
-        <div class="col-9">
-            <input asp-for="Maltbill[i].Fermentable.Color" class="form-control" disabled/>
-            <span class="text-danger" asp-validation-for="Maltbill[i].Fermentable.Color"></span>
-        </div>
-    </div>
-    <div class="mb-3 d-flex">
-        <div class="col-3">
-            <label asp-for="Hops" class="form-label">
-                <p>Potential Gravity:</p>
-            </label>
-        </div>
-
-        <div class="col-9">
-            <input asp-for="Maltbill[i].Fermentable.PotentialGravity" class="form-control" disabled/>
-            <span class="text-danger" asp-validation-for="Maltbill[i].Fermentable.PotentialGravity"></span>
-        </div>
-    </div>
-}
-<h3 class="display-6">Mash</h3>
-<div class="mb-3 d-flex">
-    <div class="col-3">
-        <h5>Mash Temp: </h5>
-    </div>
-
-    <div class="col-9">
-        <input asp-for="MashTemp" class="form-control" disabled/>
-        <span class="text-danger" asp-validation-for="MashTemp"></span>
-    </div>
-</div>
-<div class="mb-3 d-flex">
-    <div class="col-3">
-        <h5>Amount of Water: </h5>
-    </div>
-
-    <div class="col-9">
-        <input asp-for="AmountOfWater" class="form-control" disabled/>
-        <span class="text-danger" asp-validation-for="AmountOfWater"></span>
-    </div>
-</div>
-</div>
-</div>

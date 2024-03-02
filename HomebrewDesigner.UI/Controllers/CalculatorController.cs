@@ -1,4 +1,5 @@
 using HomebrewDesigner.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomebrewDesigner.Controllers;
@@ -7,7 +8,8 @@ namespace HomebrewDesigner.Controllers;
 public class CalculatorController : Controller
 {
     // GET
-    public IActionResult Index()
+    [AllowAnonymous]
+    public IActionResult Calculator()
     {
         CalculatorVM calc = new CalculatorVM();
 
@@ -20,7 +22,8 @@ public class CalculatorController : Controller
     }
     
     [HttpPost]
-    public IActionResult Index(CalculatorVM calc)
+    [AllowAnonymous]
+    public IActionResult Calculator(CalculatorVM calc)
     {
         calc.ABV = Math.Round((calc.OG - calc.FG) * 131.25, 1);
 

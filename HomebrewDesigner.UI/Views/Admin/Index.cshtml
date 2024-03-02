@@ -1,0 +1,152 @@
+@using HomebrewDesigner.Core.Domain.Identity
+@model HomebrewDesigner.ViewModels.UserVm
+
+@{
+    ViewBag.Title = "Admin | Users";
+    Layout = "_Layout";
+}
+@*TODO: make responsive*@
+<div class="text-center mt-3">
+    <div class="mt-3">
+        <h1 class="mb-2 text-main">Manage Users</h1>
+    </div>
+    <div class="mt-3 mb-3">
+        <h5 class="mt-2">
+            <a asp-action="Add" asp-controller="Admin" class="text-green">Add a User</a>
+        </h5>
+    </div>
+    <div class="bg-secondary rounded-5 p-5 table-responsive">
+        <table class="table table-bordered text-main overflow-scroll">
+            <thead>
+            <tr>
+                <th>Username</th><th>Roles</th><th></th><th></th><th></th><th></th><th></th><th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @if (!Model.Users.Any())
+            {
+                <tr>
+                    <td colspan="5">There are no user accounts.</td>
+                </tr>
+            }
+            else
+            {
+                foreach (ApplicationUser user in Model.Users)
+                {
+                    <tr>
+                        <td>@user.UserName</td>
+                        <td>
+                            @foreach (string roleName in user.RoleNames)
+                            {
+                                <div>@roleName</div>
+                            }
+                        </td>
+                        <td>
+                            <form method="post" asp-action="Delete" asp-controller="Admin" asp-route-id="@user.Id">
+                                <button type="submit" class="btn btn-danger"> Delete User</button>
+                            </form>
+                        </td>
+                        @if (!user.RoleNames.Contains("Admin") && !user.RoleNames.Contains("Guest"))
+                        {
+                            <td>
+                                <form method="post" asp-action="AddToAdmin" asp-controller="Admin" asp-route-id="@user.Id">
+                                    <button type="submit" class="btn btn-success"> Add To Admin</button>
+                                </form>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        @if (user.RoleNames.Contains("Admin"))
+                        {
+                            <td>
+                                <form method="post" asp-action="RemoveFromAdmin" asp-controller="Admin" asp-route-id="@user.Id">
+                                    <button type="submit" class="btn btn-danger"> Remove From Admin</button>
+                                </form>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+
+                        @if (!user.RoleNames.Contains("Admin") && !user.RoleNames.Contains("User"))
+                        {
+                            <td>
+                                <form method="post" asp-action="AddToUserRole" asp-controller="Admin" asp-route-id="@user.Id">
+                                    <button type="submit" class="btn btn-success">Add User Role</button>
+                                </form>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        @if (user.RoleNames.Contains("User") && !user.RoleNames.Contains("Admin"))
+                        {
+                            <td>
+                                <form method="post" asp-action="RemoveFromUserRole" asp-controller="Admin" asp-route-id="@user.Id">
+                                    <button type="submit" class="btn btn-danger"> Remove User Role</button>
+                                </form>
+                            </td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td>
+                            <a class="btn btn-secondary" asp-action="Edit" asp-controller="Admin" asp-route-id="@user.Id">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+    <hr class="mt-5 text-green"/>
+    <div class="mt-3">
+        <h1 class="mb-2 text-main">Manage Roles</h1>
+    </div>
+    <div class="bg-secondary table-responsive rounded-5 p-5">
+        <table class="table table-bordered text-main">
+            <thead>
+            <tr>
+                <th>Role</th><th></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            @foreach (var role in @Model.Roles)
+            {
+                <tr>
+                    <td>@role.Name</td>
+                    <td>
+                        <form method="post" asp-action="DeleteRole" asp-controller="Admin" asp-route-id="@role.Id">
+                            <button type="submit" class="btn btn-danger"> Delete Role</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+
+            </tbody>
+        </table>
+    </div>
+
+    @foreach (var key in ViewData.ModelState.Keys)
+    {
+        <div>@key</div>
+        @foreach (var error in ViewData.ModelState[key].Errors)
+        {
+            <div class="text-green">@error.ErrorMessage</div>
+        }
+    }
+
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

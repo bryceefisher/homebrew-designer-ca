@@ -134,7 +134,7 @@ input:-webkit-autofill:active  {
   border-color: #f9f9f9;
 }
 
-.text-green {
+.text-validation {
   color: #31ED31;
 }
 
@@ -164,7 +164,64 @@ input {
   width: 15px;
 }
 
+.ferm-img{
+  height: 30px;
+  width: 20px;
+}
+
 .yeast-img{
   height: 30px;
   width: 25px;
 }
+
+.nav-logo {
+  height: 50px;
+  width: 35px;
+  margin: 5px;
+}
+
+h5 {
+  color: #f9f9f9;
+}
+
+p {
+  color: #f9f9f9;
+}
+input{
+  background-color: #2b2b2b !important;
+  color: #f9f9f9 !important;
+}
+
+.text-validation {
+  color: #31ED31 !important;
+}
+
+.text-green {
+  color: #31ED31 !important;
+}
+
+td {
+  position: relative;
+}
+
+.image-tooltip {
+  display: none;
+  position: absolute;
+  bottom: 50%; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  border: 1px solid #ccc; 
+  background-color: white; 
+  z-index: 100;
+}
+
+.beer-img:hover + .image-tooltip {
+  display: block;
+}
+
+.image-tooltip img {
+  max-width: 250px; 
+  height: auto; 
+  display: block; 
+}
+

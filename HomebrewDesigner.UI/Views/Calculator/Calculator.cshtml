@@ -6,7 +6,7 @@
 <div class="container-fluid mt-5 text-center">
     <h1 class="display-3 text-decoration-none text-main">ABV Calculator</h1>
     <div class="container rounded-5 p-3 pt-5 bg-secondary">
-        <form asp-action="Index" asp-controller="Calculator" method="post">
+        <form asp-action="Calculator" asp-controller="Calculator" method="post">
             <div class="mb-3 d-flex">
                 <div class="col-3">
                     <label asp-for="OG" class="form-label">
@@ -15,7 +15,7 @@
                 </div>
                 <div class="col-9">
                     <input asp-for="OG" class="form-control bg-secondary text-main"/>
-                    <span class="text-danger" asp-validation-for="OG"></span>
+                    <span class="text-green" asp-validation-for="OG"></span>
                 </div>
             </div>
             <div class="mb-3 d-flex">
@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-9">
                     <input asp-for="FG" class="form-control bg-secondary text-main"/>
-                    <span class="text-danger" asp-validation-for="FG"></span>
+                    <span class="text-green" asp-validation-for="FG"></span>
                 </div>
             </div>
             <div class="mb-3 d-flex">
@@ -37,7 +37,7 @@
                 </div>
                 <div class="col-9">
                     <input asp-for="ABV" disabled class="form-control bg-secondary text-main"/>
-                    <span class="text-danger" asp-validation-for="ABV"></span>
+                    <span class="text-green" asp-validation-for="ABV"></span>
                 </div>
             </div>
 
@@ -45,3 +45,8 @@
         </form>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

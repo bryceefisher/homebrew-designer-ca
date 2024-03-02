@@ -8,22 +8,22 @@ public class YeastUpdateRequest
 {
     public int Id { get; set;  }
     
-    [Required]
+    [Required (ErrorMessage = "Name is required.")]
     public string Name { get; set;  }
     
-    [Required]
+    [Required (ErrorMessage = "Lab is required.")]
     public string Lab { get; set;  }
     
-    [Required]
+    [Required (ErrorMessage = "Code is required.")]
     public string Code { get; set;  }
     
-    [Required]
+    [Required (ErrorMessage = "Type is required.")]
     public YeastTypeEnum Type { get; set;  }
     
-    [Required]
+    [Required (ErrorMessage = "Form is required.")]
     public YeastFormEnum Form { get; set;  }
     
-    [Required]
+    [Required (ErrorMessage = "Flocculation is required.")]
     public YeastFlocEnum Flocculation { get; set;  }
     
     
