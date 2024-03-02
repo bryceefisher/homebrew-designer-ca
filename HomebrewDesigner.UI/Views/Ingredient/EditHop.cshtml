@@ -4,43 +4,55 @@
 }
 
 <div class="container mt-5 text-center">
-     <h1 class="display-2 text-main">Edit Hop</h1>
-<div class="container rounded-5 bg-secondary p-3 pt-5 mt-4">
-    <form asp-controller="Ingredient" asp-action="EditHop" method="post">
-        <div class="mb-3 d-flex visually-hidden">
-            <div class="col-3">
-                <label asp-for="Id" class="form-label">
-                    <h5>Id:</h5>
-                </label>
+    <h1 class="display-2 text-main">Edit Hop</h1>
+    <div class="container rounded-5 bg-secondary p-3 pt-5 mt-4">
+        <form asp-controller="Ingredient" asp-action="EditHop" method="post" id="form">
+            <div class="mb-3 d-flex visually-hidden">
+                <div class="col-3">
+                    <label asp-for="Id" class="form-label">
+                        <h5>Id:</h5>
+                    </label>
+                </div>
+                <div class="col-9">
+                    <input class="w-100 form-control" asp-for="Id">
+                </div>
             </div>
-            <div class="col-9">
-                <input class="w-100 form-control" asp-for="Id">
+            <div class="mb-3 d-flex">
+                <div class="col-3">
+                    <label asp-for="Name" class="form-label text-main">
+                        <h5>Name:</h5>
+                    </label>
+                </div>
+                <div class="col-9">
+                    <input class="w-100 form-control text-main bg-main" asp-for="Name">
+                    <span asp-validation-for="Name" class="text-validation"></span>
+                </div>
             </div>
-        </div>
-        <div class="mb-3 d-flex">
-            <div class="col-3">
-                <label asp-for="Name" class="form-label text-main">
-                    <h5>Name:</h5>
-                </label>
+            <div class="mb-3 d-flex">
+                <div class="col-3">
+                    <label asp-for="AlphaAcid" class="form-label text-main">
+                        <h5>Alpha Acid:</h5>
+                    </label>
+                </div>
+                <div class="col-9">
+                    <input class="w-100 form-control text-main bg-main" asp-for="AlphaAcid" >
+                    <span asp-validation-for="AlphaAcid" class="text-validation"></span>
+                </div>
             </div>
-            <div class="col-9">
-                <input class="w-100 form-control text-main bg-main" asp-for="Name" required>
+            <div id="loader" class="visually-hidden mt-3">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
-        </div>
-        <div class="mb-3 d-flex">
-            <div class="col-3">
-                <label asp-for="AlphaAcid" class="form-label text-main">
-                    <h5>Alpha Acid:</h5>
-                </label>
-            </div>
-            <div class="col-9">
-                <input class="w-100 form-control text-main bg-main" asp-for="AlphaAcid" required>
-            </div>
-        </div>
-        <div class="text-center mt-5">
-            <button type="submit" class="btn btn-main text-green">Update Hop</button>
+            <div class="text-center mt-5" id="buttonDiv">
+                <button type="submit" class="btn btn-main text-green">Update Hop</button>
 
-        </div>
-    </form>
+            </div>
+        </form>
+    </div>
 </div>
-</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

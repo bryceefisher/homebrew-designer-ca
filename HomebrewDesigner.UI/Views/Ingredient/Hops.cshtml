@@ -33,32 +33,45 @@
                     <a class="btn btn-main text-main p-2" asp-controller="Ingredient" asp-action="AddHop">Add Hop</a>
                 </div>
         <h1 class="display-6 text-main">Hops</h1>
-        <table class="table text-main overflow-scroll">
-            <thead>
-            <tr>
-                <th>Ingredient Type</th>
-                <th scope="col">Name</th>
-                <th scope="col">Alpha Acid Percentage</th>
-                <th scope="col">Edit</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var hop in Model)
-            {
+        <div class="table-responsive">
+            <table class="table text-main overflow-scroll">
+                <thead>
                 <tr>
-                    <td><img class="hops-img" src="~/images/hop.png"/></td>
-                    
-                    <td class="text-green">@hop.Name</td>
-                    <td>@hop.AlphaAcid</td>
-                    <td>
-                        <a class="text-green" asp-controller="Ingredient" asp-action="EditHop" asp-route-Id="@hop.Id">Edit</a>
-                    </td>
+                    <th>Ingredient Type</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Alpha Acid Percentage</th>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <th scope="col">Edit</th>
+                    }
                 </tr>
-            }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach (var hop in Model)
+                {
+                    <tr>
+                        <td><img class="hops-img" src="~/images/hop.png"/></td>
+                    
+                        <td class="text-green">@hop.Name</td>
+                        <td>@hop.AlphaAcid</td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td>
+                                <a class="text-green" asp-controller="Ingredient" asp-action="EditHop" asp-route-Id="@hop.Id">Edit</a>
+                            </td>
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+            </div>
     </div>
 </div>
 <div class="container mt-3 text-center">
     <a class="btn btn-main text-main p-2" asp-controller="Ingredient" asp-action="AddHop">Add Hop</a>
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

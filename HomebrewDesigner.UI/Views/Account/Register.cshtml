@@ -12,37 +12,37 @@
                 <div class="form-group">
                     <label asp-for="FirstName" class="control-label text-main" >First Name:</label>
                     <input asp-for="FirstName" class="form-control bg-main" placeholder="First Name"/>
-                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                    <span asp-validation-for="FirstName" class="text-validation"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="LastName" class="control-label text-main">Last Name:</label>
                     <input asp-for="LastName" class="form-control bg-main" placeholder="Last Name"/>
-                    <span asp-validation-for="LastName" class="text-danger"></span>
+                    <span asp-validation-for="LastName" class="text-validation"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="Email" class="control-label text-main">Email:</label>
                     <input asp-for="Email" class="form-control bg-main" placeholder="Email"/>
-                    <span asp-validation-for="Email" class="text-danger"></span>
+                    <span asp-validation-for="Email" class="text-validation"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="UserName" class="control-label text-main">Username:</label>
                     <input asp-for="UserName" class="form-control bg-main" placeholder="UserName"/>
-                    <span asp-validation-for="UserName" class="text-danger"></span>
+                    <span asp-validation-for="UserName" class="text-validation"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="Password" class="control-label text-main">Password:</label>
                     <input asp-for="Password" class="form-control bg-main" placeholder="Password"/>
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                    <span asp-validation-for="Password" class="text-validation"></span>
                 </div>
 
                 <div class="form-group">
                     <label asp-for="ConfirmPassword" class="control-label text-main">Confirm Password:</label>
                     <input asp-for="ConfirmPassword" class="form-control bg-main" placeholder="Confirm Password"/>
-                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    <span asp-validation-for="ConfirmPassword" class="text-validation"></span>
                 </div>
 
 
@@ -59,7 +59,7 @@
                 <ul>
                     @foreach (var error in ViewData.ModelState.Values.SelectMany(x => x.Errors))
                     {
-                        <li class="text-danger">@error.ErrorMessage</li>
+                        <li class="text-validation">@error.ErrorMessage</li>
                     }
                 </ul>
             </form>
@@ -70,3 +70,9 @@
 
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}
+

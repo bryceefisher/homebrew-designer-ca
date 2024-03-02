@@ -1,0 +1,81 @@
+@model HomebrewDesigner.ViewModels.RegisterVM
+
+@{
+    ViewData["Title"] = "Admin | Add User";
+}
+
+
+<div class="text-center pt-5">
+    <h1 class="display-6 text-main">Add a User</h1>
+    <div class="container text-center col-10 flex-column d-flex align-items-center">
+        <div class="col-12">
+            <form asp-action="Add" asp-controller="Admin" method="post" id="form">
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label text-main">First Name:</label>
+                    <input asp-for="FirstName" class="form-control"/>
+                    <span asp-validation-for="FirstName" class="text-green"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="LastName" class="control-label text-main">Last Name:</label>
+                    <input asp-for="LastName" class="form-control"/>
+                    <span asp-validation-for="LastName" class="text-green"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label text-main">Email:</label>
+                    <input asp-for="Email" class="form-control"/>
+                    <span asp-validation-for="Email" class="text-green"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UserName" class="control-label text-main">Username:</label>
+                    <input asp-for="UserName" class="form-control"/>
+                    <span asp-validation-for="UserName" class="text-green"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label text-main">Password:</label>
+                    <input asp-for="Password" class="form-control"/>
+                    <span asp-validation-for="Password" class="text-green"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword" class="control-label text-main">Confirm Password:</label>
+                    <input asp-for="ConfirmPassword" class="form-control"/>
+                    <span asp-validation-for="ConfirmPassword" class="text-green"></span>
+                </div>
+
+                <div class="form-group mt-3">
+                    <label asp-for="IsAdmin" class="form-check-label text-main px-1">Admin Role:</label>
+                    <input asp-for="IsAdmin" type="checkbox" class="form-check-input"/>
+                    <span asp-validation-for="IsAdmin" class="text-green"></span>
+                </div>
+
+                <div id="loader" class="visually-hidden mt-3">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <div class="form-group mt-3 mb-3" id="buttonDiv">
+                    <button type="submit" class="btn btn-main text-main">Add User</button>
+                    <a class="text-white text-decoration-none btn btn-main text-main" asp-controller="Admin" asp-action="Add">Clear</a>
+                </div>
+
+                <ul>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(x => x.Errors))
+                    {
+                        <li class="text-green">@error.ErrorMessage</li>
+                    }
+                </ul>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

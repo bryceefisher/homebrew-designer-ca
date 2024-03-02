@@ -4,6 +4,7 @@ using HomebrewDesigner.Core.Domain.Entities;
 using HomebrewDesigner.Core.DTO;
 using HomebrewDesigner.Core.ServiceContracts;
 using HomebrewDesigner.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomebrewDesigner.Controllers;
@@ -28,6 +29,7 @@ public class RecipeController : Controller
         _recipeVm = new RecipeVM(_hopService, _fermentableService, _yeastService);
     }
 
+    [AllowAnonymous]
     public async Task<IActionResult> Recipes(string? searchBy, string? searchString)
     {
         ViewBag.SearchFields = new Dictionary<string, string>()
@@ -92,9 +94,9 @@ public class RecipeController : Controller
         recipeVm.HopList = await _hopService.GetAllAsync();
         recipeVm.YeastList = await _yeastService.GetAllAsync();
         recipeVm.FermentableList = await _fermentableService.GetAllAsync();
-
         recipeVm.Recipe = new RecipeAddRequest();
         recipeVm.Recipe.MaltBill = new List<RecipeAddRequest.FermentablePair>();
+
 
         if (recipeVm.FermentableId is not null)
         {
@@ -184,11 +186,11 @@ public class RecipeController : Controller
         {
             recipe.Recipe.FinalGravity = Math.Round(1.002 + random.NextDouble() * (1.025 - 1.015), 3);
         }
-        
-        
-        
-        recipe.Recipe.ABV = (double)Math.Round((decimal)((recipe.Recipe.OriginalGravity - recipe.Recipe.FinalGravity) * 131.25), 2);
-        
+
+
+        recipe.Recipe.ABV =
+            (double)Math.Round((decimal)((recipe.Recipe.OriginalGravity - recipe.Recipe.FinalGravity) * 131.25), 2);
+
         if (recipe.Recipe.ABV < 5)
         {
             recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(12, 35);
@@ -213,6 +215,7 @@ public class RecipeController : Controller
         {
             recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(60, 90);
         }
+
         double? MCU = 0;
         foreach (var grain in recipe.Recipe.MaltBill)
         {
@@ -276,26 +279,28 @@ public class RecipeController : Controller
 
         recipe.Recipe.Hops = new List<HopAddition>();
 
-
-        for (int i = 0; i < recipeVm.HopId.Length; i++)
+        if (recipeVm.HopId is not null)
         {
-            // Get Hop by Id from _hopService
-            HopResponse hopResponse = await _hopService.GetByIdAsync(recipeVm.HopId[i]);
-            Hop hop = hopResponse.ToHop();
-
-
-            // Create a new HopAddition
-            HopAddition hopAddition = new HopAddition
+            for (int i = 0; i < recipeVm.HopId.Length; i++)
             {
-                Hop = hop,
-                Use = recipeVm.HopAdditions[i].Use,
-                BoilTime = recipeVm.HopAdditions[i].BoilTime,
-                DryHopDays = recipeVm.HopAdditions[i].DryHopDays,
-                Form = recipeVm.HopAdditions[i].Form,
-                Amount = recipeVm.HopAdditions[i].Amount
-            };
+                // Get Hop by Id from _hopService
+                HopResponse hopResponse = await _hopService.GetByIdAsync(recipeVm.HopId[i]);
+                Hop hop = hopResponse.ToHop();
 
-            recipe.Recipe.Hops.Add(hopAddition);
+
+                // Create a new HopAddition
+                HopAddition hopAddition = new HopAddition
+                {
+                    Hop = hop,
+                    Use = recipeVm.HopAdditions[i].Use,
+                    BoilTime = recipeVm.HopAdditions[i].BoilTime,
+                    DryHopDays = recipeVm.HopAdditions[i].DryHopDays,
+                    Form = recipeVm.HopAdditions[i].Form,
+                    Amount = recipeVm.HopAdditions[i].Amount
+                };
+
+                recipe.Recipe.Hops.Add(hopAddition);
+            }
         }
 
         TempData["Recipe"] = JsonSerializer.Serialize(recipe);
@@ -319,8 +324,9 @@ public class RecipeController : Controller
     [HttpPost]
     public async Task<IActionResult> EditRecipe(RecipeUpdateRequest recipe)
     {
-        RecipeUpdateRequest? recipeUpdateRequest =
-            JsonSerializer.Deserialize<RecipeUpdateRequest>(TempData["RecipeUpdateRequest"].ToString());
+        RecipeResponse response = await _recipeService.GetByIdAsync(recipe.Id);
+
+        RecipeUpdateRequest recipeUpdateRequest = response.ToRecipeUpdateRequest();
 
         recipeUpdateRequest.Name = recipe.Name;
         recipeUpdateRequest.Style = recipe.Style;
@@ -356,6 +362,7 @@ public class RecipeController : Controller
         return RedirectToAction("Recipes", "Recipe");
     }
 
+    [AllowAnonymous]
     public async Task<IActionResult> ViewRecipe(int id)
     {
         RecipeResponse recipe = await _recipeService.GetByIdAsync(id);

@@ -32,37 +32,52 @@
             <a class="btn btn-main text-main p-2" asp-controller="Ingredient" asp-action="AddFermentable">Add Fermentable</a>
         </div>
         <h1 class="display-6 text-main">Fermentables</h1>
-        <table class="table text-main overflow-scroll">
-            <thead>
-            <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Type</th>
-                <th scope="col">Origin</th>
-                <th scope="col">Color</th>
-                <th scope="col">Potential Gravity</th>
-                <th scope="col">Max In Batch %</th>
-                <th scope="col">Edit</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach (var ferm in Model)
-            {
+        <div class="table-responsive">
+            <table class="table text-main overflow-scroll">
+                <thead>
                 <tr>
-                    <td class="text-green">@ferm.Name</td>
-                    <td>@ferm.Type</td>
-                    <td>@ferm.Origin</td>
-                    <td>@ferm.Color</td>
-                    <td>@ferm.PotentialGravity</td>
-                    <td>@ferm.MaxInBatch</td>
-                    <td>
-                        <a class="text-green" asp-controller="Ingredient" asp-action="EditFermentable" asp-route-Id="@ferm.Id">Edit</a>
-                    </td>
+                    <th scope="col">Ingredient Type</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Origin</th>
+                    <th scope="col">Color</th>
+                    <th scope="col">Potential Gravity</th>
+                    <th scope="col">Max In Batch %</th>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <th scope="col">Edit</th>
+                    }
                 </tr>
-            }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                @foreach (var ferm in Model)
+                {
+                    <tr>
+                        <td><img src="~/images/fermentable.png" class="ferm-img"/></td>
+                        <td class="text-green">@ferm.Name</td>
+                        <td>@ferm.Type</td>
+                        <td>@ferm.Origin</td>
+                        <td>@ferm.Color</td>
+                        <td>@ferm.PotentialGravity</td>
+                        <td>@ferm.MaxInBatch</td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td>
+                                <a class="text-green" asp-controller="Ingredient" asp-action="EditFermentable" asp-route-Id="@ferm.Id">Edit</a>
+                            </td>
+                        }
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <div class="container mt-3 text-center">
     <a class="btn btn-main text-main p-2" asp-controller="Ingredient" asp-action="AddFermentable">Add Fermentables</a>
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

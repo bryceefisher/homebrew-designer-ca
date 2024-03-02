@@ -57,7 +57,7 @@ public class AccountController : Controller
             {
                 await _signInManager.SignInAsync(user,
                     false);
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Home", "Home");
             }
             
             // Add errors to ModelState and return to the registration view
@@ -102,7 +102,7 @@ public class AccountController : Controller
                     return LocalRedirect(ReturnUrl);
                 }
                 // Redirect to the Person Index page
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Home", "Home");
             }
 
             // Add error to ModelState and return to the login view

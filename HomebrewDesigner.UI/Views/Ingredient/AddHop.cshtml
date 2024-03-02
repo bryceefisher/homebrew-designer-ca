@@ -1,11 +1,11 @@
-@model HomebrewDesigner.Core.DTO.HopUpdateRequest
+@model HomebrewDesigner.Core.DTO.HopAddRequest
 @{
     ViewBag.Title = "Add Hop";
 }
 
-<div class="container mt-5 text-center">
-    <h1 class="display-5 pb-3">Add Hop</h1>
-    <form asp-action="AddHop" asp-controller="Ingredient" method="post">
+<div class="container mt-5 text-center bg-secondary rounded-5 p-3">
+    <h1 class="display-5 pb-3 text-main">Add Hop</h1>
+    <form asp-action="AddHop" asp-controller="Ingredient" method="post" id="form">
         <div class="mb-3 d-flex">
             <div class="col-3">
                 <label asp-for="Name" class="form-label">
@@ -14,6 +14,7 @@
             </div>
             <div class="col-9">
                 <input class="w-100 form-control" asp-for="Name" required>
+                <span asp-validation-for="Name" class="text-validation"></span>
             </div>
         </div>
         <div class="mb-3 d-flex">
@@ -24,10 +25,22 @@
             </div>
             <div class="col-9">
                 <input class="w-100 form-control" asp-for="AlphaAcid" required>
+                <span asp-validation-for="AlphaAcid" class="text-validation"></span>
             </div>
         </div>
-        <div class="text-center mt-5">
-            <button type="submit" class="btn btn-danger">Add Hops</button>
+
+        <div id="loader" class="visually-hidden mt-3">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="text-center mt-5" id="buttonDiv">
+            <button type="submit" class="btn btn-main text-green">Add Hops</button>
         </div>
     </form>
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

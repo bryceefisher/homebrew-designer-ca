@@ -10,4 +10,5 @@ public class ApplicationUser : IdentityUser<string>
     
     [NotMapped]
     public IList<string> RoleNames { get; set; }
+    
 }

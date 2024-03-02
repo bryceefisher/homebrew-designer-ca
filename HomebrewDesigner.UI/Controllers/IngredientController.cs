@@ -2,6 +2,7 @@ using System.Collections;
 using HomebrewDesigner.Core.DTO;
 using HomebrewDesigner.Core.Enums;
 using HomebrewDesigner.Core.ServiceContracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomebrewDesigner.Controllers;
@@ -23,6 +24,7 @@ public class IngredientController : Controller
     }
 
     // GET
+    [AllowAnonymous]
     public async Task<IActionResult> Hops(string? searchBy, string? searchString)
     {
         ViewBag.SearchFields = new Dictionary<string, string>()
@@ -44,6 +46,7 @@ public class IngredientController : Controller
     }
 
     // GET
+    [AllowAnonymous]
     public async Task<IActionResult> Yeast(string? searchBy, string? searchString)
     {
         ViewBag.SearchFields = new Dictionary<string, string>()
@@ -70,6 +73,7 @@ public class IngredientController : Controller
     }
 
     // GET
+    [AllowAnonymous]
     public async Task<IActionResult> Fermentables(string? searchBy, string? searchString)
     {
         ViewBag.SearchFields = new Dictionary<string, string>()

@@ -5,7 +5,7 @@
 <body>
 <div class="container text-center mt-5 bg-secondary rounded-5 pe-5 pt-3">
     <h1 class="display-2 pb-3 text-main">Edit Fermentable</h1>
-    <form asp-controller="Ingredient" asp-action="EditFermentable" method="post" class="pt-3">
+    <form asp-controller="Ingredient" asp-action="EditFermentable" method="post" class="pt-3" id="form">
         <div class="mb-3 d-flex visually-hidden">
             <div class="col-3">
                 <label asp-for="Id" class="form-label">
@@ -24,7 +24,7 @@
             </div>
             <div class="col-9">
                 <input class="w-100 form-control bg-secondary text-main" asp-for="Name">
-                <span class="text-danger" asp-validation-for="Name"></span>
+                <span class="text-validation" asp-validation-for="Name"></span>
             </div>
         </div>
         <div class="mb-3 d-flex ">
@@ -47,7 +47,7 @@
                         }
                     }
                 </select>
-                <span class="text-danger" asp-validation-for="Type"></span>
+                <span class="text-validation" asp-validation-for="Type"></span>
             </div>
         </div>
         <div class="mb-3 d-flex">
@@ -71,7 +71,7 @@
                         }
                     }
                 </select>
-                <span asp-validation-for="Origin" class="text-danger"></span>
+                <span asp-validation-for="Origin" class="text-validation"></span>
             </div>
         </div>
         <div class="mb-3 d-flex">
@@ -82,7 +82,7 @@
             </div>
             <div class="col-9">
                 <input class="w-100 form-control bg-secondary text-main" asp-for="Color">
-                <span class="text-danger" asp-validation-for="Color"></span>
+                <span class="text-validation" asp-validation-for="Color"></span>
             </div>
         </div>
         <div class="mb-3 d-flex">
@@ -93,7 +93,7 @@
             </div>
             <div class="col-9">
                 <input class="w-100 form-control bg-secondary text-main" asp-for="PotentialGravity">
-                <span class="text-danger" asp-validation-for="PotentialGravity"></span>
+                <span class="text-validation" asp-validation-for="PotentialGravity"></span>
             </div>
         </div>
         <div class="mb-3 d-flex">
@@ -104,12 +104,22 @@
             </div>
             <div class="col-9">
                 <input class="w-100 form-control bg-secondary text-main" asp-for="MaxInBatch">
-                <span class="text-danger" asp-validation-for="MaxInBatch"></span>
+                <span class="text-validation" asp-validation-for="MaxInBatch"></span>
             </div>
         </div>
-        <div class="text-center mt-5 pb-5">
+        <div id="loader" class="visually-hidden mt-3">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="text-center mt-5 pb-5" id="buttonDiv">
             <button type="submit" class="btn btn-main text-green">Update Fermentable</button>
         </div>
     </form>
 </div>
 </body>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

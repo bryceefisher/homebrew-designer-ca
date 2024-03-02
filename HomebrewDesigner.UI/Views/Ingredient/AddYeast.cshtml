@@ -1,72 +1,82 @@
-@model HomebrewDesigner.Core.DTO.YeastUpdateRequest
+@model HomebrewDesigner.Core.DTO.YeastAddRequest
 @{
     ViewBag.Title = "Add Yeast";
 }
 
-<div class="container mt-5 text-center bg-light">
-    <h1 class="display-5 pb-3">Add Yeast</h1>
-    <form asp-action="AddYeast" asp-controller="Ingredient" method="post">
+<div class="container mt-5 text-center bg-secondary p-3 rounded-5">
+    <h1 class="display-5 pb-3 text-main">Add Yeast</h1>
+    <form asp-action="AddYeast" asp-controller="Ingredient" method="post" id="form">
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <label asp-for="Name" class="form-label">
+                <label asp-for="Name" class="form-label main">
                     <h5>Name:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <input class="w-100 form-control" asp-for="Name" required>
+                <input class="w-100 form-control" asp-for="Name">
+                <span asp-validation-for="Name" class="text-validation"></span>
             </div>
+
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <label asp-for="Lab" class="form-label">
+                <label asp-for="Lab" class="form-label main">
                     <h5>Lab:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <input class="w-100 form-control" asp-for="Lab" required>
+                <input class="w-100 form-control" asp-for="Lab">
+                <span asp-validation-for="Lab" class="text-validation"></span>
             </div>
+
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <label asp-for="Code" class="form-label">
+                <label asp-for="Code" class="form-label main">
                     <h5>Code:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <input class="w-100 form-control" asp-for="Code" required>
+                <input class="w-100 form-control" asp-for="Code">
+                <span asp-validation-for="Code" class="text-validation"></span>
             </div>
+
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <label asp-for="Type" class="form-label">
+                <label asp-for="Type" class="form-label main">
                     <h5>Type:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <select class="form-select w-100" asp-for="Type">
+                <select class="form-select w-100 bg-secondary text-main" asp-for="Type">
                     <option selected disabled="disabled">Select a Type</option>
                     @foreach (var type in ViewBag.Types)
                     {
                         <option value="@type">@type</option>
                     }
                 </select>
+                <span asp-validation-for="Type" class="text-validation"></span>
             </div>
+
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
-                <label asp-for="Form" class="form-label">
+                <label asp-for="Form" class="form-label main">
                     <h5>Form:</h5>
                 </label>
             </div>
             <div class="col-9">
-                <select class="form-select w-100" asp-for="Form">
+                <select class="form-select w-100 bg-secondary text-main" asp-for="Form">
                     <option selected disabled="disabled">Select a Form</option>
                     @foreach (var form in ViewBag.Forms)
                     {
                         <option value="@form">@form</option>
                     }
                 </select>
+                <span asp-validation-for="Form" class="text-validation"></span>
             </div>
+
         </div>
         <div class="mb-3 d-flex">
             <div class="col-3">
@@ -75,18 +85,31 @@
                 </label>
             </div>
             <div class="col-9">
-                <select class="form-select w-100" asp-for="Flocculation">
+                <select class="form-select w-100 bg-secondary text-main" asp-for="Flocculation">
                     <option selected disabled="disabled">Select Flocculation</option>
                     @foreach (var floc in ViewBag.Flocs)
                     {
                         <option value="@floc">@floc</option>
                     }
                 </select>
+                <span asp-validation-for="Flocculation" class="text-validation"></span>
+            </div>
+
+        </div>
+
+        <div id="loader" class="visually-hidden mt-3">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
             </div>
         </div>
 
-        <div class="text-center mt-5">
-            <button type="submit" class="btn btn-success">Add Yeast</button>
+        <div class="text-center mt-5" id="buttonDiv">
+            <button type="submit" class="btn btn-main text-validation">Add Yeast</button>
         </div>
     </form>
 </div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+}

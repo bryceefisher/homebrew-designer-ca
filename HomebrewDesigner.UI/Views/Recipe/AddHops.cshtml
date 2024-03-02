@@ -23,8 +23,7 @@
                         <div>
                             <span asp-validation-for="HopId[0]" class="text-green"></span>
                         </div>
-
-                        <!-- Add dynamic fields for the first hop addition -->
+                        
 
                         <label class="form-label mt-1 text-main" asp-for="HopAdditions[0].Use"></label>
                         <select class="form-select text-main bg-secondary" asp-for="HopAdditions[0].Use">
@@ -83,16 +82,14 @@
          
             let hopIndex = @Model.Recipe.Hops.Count;
             let hopAddCount = 1;
-            
-        
+
             document.querySelector(".add-hop").addEventListener("click", function (event) {
                 event.preventDefault();
           
                 let template = document.querySelector(".hop-addition-template").cloneNode(true);
        
                 hopIndex++;
-                
-
+  
                 let elements = template.querySelectorAll("[name]");
                 elements.forEach(element => {
                     let name = element.getAttribute("name");

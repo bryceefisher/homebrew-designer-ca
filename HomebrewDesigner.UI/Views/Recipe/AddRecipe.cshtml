@@ -11,15 +11,15 @@
         <div class="container d-flex justify-content-between">
             <div class="container bg-secondary p-2 rounded-5 text-main m-2 pb-3">
                 <h1 class="display-6">Name:</h1>
-                <input asp-for="Recipe.Name" class="form-control bg-secondary text-main" placeholder="Name"/>
+                <input asp-for="Recipe.Name" class="form-control bg-secondary text-main" placeholder="Name" required/>
                 <div>
                     <span asp-validation-for="Recipe.Name" class="text-green"></span>
                 </div>
             </div>
             <div class="container bg-secondary p-2 rounded-5 m-2 pb-3">
                 <h1 class="display-6 text-main">Style:</h1>
-                <select class="form-select bg-secondary text-main" asp-for="Recipe.Style">
-                    <option selected disabled>Style</option>
+                <select class="form-select bg-secondary text-main" asp-for="Recipe.Style" required>
+                    <option selected disabled value="">Style</option>
                     @foreach (var item in Enum.GetNames(typeof(StyleEnum)))
                     {
                         <option value="@item">@Regex.Replace(item, "([a-z])([A-Z])", "$1 $2")</option>
@@ -33,8 +33,8 @@
         <div class="container bg-secondary p-2 rounded-5 m-2 pb-3">
             <h1 class="display-6 text-main">Yeast:</h1>
             <label asp-for="YeastId" class="text-main">Yeast</label>
-            <select class="form-select mt-2 bg-secondary text-main" asp-for="YeastId">
-                <option selected disabled>Yeast</option>
+            <select class="form-select mt-2 bg-secondary text-main" asp-for="YeastId" required>
+                <option selected disabled value="">Yeast</option>
                 @foreach (YeastResponse yeast in Model.YeastList)
                 {
                     <option value="@yeast.Id">@yeast.Name</option>
@@ -44,12 +44,12 @@
                 <span asp-validation-for="YeastId" class="text-green"></span>
             </div>
             <label class="form-label mt-2 text-main" asp-for="Recipe.YeastAmount"></label>
-            <input asp-for="Recipe.YeastAmount" class="form-control bg-secondary text-main" placeholder="Yeast Amount (ml)"/>
+            <input asp-for="Recipe.YeastAmount" class="form-control bg-secondary text-main" placeholder="Yeast Amount (ml)" required type="number"/>
             <div>
                 <span asp-validation-for="Recipe.YeastAmount" class="text-green"></span>
             </div>
             <label class="form-label mt-2 text-main" asp-for="Recipe.YeastViability"></label>
-            <input asp-for="Recipe.YeastViability" class="form-control text-main bg-secondary" placeholder="Yeast Viability (%)"/>
+            <input asp-for="Recipe.YeastViability" class="form-control text-main bg-secondary" placeholder="Yeast Viability (%)" required type="number"/>
             <div>
                 <span asp-validation-for="Recipe.YeastViability" class="text-green"></span>
             </div>
@@ -57,10 +57,10 @@
         <div class="container p-2 rounded-2 m-2 pb-3 bg-secondary">
             <h1 class="display-6 text-main">Mash:</h1>
             <label class="form-label mt-2 text-main" asp-for="Recipe.MashTemp"></label>
-            <input asp-for="Recipe.MashTemp" class="form-control text-main bg-secondary" placeholder="Mash Temp (f)"/>
+            <input asp-for="Recipe.MashTemp" class="form-control text-main bg-secondary" placeholder="Mash Temp (f)" required type="number"/>
             <span asp-validation-for="Recipe.MashTemp"></span>
             <label class="form-label mt-2 text-main" asp-for="Recipe.WaterRatio"></label>
-            <input asp-for="Recipe.WaterRatio" class="form-control text-main bg-secondary" placeholder="Water Ratio (*:1)"/>
+            <input asp-for="Recipe.WaterRatio" class="form-control text-main bg-secondary" placeholder="Water Ratio (*:1)" required type="text" pattern="[0-9]+([.,][0-9]+)?" step="0.01"/>
             <div>
             <span asp-validation-for="Recipe.WaterRatio" class="text-green"></span>
             </div>

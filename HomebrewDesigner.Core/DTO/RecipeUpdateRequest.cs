@@ -35,15 +35,15 @@ public class RecipeUpdateRequest
     public List<HopAddition> Hops { get; set; }
     
     public Yeast Yeast { get; set; }
-   
+    [Required]
     public double? YeastAmount { get; set; }
-   
+    [Required]
     public double? YeastViability { get; set; }
-   
+    [Required]
     public int? MashTemp { get; set; }
    
     public List<FermentablePair> Maltbill { get; set; }
-   
+    [Required]
     public double? WaterRatio { get; set; }
    
     public double? AmountOfWater { get; set; }
