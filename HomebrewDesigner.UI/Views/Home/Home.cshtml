@@ -1,4 +1,5 @@
-﻿@model IEnumerable<HomebrewDesigner.Core.DTO.RecipeResponse>
+﻿@using Humanizer
+@model IEnumerable<HomebrewDesigner.Core.DTO.RecipeResponse>
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -12,7 +13,7 @@
             {
                 <a asp-action="ViewRecipe" asp-controller="Recipe">
                     <a class="text-decoration-none text-green" asp-controller="Recipe" asp-action="ViewRecipe" asp-route-Id="@item.Id"><h2>@item.Name</h2></a>
-                    <p class="text-main">@item.Style</p>
+                    <p class="text-main">@item.Style.Humanize(LetterCasing.Title)</p>
                 </a>
             }
         </div>

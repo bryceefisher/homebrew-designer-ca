@@ -1,3 +1,4 @@
+@using Humanizer
 @model IEnumerable<HomebrewDesigner.Core.DTO.FermentableResponse>
 
 @{
@@ -55,8 +56,8 @@
                     <tr>
                         <td><img src="~/images/fermentable.png" class="ferm-img"/></td>
                         <td class="text-green">@ferm.Name</td>
-                        <td>@ferm.Type</td>
-                        <td>@ferm.Origin</td>
+                        <td>@ferm.Type.Humanize(LetterCasing.Title)</td>
+                        <td>@ferm.Origin.Humanize(LetterCasing.Title)</td>
                         <td>@ferm.Color</td>
                         <td>@ferm.PotentialGravity</td>
                         <td>@ferm.MaxInBatch</td>

@@ -1,3 +1,4 @@
+@using Humanizer
 @model IEnumerable<HomebrewDesigner.Core.DTO.RecipeResponse>
 @{
     ViewBag.Title = "Recipes";
@@ -60,7 +61,7 @@
                             <td>
                                 <a class="text-green" asp-action="ViewRecipe" asp-controller="Recipe" asp-route-Id="@recipe.Id">@recipe.Name</a>
                             </td>
-                            <td>@recipe.Style</td>
+                            <td>@recipe.Style.Humanize(LetterCasing.Title)</td>
                             <td>@recipe.OriginalGravity</td>
                             <td>@recipe.FinalGravity</td>
                             <td>@recipe.ABV</td>
