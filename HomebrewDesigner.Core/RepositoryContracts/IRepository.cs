@@ -32,6 +32,13 @@ public interface IRepository<T, TUpdateRequest>
     /// <param name="id">The identifier of the entity.</param>
     /// <returns>The entity.</returns>
     Task<T> GetByIdAsync(int id);
+
+    /// <summary>
+    /// Returns an object based on it's name.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns>An object if exists.</returns>
+    Task<T> GetByNameAsync(string name);
     
     /// <summary>
     /// Deletes an object based on the given id.

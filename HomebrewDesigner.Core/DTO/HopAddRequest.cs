@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using HomebrewDesigner.Core.Domain.Entities;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HomebrewDesigner.Core.DTO;
 
@@ -10,6 +11,7 @@ public class HopAddRequest
 {
    public int Id { get; set; }
    
+   [Remote(action: "UniqueEntityName", controller: "Ingredient", ErrorMessage = "Hop name already exists")]
    [Required(ErrorMessage = "Hop name cannot be blank.")]
    public string Name { get; set; }  
    

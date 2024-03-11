@@ -45,6 +45,11 @@ public class RecipeRepository : IRecipeRepository
             .FirstOrDefaultAsync(r => r.Id == id) ?? throw new InvalidOperationException();
     }
 
+    public Task<Recipe> GetByNameAsync(string name)
+    {
+        throw new NotImplementedException();
+    }
+
     public async Task<bool> DeleteAsync(int id)
     {
         Recipe recipe = _db.Recipes.FirstOrDefault(r => r.Id == id) ?? throw new InvalidOperationException();

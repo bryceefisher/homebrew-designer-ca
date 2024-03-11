@@ -85,6 +85,13 @@ public class HopService : IService<HopAddRequest, HopUpdateRequest, HopResponse>
         return hop.ToHopResponse();
     }
 
+    public async Task<HopResponse> GetByNameAsync(string name)
+    {
+        Hop? hop = await _hopRepository.GetByNameAsync(name);
+
+        return (hop is null) ? null : hop.ToHopResponse();
+    }
+
     /*******ToDo Tighten up this code************/
 
     public async Task<List<HopResponse>> GetFilteredAsync(string? searchBy, string? searchString)

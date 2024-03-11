@@ -47,6 +47,13 @@ public class FermentableRepository : IRepository<Fermentables, FermentableUpdate
         return await _db.Fermentables.FirstOrDefaultAsync(f => f.Id == id);
     }
 
+    public async Task<Fermentables> GetByNameAsync(string name)
+    {
+        Fermentables? fermentable = await _db.Fermentables.FirstOrDefaultAsync(f => f.Name == name) ?? null;
+
+        return fermentable;
+    }
+
     public Task<bool> DeleteAsync(int id)
     {
         throw new NotImplementedException();

@@ -30,6 +30,13 @@ public interface IService<in TAddRequest, in TUpdateRequest, TResponse>
     /// <param name="id"></param>
     /// <returns></returns>
     Task<TResponse> GetByIdAsync(int id);
+
+    /// <summary>
+    /// Gets an object by name.
+    /// </summary>
+    /// <param name="name"></param>
+    /// <returns>Matching object if it exists.</returns>
+    Task<TResponse> GetByNameAsync(string name);
     
     /// <summary>
     /// Returns all objects that match with the given search field and search string

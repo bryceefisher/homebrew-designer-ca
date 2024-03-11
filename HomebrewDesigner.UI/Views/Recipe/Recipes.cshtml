@@ -66,7 +66,7 @@
                             <td>@recipe.FinalGravity</td>
                             <td>@recipe.ABV</td>
                             <td>@recipe.IBU</td>
-                            <td>@recipe.Color</td>
+                            <td>@Math.Round(recipe.Color, 0)</td>
                             @if (@recipe.Color < 10)
                             {
                                 <td>

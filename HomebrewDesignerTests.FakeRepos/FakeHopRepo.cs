@@ -39,6 +39,11 @@ public class FakeHopRepo : IRepository<Hop, HopUpdateRequest>
         return await Task.Run(() => _hops.Find(h => h.Id == id)) ?? throw new ArgumentException("Hop not found");
     }
 
+    public Task<Hop> GetByNameAsync(string name)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<bool> DeleteAsync(int id)
     {
         throw new NotImplementedException();

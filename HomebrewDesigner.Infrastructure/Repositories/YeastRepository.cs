@@ -33,6 +33,13 @@ public class YeastRepository : IRepository<Yeast, YeastUpdateRequest>
         return await _db.Yeasts.FirstOrDefaultAsync(y => y.Id == id) ?? throw new InvalidOperationException();
     }
 
+    public async Task<Yeast> GetByNameAsync(string name)
+    {
+        Yeast? yeast = await _db.Yeasts.FirstOrDefaultAsync(y => y.Name == name) ?? null;
+
+        return yeast;
+    }
+
     public Task<bool> DeleteAsync(int id)
     {
         throw new NotImplementedException();

@@ -16,7 +16,7 @@ public class RecipeController : Controller
     private readonly IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse> _fermentableService;
     private readonly IService<YeastAddRequest, YeastUpdateRequest, YeastResponse> _yeastService;
     private readonly IRecipeService _recipeService;
-    private RecipeVM _recipeVm;
+    private RecipeDetailsDto _recipeVm;
 
     public RecipeController(IService<HopAddRequest, HopUpdateRequest, HopResponse> hopService,
         IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse> fermentableService,
@@ -26,7 +26,7 @@ public class RecipeController : Controller
         _fermentableService = fermentableService;
         _yeastService = yeastService;
         _recipeService = recipeService;
-        _recipeVm = new RecipeVM(_hopService, _fermentableService, _yeastService);
+        _recipeVm = new RecipeDetailsDto(_hopService, _fermentableService, _yeastService);
     }
 
     [AllowAnonymous]
@@ -59,7 +59,7 @@ public class RecipeController : Controller
     // GET
     public async Task<IActionResult> AddRecipe()
     {
-        RecipeVM recipeVm = JsonSerializer.Deserialize<RecipeVM>(TempData["Recipe"].ToString());
+        var recipeVm = JsonSerializer.Deserialize<RecipeDetailsDto>(TempData["Recipe"].ToString());
 
 
         recipeVm.HopList = await _hopService.GetAllAsync();
@@ -102,7 +102,7 @@ public class RecipeController : Controller
         {
             for (int i = 0; i < recipeVm.FermentableId.Length; i++)
             {
-                if ((i + 1 > recipeVm.FermentableWeight.Length && i < recipeVm.FermentableId.Length))
+                if (i + 1 > recipeVm.FermentableWeight.Length && i < recipeVm.FermentableId.Length)
                 {
                     break;
                 }
@@ -133,117 +133,29 @@ public class RecipeController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> AddRecipe(RecipeVM recipeVm)
+    public async Task<IActionResult> AddRecipe(RecipeDetailsDto recipeVm)
     {
-        Random random = new();
-        RecipeVM recipe = JsonSerializer.Deserialize<RecipeVM>(TempData["Recipe"].ToString());
+        var recipe = JsonSerializer.Deserialize<RecipeDetailsDto>(TempData["Recipe"].ToString());
 
         if (recipeVm.YeastId != 0)
         {
-            YeastResponse yeast = await _yeastService.GetByIdAsync(recipeVm.YeastId);
-            recipe.Recipe.Yeast = yeast.ToYeast();
+            YeastResponse yeastResponse = await _yeastService.GetByIdAsync(recipeVm.YeastId);
+            recipe.Recipe.Yeast = yeastResponse.ToYeast();
         }
 
-        recipe.Recipe.Name = recipeVm.Recipe.Name;
-        recipe.Recipe.Style = recipeVm.Recipe.Style;
-        recipe.Recipe.YeastAmount = recipeVm.Recipe.YeastAmount;
-        recipe.Recipe.YeastViability = recipeVm.Recipe.YeastViability;
-
-        recipe.Recipe.MashTemp = recipeVm.Recipe.MashTemp;
-
-        recipe.Recipe.WaterRatio = recipeVm.Recipe.WaterRatio;
-
-        double? grainWeight = 0;
-        foreach (var grain in recipe.Recipe.MaltBill)
-        {
-            grainWeight += grain.Weight;
-        }
-
-        recipe.Recipe.AmountOfWater = Math.Round((double)(grainWeight * recipe.Recipe.WaterRatio)!, 2);
-
-        double? GU = 0;
-        foreach (var grain in recipe.Recipe.MaltBill)
-        {
-            GU += double.Parse(grain.Fermentable.PotentialGravity.ToString()
-                .Substring(grain.Fermentable.PotentialGravity.ToString().IndexOf(".") + 1, 3)) * grain.Weight;
-        }
-
-        recipe.Recipe.OriginalGravity = double.Parse(((GU / 6.75) / 1000 + 1).ToString()!.Substring(0, 5));
-
-        if (recipe.Recipe.OriginalGravity < 1.040)
-        {
-            recipe.Recipe.FinalGravity = Math.Round(1.002 + random.NextDouble() * (1.010 - 1.005), 3);
-        }
-        else if (recipe.Recipe.OriginalGravity < 1.060)
-        {
-            recipe.Recipe.FinalGravity = Math.Round(1.002 + random.NextDouble() * (1.015 - 1.010), 3);
-        }
-        else if (recipe.Recipe.OriginalGravity < 1.080)
-        {
-            recipe.Recipe.FinalGravity = Math.Round(1.002 + random.NextDouble() * (1.020 - 1.012), 3);
-        }
-        else
-        {
-            recipe.Recipe.FinalGravity = Math.Round(1.002 + random.NextDouble() * (1.025 - 1.015), 3);
-        }
-
-
-        recipe.Recipe.ABV =
-            (double)Math.Round((decimal)((recipe.Recipe.OriginalGravity - recipe.Recipe.FinalGravity) * 131.25), 2);
-
-        if (recipe.Recipe.ABV < 5)
-        {
-            recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(12, 35);
-        }
-        else if (recipe.Recipe.ABV < 6)
-        {
-            recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(20, 45);
-        }
-        else if (recipe.Recipe.ABV < 7)
-        {
-            recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(30, 55);
-        }
-        else if (recipe.Recipe.ABV < 8)
-        {
-            recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(40, 65);
-        }
-        else if (recipe.Recipe.ABV < 9)
-        {
-            recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(40, 75);
-        }
-        else
-        {
-            recipe.Recipe.IBU = RandomNumberGenerator.GetInt32(60, 90);
-        }
-
-        double? MCU = 0;
-        foreach (var grain in recipe.Recipe.MaltBill)
-        {
-            MCU += grain.Fermentable.Color * grain.Weight;
-        }
-
-        recipe.Recipe.Color = (double)(MCU / 5);
+        _recipeService.UpdateRecipeDetails(recipe, recipeVm);
+        _recipeService.CalculateWaterAmount(recipe, recipeVm);
+        _recipeService.CalculateOriginalGravity(recipe, recipeVm);
+        _recipeService.CalculateFinalGravity(recipe);
+        _recipeService.CalculateABV(recipe);
+        _recipeService.CalculateIBU(recipe);
+        _recipeService.CalculateColor(recipe);
 
 
         if (TryValidateModel(recipe.Recipe))
         {
             await _recipeService.AddAsync(recipe.Recipe);
             return RedirectToAction("Recipes", "Recipe");
-        }
-
-
-        foreach (var modelStateEntry in ModelState.Values)
-        {
-            foreach (var error in modelStateEntry.Errors)
-            {
-                // Log or inspect the error messages
-                var errorMessage = error.ErrorMessage;
-                var exception = error.Exception; // If an exception caused the error
-                // You can log or handle the error messages as needed
-                Console.WriteLine(modelStateEntry);
-                Console.WriteLine(errorMessage);
-                Console.WriteLine(exception);
-            }
         }
 
 
@@ -257,7 +169,7 @@ public class RecipeController : Controller
 
     public async Task<IActionResult> AddHops()
     {
-        var recipeComponent = JsonSerializer.Deserialize<RecipeVM>(TempData["Recipe"].ToString());
+        var recipeComponent = JsonSerializer.Deserialize<RecipeDetailsDto>(TempData["Recipe"].ToString());
         _recipeVm = recipeComponent;
 
 
@@ -273,9 +185,9 @@ public class RecipeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> AddHops(RecipeVM recipeVm)
+    public async Task<IActionResult> AddHops(RecipeDetailsDto recipeVm)
     {
-        RecipeVM recipe = JsonSerializer.Deserialize<RecipeVM>(TempData["Recipe"].ToString());
+        var recipe = JsonSerializer.Deserialize<RecipeDetailsDto>(TempData["Recipe"].ToString());
 
         recipe.Recipe.Hops = new List<HopAddition>();
 

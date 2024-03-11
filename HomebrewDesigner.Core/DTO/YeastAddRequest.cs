@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using HomebrewDesigner.Core.Domain.Entities;
 using HomebrewDesigner.Core.Enums;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HomebrewDesigner.Core.DTO;
 
@@ -11,7 +12,8 @@ public class YeastAddRequest
 {
     public int Id { get; set;  }
     
-    [Required]
+    [Remote(action: "UniqueEntityName", controller: "Ingredient", ErrorMessage = "Yeast name already exists")]
+    [Required(ErrorMessage = "Yeast Name already exists")]
     public string Name { get; set;  }
     
     [Required]

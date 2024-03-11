@@ -2,7 +2,9 @@ using System.Collections;
 using HomebrewDesigner.Core.DTO;
 using HomebrewDesigner.Core.Enums;
 using HomebrewDesigner.Core.ServiceContracts;
+using HomebrewDesigner.Core.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HomebrewDesigner.Controllers;
@@ -10,13 +12,13 @@ namespace HomebrewDesigner.Controllers;
 [Route("[controller]/[action]")]
 public class IngredientController : Controller
 {
-    
     private readonly IService<HopAddRequest, HopUpdateRequest, HopResponse> _hopService;
     private readonly IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse> _fermentableService;
     private readonly IService<YeastAddRequest, YeastUpdateRequest, YeastResponse> _yeastService;
 
     public IngredientController(IService<HopAddRequest, HopUpdateRequest, HopResponse> hopService,
-        IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse> fermentableService, IService<YeastAddRequest, YeastUpdateRequest, YeastResponse> yeastService)
+        IService<FermentableAddRequest, FermentableUpdateRequest, FermentableResponse> fermentableService,
+        IService<YeastAddRequest, YeastUpdateRequest, YeastResponse> yeastService)
     {
         _hopService = hopService;
         _fermentableService = fermentableService;
@@ -34,7 +36,7 @@ public class IngredientController : Controller
         };
 
         IEnumerable<HopResponse> hops = await _hopService.GetFilteredAsync(searchBy, searchString);
-        
+
         hops = hops.OrderBy(h => h.Name);
 
         if (hops.Any())
@@ -60,9 +62,9 @@ public class IngredientController : Controller
         };
 
         IEnumerable<YeastResponse> yeast = await _yeastService.GetFilteredAsync(searchBy, searchString);
-        
+
         yeast = yeast.OrderBy(y => y.Name);
-        
+
 
         if (yeast.Any())
         {
@@ -88,7 +90,7 @@ public class IngredientController : Controller
 
         IEnumerable<FermentableResponse> fermentable =
             await _fermentableService.GetFilteredAsync(searchBy, searchString);
-        
+
         IEnumerable<FermentableResponse> orderedFermentable = fermentable.OrderBy(f => f.Name);
 
         if (orderedFermentable.Any())
@@ -102,9 +104,9 @@ public class IngredientController : Controller
     public async Task<IActionResult> EditHop(int Id)
     {
         HopResponse hopResponse = await _hopService.GetByIdAsync(Id);
-        
+
         HopUpdateRequest hop = hopResponse.ToHopUpdateRequest();
-        
+
         return View(hop);
     }
 
@@ -113,7 +115,7 @@ public class IngredientController : Controller
     {
         if (ModelState.IsValid)
         {
-           await  _hopService.UpdateAsync(hop);
+            await _hopService.UpdateAsync(hop);
         }
 
         return RedirectToAction("Hops", "Ingredient");
@@ -127,7 +129,7 @@ public class IngredientController : Controller
     [HttpPost]
     public async Task<IActionResult> AddHop(HopAddRequest hop)
     {
-       await  _hopService.AddAsync(hop);
+        await _hopService.AddAsync(hop);
 
         return RedirectToAction("Hops", "Ingredient");
     }
@@ -174,7 +176,7 @@ public class IngredientController : Controller
     {
         if (ModelState.IsValid)
         {
-           await  _yeastService.AddAsync(yeast);
+            await _yeastService.AddAsync(yeast);
         }
 
         return RedirectToAction("Yeast", "Ingredient");
@@ -225,7 +227,45 @@ public class IngredientController : Controller
 
         ViewBag.Types = Enum.GetNames(typeof(FermentableTypeEnum));
         ViewBag.Origins = Enum.GetNames(typeof(FermentableOriginEnum));
-        
+
         return View();
+    }
+
+
+    [AllowAnonymous]
+    public async Task<IActionResult> UniqueEntityName(string name)
+    {
+        var refererHeader = HttpContext.Request.Headers["Referer"].ToString();
+
+ 
+        var refererUri = new Uri(refererHeader);
+   
+        var path = refererUri.LocalPath.ToLower();
+
+        dynamic service = DetermineServiceFromPath(path);
+
+        if (service == null)
+        {
+            return BadRequest("Unable to determine the service from the URL.");
+        }
+
+        var entity = await service.GetByNameAsync(name);
+
+        return Json(entity == null); // returns true if valid, false if already exists
+    }
+
+    private dynamic? DetermineServiceFromPath(string path)
+    {
+        string? entityType = path.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries)
+            .LastOrDefault()?
+            .Replace("add", "");
+
+        return entityType switch
+        {
+            "hop" => _hopService,
+            "yeast" => _yeastService,
+            "fermentable" => _fermentableService,
+            _ => null
+        };
     }
 }

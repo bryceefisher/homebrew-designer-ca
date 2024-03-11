@@ -48,6 +48,13 @@ public class HopRepository : IRepository<Hop, HopUpdateRequest>
         return hop;
     }
 
+    public async Task<Hop> GetByNameAsync(string name)
+    {
+        Hop? hop = await _db.Hops.FirstOrDefaultAsync(h => h.Name == name) ?? null;
+
+        return hop;
+    }
+
     public Task<bool> DeleteAsync(int id)
     {
         throw new NotImplementedException();

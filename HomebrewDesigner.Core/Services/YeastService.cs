@@ -83,7 +83,14 @@ public class YeastService : IService<YeastAddRequest, YeastUpdateRequest, YeastR
         
         return yeast.ToYeastResponse();
     }
-    
+
+    public async Task<YeastResponse> GetByNameAsync(string name)
+    {
+        Yeast? yeast = await _yeastRepository.GetByNameAsync(name);
+
+        return (yeast is null) ? null : yeast.ToYeastResponse();
+    }
+
     /*******ToDo Tighten up this code************/
     public async Task<List<YeastResponse>> GetFilteredAsync(string? searchBy, string? searchString)
     {

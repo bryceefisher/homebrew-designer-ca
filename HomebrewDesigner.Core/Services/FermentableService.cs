@@ -82,7 +82,14 @@ public class FermentableService : IService<FermentableAddRequest, FermentableUpd
         
         return fermentable.ToFermentableResponse();
     }
-    
+
+    public async Task<FermentableResponse> GetByNameAsync(string name)
+    {
+        Fermentables? fermentable = await _fermentableRepository.GetByNameAsync(name);
+
+        return (fermentable is null) ? null : fermentable.ToFermentableResponse();
+    }
+
     /*******ToDo Tighten up this code************/
     public async Task<List<FermentableResponse>> GetFilteredAsync(string? searchBy, string? searchString)
     {

@@ -39,6 +39,11 @@ public class FakeFermentableRepo : IRepository<Fermentables, FermentableUpdateRe
         return await Task.Run(() => _fermentables.Find(f => f.Id == id)) ?? throw new ArgumentException("Fermentable not found");
     }
 
+    public Task<Fermentables> GetByNameAsync(string name)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<bool> DeleteAsync(int id)
     {
         throw new NotImplementedException();

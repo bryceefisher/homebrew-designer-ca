@@ -44,6 +44,11 @@ public class FakeRecipeRepo : IRecipeRepository
         return await Task.Run(() => _recipes.Find(r => r.Id == id)) ?? throw new ArgumentException("Hop not found");
     }
 
+    public Task<Recipe> GetByNameAsync(string name)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<bool> DeleteAsync(int id)
     {
         throw new NotImplementedException();

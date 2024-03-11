@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using HomebrewDesigner.Core.Domain.Entities;
 using HomebrewDesigner.Core.Enums;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HomebrewDesigner.Core.DTO;
 /// <summary>
@@ -10,7 +11,8 @@ public class FermentableAddRequest
 {
     public int Id { get; set; }
     
-    [Required(ErrorMessage = " Name cannot be blank.")]
+    [Remote(action: "UniqueEntityName", controller: "Ingredient", ErrorMessage = "Fermentable name already exists")]
+    [Required(ErrorMessage = "Fermentable Name already exists")]
     public string Name { get; set; }
     
     [Required]
