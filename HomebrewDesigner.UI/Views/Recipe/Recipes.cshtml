@@ -50,6 +50,11 @@
                     {
                         <th scope="col">Edit</th>
                     }
+                    else
+                    {
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    }
                 </tr>
                 </thead>
                 <tbody class="pt-5">
@@ -108,6 +113,10 @@
                                 <td>
                                     <a class="text-green" asp-controller="Recipe" asp-action="EditRecipe" asp-route-Id="@recipe.Id">Edit</a> / <a class="text-green" asp-controller="Recipe" asp-action="DeleteRecipe" asp-route-Id="@recipe.Id">Delete</a>
                                 </td>
+                            }else
+                            {
+                                <td></td>
+                                <td></td>
                             }
                         </tr>
                     }
