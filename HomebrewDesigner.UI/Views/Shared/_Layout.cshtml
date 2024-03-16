@@ -55,7 +55,7 @@
                     {
                         <li class="nav-item text-white">
 
-                            <a class="text-white nav-link @Nav.Active(new string[] { "index", "add", "edit"  }, action)" asp-action="Index" asp-controller="Admin" asp-area="">Admin</a>
+                            <a class="text-white nav-link @Nav.Active(new string[] { "index", "add", "edit" }, action)" asp-action="Index" asp-controller="Admin" asp-area="">Admin</a>
 
                         </li>
                     }
@@ -65,14 +65,14 @@
                     {
                         <div id="userDiv">
                             <div>
-                                <a >Hello, @User.Identity.Name!</a> |<a asp-action="Logout" asp-controller="Account" class=" mx-2 mt-2 text-decoration-underline text-main">Logout</a>
+                                <span >Hello, @User.Identity.Name!</span> |<a asp-action="Logout" asp-controller="Account" class=" mx-2 mt-2 text-decoration-underline text-main">Logout</a>
                             </div>
                         </div>
                     }
                     else
                     {
                         <div id="userDiv">
-                            <a asp-controller="Account" asp-action="Login" class="mx-2 mt-2 text-decoration-underline text-main">Login</a> | <a asp-action="Register" asp-controller="Account" class=" mx-2 mt-2 text-decoration-underline text-main">Register</a>
+                            <a asp-controller="Account" asp-action="Login" class="mx-2 mt-2 text-light @Nav.Active(new string[] { "login" }, action)">Login</a> | <a asp-action="Register" asp-controller="Account" class=" mx-2 mt-2  text-light @Nav.Active(new string[] { "register" }, action)">Register</a>
                         </div>
                     }
                 </div>
