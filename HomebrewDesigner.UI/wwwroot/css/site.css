@@ -45,8 +45,12 @@ a.navbar-brand {
   word-break: break-all;
 }
 
-a:hover {
-  color: #f9f9f9 !important;
+nav a:hover {
+  transform: scale(1.2) !important;
+}
+
+#userDiv a:hover {
+  transform: scale(1.2) !important;
 }
 
 
@@ -223,5 +227,10 @@ td {
   max-width: 250px; 
   height: auto; 
   display: block; 
+}
+
+.link-wrapper:hover a {
+  transform: scale(1.1);
+  display: inline-block; 
 }
 

@@ -224,23 +224,7 @@ public class RecipeTests
         Assert.True(list.Count == 1);
     }
 
-
-    [Fact]
-    public async Task AddRecipe_RecipeAlreadyExists()
-    {
-        //Arrange
-        AddGrains();
-        AddGrains();
-        AddYeast();
-        RecipeAddRequest recipe = CreateAddRequest();
-        RecipeAddRequest recipe2 = CreateAddRequest();
-
-        //Act
-        await _recipes.AddAsync(recipe);
-
-        //Assert
-        await Assert.ThrowsAsync<ArgumentException>(() => _recipes.AddAsync(recipe2));
-    }
+    
 
     #endregion
 

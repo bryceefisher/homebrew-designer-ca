@@ -91,4 +91,5 @@ public enum StyleEnum
     EnglishGoldenAle,
     CreamAle,
     AmericanCreamAle,
+    Wine
 }

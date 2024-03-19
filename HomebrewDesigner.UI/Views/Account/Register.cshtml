@@ -10,7 +10,7 @@
         <div class="col-12">
             <form asp-action="Register" asp-controller="Account" method="post" id="form">
                 <div class="form-group">
-                    <label asp-for="FirstName" class="control-label text-main" >First Name:</label>
+                    <label asp-for="FirstName" class="control-label text-main">First Name:</label>
                     <input asp-for="FirstName" class="form-control bg-main" placeholder="First Name"/>
                     <span asp-validation-for="FirstName" class="text-validation"></span>
                 </div>
@@ -43,6 +43,10 @@
                     <label asp-for="ConfirmPassword" class="control-label text-main">Confirm Password:</label>
                     <input asp-for="ConfirmPassword" class="form-control bg-main" placeholder="Confirm Password"/>
                     <span asp-validation-for="ConfirmPassword" class="text-validation"></span>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(x => x.Errors))
+                    {
+                        <p class="text-validation">@error.ErrorMessage</p>
+                    }
                 </div>
 
 
@@ -56,12 +60,6 @@
                     <a class="text-main text-decoration-none btn btn-main" asp-controller="Account" asp-action="Register">Clear</a>
                 </div>
 
-                <ul>
-                    @foreach (var error in ViewData.ModelState.Values.SelectMany(x => x.Errors))
-                    {
-                        <li class="text-validation">@error.ErrorMessage</li>
-                    }
-                </ul>
             </form>
             <div class="text-center mt-5">
                 <a class="text-main text-decoration-none">Already Registered?</a><a class="text-main mx-2 mt-2 text-decoration-underline" asp-controller="Account" asp-action="Login">Login</a>
@@ -75,4 +73,3 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
 }
-
